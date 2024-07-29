@@ -29,13 +29,13 @@ static func factorial(value: int) -> int:
 	return factorial
 
 
-static func remap01(value: float, istart: float, istop: float):
+static func remap01(value: float, istart: float, istop: float) -> float:
 	return remap(value, istart, istop, 0.0, 1.0)
 
 
-static func remap_clamped(value: float, istart: float, istop: float, ostart: float, ostop: float):
+static func remap_clamped(value: float, istart: float, istop: float, ostart: float, ostop: float) -> float:
 	return clamp(remap(value, istart, istop, ostart, ostop), ostart, ostop)
 
 
-static func remap01_clamped(value: float, istart: float, istop: float):
+static func remap01_clamped(value: float, istart: float, istop: float) -> float:
 	return clamp(remap(value, istart, istop, 0.0, 1.0), 0.0, 1.0)
