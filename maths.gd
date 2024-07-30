@@ -26,6 +26,7 @@ static func gcd(a: int, b: int) -> int:
 
 	return abs(a)
 
+
 static func factorial(value: int) -> int:
 	var f: int = 1
 	
