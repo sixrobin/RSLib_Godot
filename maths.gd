@@ -27,21 +27,49 @@ static func gcd(a: int, b: int) -> int:
 	return abs(a)
 
 static func factorial(value: int) -> int:
-	var factorial: int = 1
+	var f: int = 1
 	
 	var p: int = value
 	while p >= 1:
-		factorial *= p
+		f *= p
 		p -= 1
 
-	return factorial
+	return f
 
 
-static func point_left_to_segment(a: Vector2, b: Vector2, p: Vector2) -> float:
-	var f := (b.y - a.y) * (p.x - a.x) - (p.y - a.y) * (b.x - a.x)
+static func point_left_to_segment_v2(a: Vector2, b: Vector2, p: Vector2) -> float:
+	var f: float = (b.y - a.y) * (p.x - a.x) - (p.y - a.y) * (b.x - a.x)
 	if f > 0.0:
 		return 1.0
 	elif f < 0.0:
 		return -1.0
 	else:
 		return 0.0
+		
+static func point_left_to_segment(ax: float, ay: float, bx: float, by: float, px: float, py: float) -> float:
+	var f: float = (by - ay) * (px - ax) - (py - ay) * (bx - ax)
+	if f > 0.0:
+		return 1.0
+	elif f < 0.0:
+		return -1.0
+	else:
+		return 0.0
+
+
+static func winding_number(polygon: Array, point: Vector2) -> int:
+	var wn: int = 0;
+	
+	var poly := Array(polygon)
+	poly.append(polygon[0])
+	
+	for i in range(polygon.size() - 1):
+		if poly[i].x <= point.x:
+			if poly[i + 1].x > point.x:
+				if point_left_to_segment(poly[i].x, poly[i].y, poly[i + 1].x, poly[i + 1].y, point.x, point.y) > 0.0:
+					wn -= 1;
+		else:
+			if poly[i + 1].x <= point.x:
+				if point_left_to_segment(poly[i].x, poly[i].y, poly[i + 1].x, poly[i + 1].y, point.x, point.y) < 0.0:
+					wn += 1;
+	
+	return wn
