@@ -1,7 +1,6 @@
 extends RefCounted
 
 
-
 static func clamp_v2(vector: Vector2, min: float, max: float) -> Vector2:
 	return vector.clamp(Vector2(min, min), Vector2(max, max))
 	
