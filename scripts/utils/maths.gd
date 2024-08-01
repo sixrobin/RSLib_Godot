@@ -6,6 +6,9 @@ static func clampi01(value: int) -> int:
 
 static func clampf01(value: float) -> float:
 	return clamp(value, 0.0, 1.0)
+	
+static func clampv(value: Variant, range: Vector2) -> float:
+	return clamp(value, range.x, range.y)
 
 
 static func remap01(value: float, istart: float, istop: float) -> float:
