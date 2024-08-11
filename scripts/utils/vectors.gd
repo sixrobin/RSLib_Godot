@@ -36,6 +36,19 @@ static func max_axis(vector: Variant) -> float:
 
 static func randomf(vector: Vector2) -> float:
 	return randf_range(vector.x, vector.y)
-	
+
 static func randomi(vector: Vector2i) -> int:
 	return randi_range(vector.x, vector.y)
+
+
+static func mod(vector: Vector2i, factor: int) -> Vector2i:
+	return Vector2i(vector.x % factor, vector.y % factor)
+
+static func pos_mod(vector: Vector2i, factor: int) -> Vector2i:
+	return Vector2i(posmod(vector.x, factor), posmod(vector.y, factor))
+
+static func modv(vector: Vector2i, factor: Vector2i) -> Vector2i:
+	return Vector2i(vector.x % factor.x, vector.y % factor.y)
+
+static func pos_modv(vector: Vector2i, factor: Vector2i) -> Vector2i:
+	return Vector2i(posmod(vector.x, factor.x), posmod(vector.y, factor.y))
