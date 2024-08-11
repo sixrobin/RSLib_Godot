@@ -17,7 +17,12 @@ func _ready():
 	label_settings.line_spacing = -4.0
 	self._label.label_settings = label_settings
 	
-	self.add_child(self._label)
+	var canvas_layer := CanvasLayer.new()
+	canvas_layer.layer = 128
+	
+	self.add_child(canvas_layer)
+	
+	canvas_layer.add_child(self._label)
 
 
 func _process(delta: float):
