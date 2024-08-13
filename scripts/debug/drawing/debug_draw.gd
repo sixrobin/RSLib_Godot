@@ -31,7 +31,7 @@ func _draw():
 	self._shapes.clear()
 
 
-func vec(input):
+func vec(input) -> Vector2:
 	return input if (input is Vector2) else input.global_position
 
 
@@ -63,5 +63,6 @@ func ring(c, r1: float, r2: float, resolution: int = 32, color := self.DEFAULT_C
 func rect(c, size: Vector2, color := self.DEFAULT_COLOR, width := self.DEFAULT_WIDTH) -> DebugShape:
 	return self.add(DebugRect.new(vec(c), size).set_color(color).set_width(width))
 
-# TODO: Point
-# TODO: Cross
+
+func marker(position, color := self.DEFAULT_COLOR, width := self.DEFAULT_WIDTH) -> DebugShape:
+	return self.add(DebugMarker.new(vec(position)).set_color(color).set_width(width))
