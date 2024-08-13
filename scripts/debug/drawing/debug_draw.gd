@@ -23,5 +23,7 @@ func _draw():
 			super.draw_line(a, b, shape.color)
 
 
-func line(a: Vector2, b: Vector2, color: Color = self.DEFAULT_COLOR):
+func line(a, b, color: Color = self.DEFAULT_COLOR):
+	a = a if (a is Vector2) else a.global_position
+	b = b if (b is Vector2) else b.global_position
 	_shapes.append(DebugLine.new(a, b, color))
