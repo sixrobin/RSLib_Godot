@@ -24,6 +24,6 @@ func draw(drawer: CanvasItem):
 	drawer.draw_line(b1, b2, self._color, self._width)
 
 
-func set_angle(angle: float):
+func set_angle(angle: float) -> DebugMarker:
 	self._angle = angle
 	return self
