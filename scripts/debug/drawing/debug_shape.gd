@@ -7,5 +7,5 @@ func _init(p_color: Color):
 	self.color = p_color
 
 
-func get_points() -> PackedVector2Array:
-	return PackedVector2Array()
+func draw(drawer: CanvasItem):
+	pass

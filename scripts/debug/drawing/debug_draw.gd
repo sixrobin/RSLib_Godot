@@ -1,6 +1,6 @@
 extends Node2D
 
-const DEFAULT_COLOR: Color = Color(1.0, 1.0, 0.0)
+const DEFAULT_COLOR: Color = Color.YELLOW
 
 var _shapes: Array[DebugShape] = []
 
@@ -11,19 +11,23 @@ func _ready():
 
 func _process(delta):
 	self.queue_redraw()
-	self._shapes.clear()
 
 
 func _draw():
 	for shape in self._shapes:
-		var points := shape.get_points()
-		for i in points.size() - 1:
-			var a := points[i]
-			var b := points[i + 1]
-			super.draw_line(a, b, shape.color)
+		shape.draw(self)
+		
+	self._shapes.clear()
 
 
-func line(a, b, color: Color = self.DEFAULT_COLOR):
+func line(a, b, color := self.DEFAULT_COLOR):
 	a = a if (a is Vector2) else a.global_position
 	b = b if (b is Vector2) else b.global_position
 	_shapes.append(DebugLine.new(a, b, color))
+
+
+func triangle(a, b, c, color := self.DEFAULT_COLOR):
+	a = a if (a is Vector2) else a.global_position
+	b = b if (b is Vector2) else b.global_position
+	c = c if (c is Vector2) else c.global_position
+	_shapes.append(DebugTriangle.new(a, b, c, color))
