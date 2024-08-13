@@ -5,11 +5,11 @@ var circle1: DebugCircle
 var circle2: DebugCircle
 
 
-func _init(center: Vector2, r1: float, r2: float, resolution: int):
+func _init(center: Vector2, radius1: float, radius2: float, resolution: int):
 	super._init()
 	
-	self.circle1 = DebugCircle.new(center, r1, resolution)
-	self.circle2 = DebugCircle.new(center, r2, resolution)
+	self.circle1 = DebugCircle.new(center, radius1, resolution)
+	self.circle2 = DebugCircle.new(center, radius2, resolution)
 	
 
 func draw(drawer: CanvasItem):
