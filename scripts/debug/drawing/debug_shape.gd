@@ -2,7 +2,7 @@ class_name DebugShape
 
 var _color: Color
 var _width: float
-# TODO: always_draw variable, to draw shape whether debug is enabled or not.
+var always_draw: bool
 
 
 func _init():
@@ -20,4 +20,9 @@ func set_color(color: Color) -> DebugShape:
 
 func set_width(width: float) -> DebugShape:
 	self._width = width
+	return self
+
+
+func set_always_draw(value: bool) -> DebugShape:
+	self.always_draw = value
 	return self

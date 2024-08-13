@@ -4,6 +4,8 @@ const DEFAULT_COLOR: Color = Color.YELLOW
 const DEFAULT_WIDTH: float = 1.0
 
 var _shapes: Array[DebugShape] = []
+var _key_just_pressed: bool = false
+var _enabled: bool = false
 
 
 func _ready():
@@ -11,13 +13,20 @@ func _ready():
 	
 
 func _process(delta):
-	# TODO: Add a debug key to toggle drawing.
+	var key_pressed := Input.is_key_pressed(KEY_F2)
+	if not self._key_just_pressed and key_pressed:
+		self._key_just_pressed = true
+		self._enabled = not self._enabled
+	elif self._key_just_pressed and not key_pressed:
+		self._key_just_pressed = false
+	
 	self.queue_redraw()
 
 
 func _draw():
 	for shape in self._shapes:
-		shape.draw(self)
+		if self._enabled or shape.always_draw:
+			shape.draw(self)
 		
 	self._shapes.clear()
 

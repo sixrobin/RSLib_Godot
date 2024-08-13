@@ -27,7 +27,6 @@ func _ready():
 
 func _process(delta: float):
 	var key_pressed := Input.is_key_pressed(KEY_F1)
-	
 	if not self._key_just_pressed and key_pressed:
 		self._key_just_pressed = true
 		self._label.visible = not self._label.visible
