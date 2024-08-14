@@ -18,6 +18,11 @@ func set_color(color: Color) -> DebugShape:
 	return self
 
 
+func set_alpha(alpha: float) -> DebugShape:
+	self._color.a = alpha
+	return self
+
+
 func set_width(width: float) -> DebugShape:
 	self._width = width
 	return self
