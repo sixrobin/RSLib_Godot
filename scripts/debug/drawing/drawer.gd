@@ -12,7 +12,7 @@ func _ready():
 	self.z_index = 2^63 - 1
 	
 
-func _process(delta):
+func _process(delta: float):
 	var key_pressed := Input.is_key_pressed(KEY_F2)
 	if not self._key_just_pressed and key_pressed:
 		self._key_just_pressed = true
@@ -64,5 +64,5 @@ func rect(c, size: Vector2, color := self.DEFAULT_COLOR, width := self.DEFAULT_W
 	return self.add(DebugRect.new(vec(c), size).set_color(color).set_width(width))
 
 
-func marker(position, color := self.DEFAULT_COLOR, width := self.DEFAULT_WIDTH) -> DebugShape:
-	return self.add(DebugMarker.new(vec(position)).set_color(color).set_width(width))
+func marker(pos, color := self.DEFAULT_COLOR, width := self.DEFAULT_WIDTH) -> DebugShape:
+	return self.add(DebugMarker.new(vec(pos)).set_color(color).set_width(width))
