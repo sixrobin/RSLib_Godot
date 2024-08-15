@@ -14,8 +14,8 @@ func _ready():
 func _process(delta: float):
 	self.focus_target()
 	
-	RSDraw.marker(self._target).set_color(self._debug_color).set_always_draw(true)
-	RSDraw.rect(self, _size).set_color(self._debug_color).set_always_draw(true)
+	RSDraw.marker(self._target).set_color(self._debug_color)
+	RSDraw.rect(self, _size).set_color(self._debug_color)
 
 
 func focus_target():
