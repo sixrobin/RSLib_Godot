@@ -24,5 +24,5 @@ func _process(delta: float):
 	elif offset.y < -half_size.y:
 		self.global_position.y += offset.y + half_size.y
 		
-	RSDraw.marker(self._target).set_color(self._debug_color).set_width(2).set_always_draw(true)
-	RSDraw.rect(self, _size).set_color(self._debug_color).set_width(2).set_always_draw(true)
+	RSDraw.marker(self._target).set_color(self._debug_color).set_width(2)
+	RSDraw.rect(self, _size).set_color(self._debug_color).set_width(2)
