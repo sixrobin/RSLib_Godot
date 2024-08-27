@@ -45,7 +45,7 @@ func _process(delta: float):
 		if self._positioned_texts[key] == 2:  # Buffer to avoid destroying label right after its spawn.
 			self._positioned_texts.erase(key)
 			key.queue_free()
-		
+
 
 func format(key, value) -> String:
 	const FORMAT: String = "%s: %s"
