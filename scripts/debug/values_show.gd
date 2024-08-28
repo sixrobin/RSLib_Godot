@@ -52,7 +52,7 @@ func format(key, value) -> String:
 	return (FORMAT + "\n") % [str(key), str(value)]
 
 
-func debug_value(key, value, position: Vector2 = Vector2.INF):
+func show(key, value, position: Vector2 = Vector2.INF):
 	var debug_text: String = self.format(key, value)
 	
 	if not position.is_finite():
