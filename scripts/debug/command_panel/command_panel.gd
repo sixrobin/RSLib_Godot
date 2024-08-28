@@ -12,6 +12,9 @@ func _ready():
 	self.create_panel()
 
 
+# TODO: Process function to toggle panel visibility.
+
+
 func create_panel():
 	var screen_resolution: Vector2 = get_viewport().get_visible_rect().size
 	print(screen_resolution)
