@@ -1,5 +1,7 @@
 extends Node
 
+var RS_HELP := preload("res://RSLib/scripts/utils/helpers.gd")
+
 var _buttons_container: Control = null
 var _commands: Array[PanelCommand] = []
 
@@ -49,11 +51,7 @@ func add_command(source: Node, action_name: String, action: Callable):
 
 func remove_command(command: PanelCommand):
 	command.button.queue_free()
-	
-	for i in self._commands.size():
-		if self._commands[i] == command:
-			self._commands.remove_at(i)
-			break
+	RS_HELP.remove(command, self._commands)
 
 
 func add_button() -> Button:
