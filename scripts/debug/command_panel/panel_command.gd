@@ -18,5 +18,6 @@ func set_button(p_button: Button) -> PanelCommand:
 
 
 func execute() -> PanelCommand:
+	print("[RSLib] Executing command %s" % self.label)
 	self.action.call()
 	return self

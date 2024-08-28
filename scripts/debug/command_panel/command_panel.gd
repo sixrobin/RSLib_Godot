@@ -1,6 +1,8 @@
 extends Node
 
-var RS_HELP := preload("res://RSLib/scripts/utils/helpers.gd")
+const RS_HELP := preload("res://RSLib/scripts/utils/helpers.gd")
+const MARGIN: int = 16
+const WIDTH: int = 256
 
 var _buttons_container: Control = null
 var _commands: Array[PanelCommand] = []
@@ -11,6 +13,9 @@ func _ready():
 
 
 func create_panel():
+	var screen_resolution: Vector2 = get_viewport().get_visible_rect().size
+	print(screen_resolution)
+	
 	var canvas_layer: CanvasLayer = CanvasLayer.new()
 	self.add_child(canvas_layer)
 	
@@ -21,8 +26,8 @@ func create_panel():
 	var background: ColorRect = ColorRect.new()
 	background.color = Color(0.1, 0.1, 0.1, 1.0)
 	background.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
-	background.size = Vector2(378, 1016)
-	background.position = Vector2(1510, 32)
+	background.size = Vector2(WIDTH, screen_resolution.y - MARGIN * 2)
+	background.position = Vector2(screen_resolution.x - WIDTH - MARGIN, MARGIN)
 	control.add_child(background)
 	
 	var scroll_container: ScrollContainer = ScrollContainer.new()
@@ -32,12 +37,15 @@ func create_panel():
 	
 	var vbox: VBoxContainer = VBoxContainer.new()
 	vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
-	vbox.custom_minimum_size = Vector2(378, 0)
+	vbox.custom_minimum_size = Vector2(WIDTH, 0)
 	scroll_container.add_child(vbox)
 	self._buttons_container = vbox
+	
+	#for i in 100:
+		#self.add(self, "Test %s" % [i], func(): print("Test %s" % [i]))
 
 
-func add_command(source: Node, action_name: String, action: Callable):
+func add(source: Node, action_name: String, action: Callable):
 	var command: PanelCommand = PanelCommand.new(source, action_name, action)
 	self._commands.append(command)
 	
@@ -46,10 +54,10 @@ func add_command(source: Node, action_name: String, action: Callable):
 	button.button_down.connect(command.execute)
 	command.set_button(button)
 	
-	source.tree_exited.connect(func(): self.remove_command(command))
+	source.tree_exited.connect(func(): self.remove(command))
 
 
-func remove_command(command: PanelCommand):
+func remove(command: PanelCommand):
 	command.button.queue_free()
 	RS_HELP.remove(command, self._commands)
 
