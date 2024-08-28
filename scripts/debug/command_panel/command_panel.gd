@@ -17,7 +17,6 @@ func _ready():
 
 func create_panel():
 	var screen_resolution: Vector2 = get_viewport().get_visible_rect().size
-	print(screen_resolution)
 	
 	var canvas_layer: CanvasLayer = CanvasLayer.new()
 	self.add_child(canvas_layer)
