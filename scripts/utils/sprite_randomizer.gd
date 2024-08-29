@@ -17,7 +17,7 @@ func randomize_sprite():
 		print("Invalid parent node to randomize sprite!")
 		return
 		
-	if self.textures.size() > 0:
+	if self.textures != null and self.textures.size() > 0:
 		sprite2D.texture = self.textures.pick_random()
 		
 	if self.randomize_flip_h:
