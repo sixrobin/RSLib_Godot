@@ -4,26 +4,35 @@ const RS_HELP := preload("res://RSLib/scripts/utils/helpers.gd")
 const MARGIN: int = 16
 const WIDTH: int = 256
 
+var _canvas_layer: CanvasLayer = null
 var _buttons_container: Control = null
 var _commands: Array[PanelCommand] = []
+var _key_just_pressed: bool = false
 
 
 func _ready():
 	self.create_panel()
+	self._canvas_layer.visible = false
 
 
-# TODO: Process function to toggle panel visibility.
+func _process(delta: float):
+	var key_pressed := Input.is_key_pressed(KEY_F3)
+	if not self._key_just_pressed and key_pressed:
+		self._key_just_pressed = true
+		self._canvas_layer.visible = not self._canvas_layer.visible
+	elif self._key_just_pressed and not key_pressed:
+		self._key_just_pressed = false
 
 
 func create_panel():
 	var screen_resolution: Vector2 = get_viewport().get_visible_rect().size
 	
-	var canvas_layer: CanvasLayer = CanvasLayer.new()
-	self.add_child(canvas_layer)
+	self._canvas_layer = CanvasLayer.new()
+	self.add_child(self._canvas_layer)
 	
 	var control: Control = Control.new()
 	control.z_index = 2^63 - 1
-	canvas_layer.add_child(control)
+	self._canvas_layer.add_child(control)
 	
 	var background: ColorRect = ColorRect.new()
 	background.color = Color(0.1, 0.1, 0.1, 1.0)
