@@ -2,8 +2,9 @@ class_name SpriteRandomizer
 extends Node
 
 @export var textures: Array[Texture2D]
-@export var randomize_flip_h := false
-@export var randomize_flip_v := false
+@export var randomize_flip_h: bool = false
+@export var randomize_flip_v: bool = false
+@export var random_scale: Vector2 = Vector2.ONE
 
 
 func _ready():
@@ -25,3 +26,5 @@ func randomize_sprite():
 		
 	if self.randomize_flip_v:
 		sprite2D.flip_v = randf() < 0.5
+		
+	sprite2D.scale *= randf_range(random_scale.x, random_scale.y)
