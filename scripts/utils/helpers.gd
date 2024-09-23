@@ -16,3 +16,9 @@ static func remove(item, array: Array) -> bool:
 			return true
 	
 	return false
+
+
+static func queue_free_children(node: Node):
+	for child in node.get_children():
+		node.remove_child(child)
+		child.queue_free()
