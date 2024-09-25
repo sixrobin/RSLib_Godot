@@ -7,7 +7,6 @@ const WIDTH: int = 256
 var _canvas_layer: CanvasLayer = null
 var _buttons_container: Control = null
 var _commands: Array[PanelCommand] = []
-var _key_just_pressed: bool = false
 
 
 func _ready():
@@ -15,13 +14,8 @@ func _ready():
 	self._canvas_layer.visible = false
 
 
-func _process(delta: float):
-	var key_pressed := Input.is_key_pressed(KEY_F3)
-	if not self._key_just_pressed and key_pressed:
-		self._key_just_pressed = true
-		self._canvas_layer.visible = not self._canvas_layer.visible
-	elif self._key_just_pressed and not key_pressed:
-		self._key_just_pressed = false
+func toggle_visible():
+	self._canvas_layer.visible = not self._canvas_layer.visible
 
 
 func create_panel():

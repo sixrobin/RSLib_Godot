@@ -4,7 +4,6 @@ const COLOR: Color = Color.YELLOW
 
 var _values_text: String = ""
 var _label: Label
-var _key_just_pressed: bool = false
 var _positioned_texts = {}
 
 
@@ -29,13 +28,6 @@ func _ready():
 
 
 func _process(delta: float):
-	var key_pressed := Input.is_key_pressed(KEY_F1)
-	if not self._key_just_pressed and key_pressed:
-		self._key_just_pressed = true
-		self._label.visible = not self._label.visible
-	elif self._key_just_pressed and not key_pressed:
-		self._key_just_pressed = false
-	
 	self._label.text = self._values_text
 	self._values_text = ""
 	
@@ -45,6 +37,10 @@ func _process(delta: float):
 		if self._positioned_texts[key] == 2:  # Buffer to avoid destroying label right after its spawn.
 			self._positioned_texts.erase(key)
 			key.queue_free()
+
+
+func toggle_visible():
+		self._label.visible = not self._label.visible
 
 
 func format(key, value) -> String:

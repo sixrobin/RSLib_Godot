@@ -4,7 +4,6 @@ const DEFAULT_COLOR: Color = Color.YELLOW
 const DEFAULT_WIDTH: float = 1.0
 
 var _shapes: Array[DebugShape] = []
-var _key_just_pressed: bool = false
 var _enabled: bool = false
 
 
@@ -13,13 +12,6 @@ func _ready():
 	
 
 func _process(delta: float):
-	var key_pressed := Input.is_key_pressed(KEY_F2)
-	if not self._key_just_pressed and key_pressed:
-		self._key_just_pressed = true
-		self._enabled = not self._enabled
-	elif self._key_just_pressed and not key_pressed:
-		self._key_just_pressed = false
-	
 	self.queue_redraw()
 
 
@@ -29,6 +21,10 @@ func _draw():
 			shape.draw(self)
 		
 	self._shapes.clear()
+
+
+func toggle_visible():
+	self._enabled = not self._enabled
 
 
 func vec(input) -> Vector2:
