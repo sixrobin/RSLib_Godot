@@ -7,6 +7,7 @@ const WIDTH: int = 256
 var _canvas_layer: CanvasLayer = null
 var _buttons_container: Control = null
 var _commands: Array[PanelCommand] = []
+var _sources: Dictionary = {}  # Commands count per source
 
 
 func _ready():
@@ -59,12 +60,26 @@ func add(source: Node, action_name: String, action: Callable):
 	button.button_down.connect(command.execute)
 	command.set_button(button)
 	
-	source.tree_exited.connect(func(): self.remove(command))
+	if self._sources.has(source):
+		self._sources[source] += 1
+	else:
+		source.tree_exited.connect(func(): self.on_source_tree_exited(source))
+		self._sources[source] = 1
 
 
 func remove(command: PanelCommand):
 	command.button.queue_free()
 	RS_HELP.remove(command, self._commands)
+
+
+func on_source_tree_exited(source: Node):
+	var removed_commands: Array[PanelCommand] = []
+	for command in self._commands:
+		if command.source == source:
+			removed_commands.append(command)
+	
+	for command in removed_commands:
+		remove(command)
 
 
 func add_button() -> Button:
