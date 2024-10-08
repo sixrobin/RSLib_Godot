@@ -15,6 +15,14 @@ func _ready():
 	self._canvas_layer.visible = false
 
 
+func _unhandled_key_input(event: InputEvent) -> void:
+	var event_key: InputEventKey = event as InputEventKey
+	if event_key != null and event.is_pressed():
+		for command in _commands:
+			if command.key == int(event_key.keycode):
+				command.execute()
+
+
 func toggle_visible():
 	self._canvas_layer.visible = not self._canvas_layer.visible
 
@@ -51,8 +59,8 @@ func create_panel():
 		#self.add(self, "Test %s" % [i], func(): print("Test %s" % [i]))
 
 
-func add(source: Node, action_name: String, action: Callable):
-	var command: PanelCommand = PanelCommand.new(source, action_name, action)
+func add(source: Node, action_name: String, action: Callable, key: int = -1):
+	var command: PanelCommand = PanelCommand.new(source, action_name, action, key)
 	self._commands.append(command)
 	
 	var button: Button = self.add_button()
