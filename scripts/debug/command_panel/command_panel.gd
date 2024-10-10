@@ -15,7 +15,7 @@ func _ready():
 	self._canvas_layer.visible = false
 
 
-func _unhandled_key_input(event: InputEvent) -> void:
+func _unhandled_key_input(event: InputEvent):
 	var event_key: InputEventKey = event as InputEventKey
 	if event_key != null and event.is_pressed():
 		for command in _commands:
