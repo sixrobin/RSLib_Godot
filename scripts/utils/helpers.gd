@@ -1,3 +1,4 @@
+class_name RSHelp
 extends RefCounted
 
 
@@ -22,3 +23,9 @@ static func queue_free_children(node: Node):
 	for child in node.get_children():
 		node.remove_child(child)
 		child.queue_free()
+
+
+static func unparent(node: Node):
+	var parent: Node = node.get_parent()
+	if parent:
+		parent.remove_child(node)
