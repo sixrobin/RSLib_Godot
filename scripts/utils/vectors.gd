@@ -1,3 +1,4 @@
+class_name RSVec
 extends RefCounted
 
 
@@ -39,6 +40,13 @@ static func randomf(vector: Vector2) -> float:
 
 static func randomi(vector: Vector2i) -> int:
 	return randi_range(vector.x, vector.y)
+
+
+static func random_vec2() -> Vector2:
+	return Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+
+static func random_vec3() -> Vector3:
+	return Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1)).normalized()
 
 
 static func mod(vector: Vector2i, factor: int) -> Vector2i:
