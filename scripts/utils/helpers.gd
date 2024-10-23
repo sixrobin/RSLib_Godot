@@ -29,3 +29,16 @@ static func unparent(node: Node):
 	var parent: Node = node.get_parent()
 	if parent:
 		parent.remove_child(node)
+
+
+static func format_byte_size(bytes: int, round: bool = false):
+	var counter: int = 0
+	var number := bytes
+	while round(number / 1024) >= 1:
+		number /= 1024
+		counter += 1
+	
+	var result: String = ""
+	result += "%.0" % [number] if round else str(number)
+	result += ["bytes", "KB", "MB", "GB", "TB", "PB"][counter]
+	return result

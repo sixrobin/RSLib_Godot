@@ -13,10 +13,12 @@ func _ready():
 	self._label = Label.new()
 	self._label.z_index = 2^63 - 1
 	self._label.modulate = self.COLOR
-	self._label.visible = false
+	self._label.position.x = 20
+	self._label.position.y = 256
 	
 	var label_settings := LabelSettings.new()
 	label_settings.line_spacing = -4.0
+	label_settings.font_size = 12
 	self._label.label_settings = label_settings
 	
 	var canvas_layer := CanvasLayer.new()
@@ -28,6 +30,14 @@ func _ready():
 
 
 func _process(delta: float):
+	self.new_line()
+	self.show("fps", Performance.get_monitor(Performance.TIME_FPS))
+	self.show("mem", RSHelp.format_byte_size(OS.get_static_memory_usage()))
+	self.show("obj", Performance.get_monitor(Performance.OBJECT_COUNT))
+	self.show("obj_nodes", Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
+	self.show("orphans", Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT))
+	self.show("draw_calls", Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+	
 	self._label.text = self._values_text
 	self._values_text = ""
 	
@@ -40,7 +50,7 @@ func _process(delta: float):
 
 
 func toggle_visible():
-		self._label.visible = not self._label.visible
+	self._label.visible = not self._label.visible
 
 
 func format(key, value) -> String:
@@ -56,6 +66,10 @@ func show(key, value, position: Vector2 = Vector2.INF):
 	elif self._label.visible:
 		var positioned_label = self.create_positioned_text(debug_text, position)
 		self._positioned_texts[positioned_label] = 0
+
+
+func new_line():
+	self._values_text += "\n"
 
 
 func create_positioned_text(debug_text: String, position: Vector2) -> Label:
