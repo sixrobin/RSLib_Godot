@@ -14,7 +14,7 @@ func _ready():
 	self._label.z_index = 2^63 - 1
 	self._label.modulate = self.COLOR
 	self._label.position.x = 20
-	self._label.position.y = 256
+	self._label.position.y = 600
 	
 	var label_settings := LabelSettings.new()
 	label_settings.line_spacing = -4.0
