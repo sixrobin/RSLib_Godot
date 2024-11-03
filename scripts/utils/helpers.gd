@@ -19,6 +19,15 @@ static func remove(item, array: Array) -> bool:
 	return false
 
 
+static func get_children_of_type(node, type):
+	var result: Array = []
+	for child in node.get_children():
+		if is_instance_of(child, type):
+			result.append(child)
+			result.append_array(get_children_of_type(child, type))
+	return result
+
+
 static func queue_free_children(node: Node):
 	for child in node.get_children():
 		node.remove_child(child)
