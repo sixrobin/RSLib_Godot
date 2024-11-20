@@ -1,14 +1,18 @@
 extends Node
 
+const DEBUG_MODE: bool = true
+
 var _commands: Dictionary = {}
 var _keys_just_pressed: Dictionary = {}
 
 
 func _ready():
 	self._commands[KEY_F] = self.toggle_fullscreen
-	self._commands[KEY_F1] = RSValues.toggle_visible
-	self._commands[KEY_F2] = RSDraw.toggle_visible
-	self._commands[KEY_F3] = RSCommand.toggle_visible
+	
+	if DEBUG_MODE:
+		self._commands[KEY_F1] = RSValues.toggle_visible
+		self._commands[KEY_F2] = RSDraw.toggle_visible
+		self._commands[KEY_F3] = RSCommand.toggle_visible
 
 
 func _process(delta: float):
