@@ -5,4 +5,4 @@ extends CollisionShape2D
 
 func _process(delta: float):
 	if self.shape is CircleShape2D:
-		RSDraw.circle(self, self.shape.radius).set_color(self._color)
+		RSDraw.circle(self, self.shape.radius * self.global_scale.x).set_color(self._color)
