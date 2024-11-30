@@ -27,7 +27,7 @@ func _ready():
 	self.add_child(canvas_layer)
 	canvas_layer.add_child(self._label)
 	
-	self._label.visible = RSDebugManager.DEBUG_MODE
+	self._label.visible = RSDebugManager.debug_mode
 
 
 func _process(delta: float):
