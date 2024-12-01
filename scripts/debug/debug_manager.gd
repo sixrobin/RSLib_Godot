@@ -15,7 +15,7 @@ func _ready():
 
 func _process(delta: float):
 	for cmd_key in _commands.keys():
-		if not self.debug_mode and cmd_key != KEY_F12:
+		if not self.debug_mode and cmd_key != KEY_F and cmd_key != KEY_F12:
 			continue
 		
 		var key_pressed := Input.is_key_pressed(cmd_key)
