@@ -7,7 +7,7 @@ var _keys_just_pressed: Dictionary = {}
 
 func _ready():
 	self._commands[KEY_F12] = self.toggle_debug_mode
-	self._commands[KEY_F] = self.toggle_fullscreen
+	self._commands[KEY_F] = self.toggle_screen_mode
 	self._commands[KEY_F1] = RSValues.toggle_visible
 	self._commands[KEY_F2] = RSDraw.toggle_visible
 	self._commands[KEY_F3] = RSCommand.toggle_visible
@@ -34,8 +34,10 @@ func toggle_debug_mode():
 	self.debug_mode = not self.debug_mode
 
 
-func toggle_fullscreen():
-	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+func toggle_screen_mode():
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	elif DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
