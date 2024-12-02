@@ -16,6 +16,9 @@ func _ready():
 
 
 func _unhandled_key_input(event: InputEvent):
+	if not RSDebugManager.debug_mode:
+		return
+		
 	var event_key: InputEventKey = event as InputEventKey
 	if event_key != null and event.is_pressed():
 		for command in _commands:
