@@ -3,7 +3,7 @@ class_name PanelCommand
 var source: Node = null
 var label: String = "[Cmd]"
 var action: Callable = func(): printerr("Not implemented command!")
-var button: Button = null
+var button: BaseButton = null
 var key: int = -1
 
 
@@ -14,7 +14,7 @@ func _init(p_source: Node, p_label: String, p_action: Callable, p_key: int = -1)
 	self.key = p_key
 
 
-func set_button(p_button: Button) -> PanelCommand:
+func set_button(p_button: BaseButton) -> PanelCommand:
 	self.button = p_button
 	return self
 

@@ -41,7 +41,7 @@ func create_panel():
 	self._canvas_layer.add_child(control)
 	
 	var background: ColorRect = ColorRect.new()
-	background.color = Color(0.1, 0.1, 0.1, 1.0)
+	background.color = Color(0.1, 0.1, 0.1, 0.7)
 	background.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
 	background.size = Vector2(WIDTH, screen_resolution.y - MARGIN * 2)
 	background.position = Vector2(screen_resolution.x - WIDTH - MARGIN, MARGIN)
@@ -66,8 +66,7 @@ func add(source: Node, action_name: String, action: Callable, key: int = -1):
 	var command: PanelCommand = PanelCommand.new(source, action_name, action, key)
 	self._commands.append(command)
 	
-	var button: Button = self.add_button()
-	button.text = command.label
+	var button: BaseButton = self.add_button(command.label, key)
 	button.button_down.connect(command.execute)
 	command.set_button(button)
 	
@@ -93,7 +92,15 @@ func on_source_tree_exited(source: Node):
 		remove(command)
 
 
-func add_button() -> Button:
+func add_button(text: String, key: int = -1) -> BaseButton:
 	var button: Button = Button.new()
 	self._buttons_container.add_child(button)
+	button.custom_minimum_size.y = 16
+	
+	var label: Label = Label.new()
+	label.text = text + ("" if key == -1 else " [%s]" % [OS.get_keycode_string(key)])
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.add_theme_font_size_override("font_size", 12)
+	button.add_child(label)
+	
 	return button
