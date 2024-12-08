@@ -51,9 +51,9 @@ func create_panel():
 	self._scroll_container.add_child(self._entries_container)
 
 
-func entry(text: String, color: Color = Color.WHITE, engine_print: bool = true):
+func entry(text, color: Color = Color.WHITE, engine_print: bool = true):
 	var label: Label = Label.new()
-	label.text = "> " + text
+	label.text = "> " + str(text)
 	label.self_modulate = color
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
