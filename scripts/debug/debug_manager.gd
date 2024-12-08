@@ -11,6 +11,7 @@ func _ready():
 	self._commands[KEY_F1] = RSValues.toggle_visible
 	self._commands[KEY_F2] = RSDraw.toggle_visible
 	self._commands[KEY_F3] = RSCommand.toggle_visible
+	self._commands[KEY_F4] = RSLog.toggle_visible
 
 
 func _process(delta: float):

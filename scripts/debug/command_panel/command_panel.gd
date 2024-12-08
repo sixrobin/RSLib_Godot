@@ -1,8 +1,9 @@
 extends Node
 
 const RS_HELP := preload("res://RSLib/scripts/utils/helpers.gd")
+const WIDTH: int = 150
+const HEIGHT: int = 700
 const MARGIN: int = 16
-const WIDTH: int = 256
 
 var _canvas_layer: CanvasLayer = null
 var _buttons_container: Control = null
@@ -43,15 +44,16 @@ func create_panel():
 	self._canvas_layer.add_child(control)
 	
 	var background: ColorRect = ColorRect.new()
-	background.color = Color(0.1, 0.1, 0.1, 0.8)
+	background.color = Color(0.1, 0.1, 0.1, 0.6)
 	background.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
-	background.size = Vector2(WIDTH, screen_resolution.y - MARGIN * 2)
+	background.size = Vector2(WIDTH, HEIGHT)
 	background.position = Vector2(screen_resolution.x - WIDTH - MARGIN, MARGIN)
 	control.add_child(background)
 	
 	var scroll_container: ScrollContainer = ScrollContainer.new()
 	scroll_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 	scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
 	background.add_child(scroll_container)
 	
 	var vbox: VBoxContainer = VBoxContainer.new()
