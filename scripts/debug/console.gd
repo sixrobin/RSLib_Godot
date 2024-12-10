@@ -66,12 +66,15 @@ func entry(text, color: Color = Color.WHITE, engine_print: bool = true):
 		print(text)
 
 
-func warning(text: String):
+func warning(text):
 	entry(text, Color.YELLOW, false)
 	printerr(text)
 
 
-func error(text: String):
+func error(text):
 	entry(text, Color.RED, false)
 	printerr(text)
 	push_error(text)
+	
+	if not self._canvas_layer.visible:
+		self.toggle_visible()
