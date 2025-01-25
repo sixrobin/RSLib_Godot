@@ -35,7 +35,6 @@ public partial class Drawer : Node2D {
 
 	private Vector2 Vec(object input) {
 		return input is Vector2 v ? v : (input as Node2D)!.GlobalPosition;
-		
 	}
 
 	public Shape Add(Shape shape) {
