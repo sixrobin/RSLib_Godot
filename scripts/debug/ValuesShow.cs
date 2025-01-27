@@ -5,7 +5,7 @@ public partial class ValuesShow : Node {
 
     private string _valuesText;
     private Label _label;
-    private System.Collections.Generic.Dictionary<Label, int> _positionedTexts = new();
+    private readonly System.Collections.Generic.Dictionary<Label, int> _positionedTexts = new();
 
     public override void _Ready() {
         SetProcessPriority(-2^63);
@@ -29,13 +29,13 @@ public partial class ValuesShow : Node {
         AddChild(canvasLayer);
         canvasLayer.AddChild(_label);
         
-        // 	self._label.visible = RSDebugManager.debug_mode // TODO
+        _label.SetVisible(DebugManager.DebugMode);
     }
 
     public override void _Process(double delta) {
         NewLine();
         Show("fps", Performance.GetMonitor(Performance.Monitor.TimeFps));
-        // 	self.show("mem", RSHelp.format_byte_size(OS.get_static_memory_usage())) // TODO
+        // 	self.show("mem", RSHelp.format_byte_size(OS.get_static_memory_usage())) // TODO C#
         Show("obj", Performance.GetMonitor(Performance.Monitor.ObjectCount));
         Show("obj_nodes", Performance.GetMonitor(Performance.Monitor.ObjectNodeCount));
         Show("orphans", Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount));
