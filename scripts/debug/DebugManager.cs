@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 public partial class DebugManager : Node {
-	public static bool DebugMode = false;
+	public static bool DebugMode = true;
 
 	private System.Collections.Generic.Dictionary<Key, Action> _commands = new();
 	private System.Collections.Generic.Dictionary<Key, bool> _keysJustPressed = new();
