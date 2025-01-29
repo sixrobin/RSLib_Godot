@@ -12,7 +12,7 @@ public partial class DebugManager : Node {
 
 		_commands[Key.F12] = ToggleDebugMode;
 		_commands[Key.F] = ToggleScreenMode;
-		// TODO C#
+		// TODO
 		//     self._commands[KEY_F1] = RSValues.toggle_visible
 		//     self._commands[KEY_F2] = RSDraw.toggle_visible
 		//     self._commands[KEY_F3] = RSCommand.toggle_visible
