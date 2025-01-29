@@ -1,22 +1,40 @@
+namespace RSLib.GE.Debug;
 using Godot;
 using System;
 
-public partial class DebugManager : Node {
+public partial class Debugger : Node {
 	public static bool DebugMode = true;
 
-	private System.Collections.Generic.Dictionary<Key, Action> _commands = new();
-	private System.Collections.Generic.Dictionary<Key, bool> _keysJustPressed = new();
+	public static Debugger Instance { get; private set; }
+	
+	public static Console Console { get; private set; }
+	public static ValuesShow ValuesShow { get; private set; }
+	public static Drawer Drawer { get; private set; }
+	public static CommandPanel CommandPanel { get; private set; }
+	
+	private readonly System.Collections.Generic.Dictionary<Key, Action> _commands = new();
+	private readonly System.Collections.Generic.Dictionary<Key, bool> _keysJustPressed = new();
 
-	public override void _Ready() {
-		base._Ready();
+	public override void _EnterTree() {
+		base._EnterTree();
+		Instance = this; // TODO: safer singleton.
 
+		AddChild(Console = new Console());
+		AddChild(ValuesShow = new ValuesShow());
+		AddChild(Drawer = new Drawer());
+		AddChild(CommandPanel = new CommandPanel());
+		
+		Console.Init();
+		ValuesShow.Init();
+		Drawer.Init();
+		CommandPanel.Init();
+		
 		_commands[Key.F12] = ToggleDebugMode;
 		_commands[Key.F] = ToggleScreenMode;
-		// TODO
-		//     self._commands[KEY_F1] = RSValues.toggle_visible
-		//     self._commands[KEY_F2] = RSDraw.toggle_visible
-		//     self._commands[KEY_F3] = RSCommand.toggle_visible
-		//     self._commands[KEY_F4] = RSLog.toggle_visible
+		_commands[Key.F1] = ValuesShow.ToggleVisible;
+		_commands[Key.F2] = Drawer.ToggleVisible;
+		_commands[Key.F3] = CommandPanel.ToggleVisible;
+		_commands[Key.F4] = Console.ToggleVisible;
 	}
 
 	public override void _Process(double delta) {

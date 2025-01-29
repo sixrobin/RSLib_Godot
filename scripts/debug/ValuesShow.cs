@@ -1,3 +1,4 @@
+namespace RSLib.GE.Debug;
 using Godot;
 
 public partial class ValuesShow : Node {
@@ -7,7 +8,7 @@ public partial class ValuesShow : Node {
     private Label _label;
     private readonly System.Collections.Generic.Dictionary<Label, int> _positionedTexts = new();
 
-    public override void _Ready() {
+    public void Init() {
         SetProcessPriority(-2^63);
 
         _label = new Label {
@@ -29,7 +30,7 @@ public partial class ValuesShow : Node {
         AddChild(canvasLayer);
         canvasLayer.AddChild(_label);
         
-        _label.SetVisible(DebugManager.DebugMode);
+        _label.SetVisible(Debugger.DebugMode);
     }
 
     public override void _Process(double delta) {

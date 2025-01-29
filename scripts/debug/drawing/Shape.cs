@@ -1,3 +1,4 @@
+namespace RSLib.GE.Debug;
 using Godot;
 
 public abstract class Shape {

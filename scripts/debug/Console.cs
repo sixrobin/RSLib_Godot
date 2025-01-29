@@ -1,3 +1,4 @@
+namespace RSLib.GE.Debug;
 using Godot;
 
 public partial class Console : Node {
@@ -9,15 +10,13 @@ public partial class Console : Node {
     private Control _entriesContainer;
     private ScrollContainer _scrollContainer;
 
-    public override void _Ready() {
-        base._Ready();
-        
+    public void Init() {
         CreatePanel();
         _canvasLayer.Visible = false;
         Entry("[RSLib Console", Colors.DimGray, false);
     }
 
-    private void ToggleVisible() {
+    public void ToggleVisible() {
         _canvasLayer.Visible = !_canvasLayer.Visible;
         _scrollContainer.ScrollVertical = (int)_entriesContainer.Size.Y;
     }

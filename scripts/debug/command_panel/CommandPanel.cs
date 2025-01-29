@@ -1,3 +1,4 @@
+namespace RSLib.GE.Debug;
 using Godot;
 
 public partial class CommandPanel : Node {
@@ -12,16 +13,15 @@ public partial class CommandPanel : Node {
     private System.Collections.Generic.List<PanelCommand> _commands = new();
     private System.Collections.Generic.Dictionary<Node, int> _sources = new(); // Commands count per source
 
-    public override void _Ready() {
-        base._Ready();
+    public void Init() {
         CreatePanel();
         _canvasLayer.Visible = false;
     }
 
     public override void _UnhandledKeyInput(InputEvent evt) {
-        base._UnhandledKeyInput(@evt);
+        base._UnhandledKeyInput(evt);
 
-        if (!DebugManager.DebugMode) {
+        if (!Debugger.DebugMode) {
             return;
         }
 
@@ -34,7 +34,7 @@ public partial class CommandPanel : Node {
         }
     }
 
-    private void ToggleVisible() {
+    public void ToggleVisible() {
         _canvasLayer.Visible = !_canvasLayer.Visible;
     }
 

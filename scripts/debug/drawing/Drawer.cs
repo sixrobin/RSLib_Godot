@@ -1,3 +1,4 @@
+namespace RSLib.GE.Debug;
 using Godot;
 
 public partial class Drawer : Node2D {
@@ -7,8 +8,7 @@ public partial class Drawer : Node2D {
 	private readonly System.Collections.Generic.List<Shape> _shapes = new();
 	private bool _enabled = false;
 
-	public override void _Ready() {
-		base._Ready();
+	public void Init() {
 		SetZIndex(2^63 - 1);
 	}
 
@@ -54,11 +54,11 @@ public partial class Drawer : Node2D {
 		return Add(new Triangle(Vec(a), Vec(b), Vec(c)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
 	}
 	
-	public Shape Circle(object c, float r, int res, Color? color = null, float width = DEFAULT_WIDTH) {
+	public Shape Circle(object c, float r, int res = 16, Color? color = null, float width = DEFAULT_WIDTH) {
 		return Add(new Circle(Vec(c), r, res).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
 	}
 	
-	public Shape Ring(object c, float r1, float r2, int res, Color? color = null, float width = DEFAULT_WIDTH) {
+	public Shape Ring(object c, float r1, float r2, int res = 16, Color? color = null, float width = DEFAULT_WIDTH) {
 		return Add(new Ring(Vec(c), r1, r2, res).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
 	}
 
