@@ -35,8 +35,9 @@ public partial class ValuesShow : Node {
 
     public override void _Process(double delta) {
         NewLine();
+        
         Show("fps", Performance.GetMonitor(Performance.Monitor.TimeFps));
-        // 	self.show("mem", RSHelp.format_byte_size(OS.get_static_memory_usage())) // TODO
+        Show("mem", Helpers.FormatByteSize(OS.GetStaticMemoryUsage(), true));
         Show("obj", Performance.GetMonitor(Performance.Monitor.ObjectCount));
         Show("obj_nodes", Performance.GetMonitor(Performance.Monitor.ObjectNodeCount));
         Show("orphans", Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount));

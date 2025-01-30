@@ -34,7 +34,7 @@ public static class Helpers {
     }
     
     // TODO: tester
-    public static string FormatByteSize(int bytes, bool round = false) {
+    public static string FormatByteSize(ulong bytes, bool round = false) {
 	    string[] suffixes = { "bytes", "KB", "MB", "GB", "TB", "PB" };
 	    int counter = 0;
 	    float number = bytes;

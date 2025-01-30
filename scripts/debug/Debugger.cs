@@ -15,14 +15,18 @@ public partial class Debugger : Node {
 	private readonly System.Collections.Generic.Dictionary<Key, Action> _commands = new();
 	private readonly System.Collections.Generic.Dictionary<Key, bool> _keysJustPressed = new();
 
-	public override void _EnterTree() {
-		base._EnterTree();
+	public void Init() {
 		Instance = this; // TODO: safer singleton.
 
-		AddChild(Console = new Console());
-		AddChild(ValuesShow = new ValuesShow());
-		AddChild(Drawer = new Drawer());
-		AddChild(CommandPanel = new CommandPanel());
+		Console = new Console();
+		ValuesShow = new ValuesShow();
+		Drawer = new Drawer();
+		CommandPanel = new CommandPanel();
+		
+		AddChild(Console);
+		AddChild(ValuesShow);
+		AddChild(Drawer);
+		AddChild(CommandPanel);
 		
 		Console.Init();
 		ValuesShow.Init();
