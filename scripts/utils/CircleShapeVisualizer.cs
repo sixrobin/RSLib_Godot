@@ -1,14 +1,17 @@
-using Godot;
-
-public partial class CircleShapeVisualizer : CollisionShape2D
+namespace RSLib.GE
 {
-    [Export] private Color _color = Colors.Magenta;
+    using Godot;
 
-    public override void _Process(double delta) {
-        base._Process(delta);
+    public partial class CircleShapeVisualizer : CollisionShape2D
+    {
+        [Export] private Color _color = Colors.Magenta;
 
-        if (Shape is CircleShape2D circleShape2D) {
-            RSLib.GE.Debug.Debugger.Drawer?.Circle(this, circleShape2D.Radius * GlobalScale.X).SetColor(_color);
+        public override void _Process(double delta)
+        {
+            base._Process(delta);
+
+            if (Shape is CircleShape2D circleShape2D)
+                RSLib.GE.Debug.Debugger.Drawer?.Circle(this, circleShape2D.Radius * GlobalScale.X).SetColor(_color);
         }
     }
 }

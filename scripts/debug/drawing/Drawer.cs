@@ -1,72 +1,86 @@
-namespace RSLib.GE.Debug;
-using Godot;
+namespace RSLib.GE.Debug
+{
+    using Godot;
 
-public partial class Drawer : Node2D {
-	private static readonly Color DEFAULT_COLOR = Colors.Yellow;
-	private const float DEFAULT_WIDTH = 1f;
+    public partial class Drawer : Node2D
+    {
+        private static readonly Color DEFAULT_COLOR = Colors.Yellow;
+        private const float DEFAULT_WIDTH = 1f;
 
-	private readonly System.Collections.Generic.List<Shape> _shapes = new();
-	private bool _enabled = false;
+        private readonly System.Collections.Generic.List<Shape> _shapes = new();
+        private bool _enabled;
 
-	public void Init() {
-		SetZIndex(2^63 - 1);
-	}
+        private static Vector2 ToVector2(object input)
+        {
+            return input is Vector2 v ? v : (input as Node2D)!.GlobalPosition;
+        }
+        
+        public void Init()
+        {
+            SetZIndex(2 ^ 63 - 1);
+        }
 
-	public override void _Process(double delta) {
-		base._Process(delta);
-		QueueRedraw();
-	}
+        public void ToggleVisible()
+        {
+            _enabled = !_enabled;
+        }
 
-	public override void _Draw() {
-		base._Draw();
+        public Shape Add(Shape shape)
+        {
+            _shapes.Add(shape);
+            return shape;
+        }
 
-		foreach (Shape shape in _shapes) {
-			if (_enabled || shape.AlwaysDraw) {
-				shape.Draw(this);
-			}
-		}
-		
-		_shapes.Clear();
-	}
+        public Shape Line(object a, object b, Color? color = null, float width = DEFAULT_WIDTH)
+        {
+            return Add(new Line(ToVector2(a), ToVector2(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+        }
 
-	public void ToggleVisible() {
-		_enabled = !_enabled;
-	}
+        public Shape Arrow(object a, object b, Color? color = null, float width = DEFAULT_WIDTH)
+        {
+            return Add(new Arrow(ToVector2(a), ToVector2(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+        }
 
-	private Vector2 Vec(object input) {
-		return input is Vector2 v ? v : (input as Node2D)!.GlobalPosition;
-	}
+        public Shape Triangle(object a, object b, object c, Color? color = null, float width = DEFAULT_WIDTH)
+        {
+            return Add(new Triangle(ToVector2(a), ToVector2(b), ToVector2(c)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+        }
 
-	public Shape Add(Shape shape) {
-		_shapes.Add(shape);
-		return shape;
-	}
+        public Shape Circle(object center, float radius, int resolution = 16, Color? color = null, float width = DEFAULT_WIDTH)
+        {
+            return Add(new Circle(ToVector2(center), radius, resolution).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+        }
 
-	public Shape Line(object a, object b, Color? color = null, float width = DEFAULT_WIDTH) {
-		return Add(new Line(Vec(a), Vec(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
-	}
+        public Shape Ring(object center, float radius1, float radius2, int resolution = 16, Color? color = null, float width = DEFAULT_WIDTH)
+        {
+            return Add(new Ring(ToVector2(center), radius1, radius2, resolution).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+        }
 
-	public Shape Arrow(object a, object b, Color? color = null, float width = DEFAULT_WIDTH) {
-		return Add(new Arrow(Vec(a), Vec(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
-	}
+        public Shape Rect(object center, Vector2 size, Color? color = null, float width = DEFAULT_WIDTH)
+        {
+            return Add(new Rect(ToVector2(center), size).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+        }
 
-	public Shape Triangle(object a, object b, object c, Color? color = null, float width = DEFAULT_WIDTH) {
-		return Add(new Triangle(Vec(a), Vec(b), Vec(c)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
-	}
-	
-	public Shape Circle(object c, float r, int res = 16, Color? color = null, float width = DEFAULT_WIDTH) {
-		return Add(new Circle(Vec(c), r, res).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
-	}
-	
-	public Shape Ring(object c, float r1, float r2, int res = 16, Color? color = null, float width = DEFAULT_WIDTH) {
-		return Add(new Ring(Vec(c), r1, r2, res).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
-	}
+        public Shape Marker(object position, Color? color = null, float width = DEFAULT_WIDTH)
+        {
+            return Add(new Marker(ToVector2(position)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+        }
+        
+        public override void _Process(double delta)
+        {
+            base._Process(delta);
+            QueueRedraw();
+        }
 
-	public Shape Rect(object c, Vector2 size, Color? color = null, float width = DEFAULT_WIDTH) {
-		return Add(new Rect(Vec(c), size).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
-	}
+        public override void _Draw()
+        {
+            base._Draw();
 
-	public Shape Marker(object position, Color? color = null, float width = DEFAULT_WIDTH) {
-		return Add(new Marker(Vec(position)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
-	}
+            foreach (Shape shape in _shapes)
+                if (_enabled || shape.AlwaysDraw)
+                    shape.Draw(this);
+
+            _shapes.Clear();
+        }
+    }
 }
