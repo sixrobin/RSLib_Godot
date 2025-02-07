@@ -16,7 +16,12 @@ namespace RSLib.GE.Debug
 
         private readonly System.Collections.Generic.Dictionary<Key, Action> _commands = new();
         private readonly System.Collections.Generic.Dictionary<Key, bool> _keysJustPressed = new();
-
+        
+        public Debugger()
+        {
+            Name = "RSLib_Debugger";
+        }
+        
         public void Init()
         {
             Instance = this; // TODO: safer singleton.
