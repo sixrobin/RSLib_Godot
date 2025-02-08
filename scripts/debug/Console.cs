@@ -15,7 +15,7 @@ namespace RSLib.GE.Debug
         public void Init()
         {
             CreatePanel();
-            Entry("[RSLib Console", Colors.DimGray, false);
+            Entry("[RSLib Console]", Colors.DimGray, false);
             _canvasLayer.Visible = false;
         }
 
@@ -43,11 +43,13 @@ namespace RSLib.GE.Debug
 
             ColorRect background = new()
             {
-                Color = new Color(0.1f, 0.1f, 0.1f, 0.6f),
+                Color = new Color(0.1f, 0.1f, 0.1f, 0.5f),
                 Size = new Vector2(WIDTH, HEIGHT),
                 Position = new Vector2(screenResolution.X - WIDTH - MARGIN, screenResolution.Y - HEIGHT - MARGIN),
             };
             background.SetAnchorsPreset(Control.LayoutPreset.RightWide);
+            background.MouseEntered += () => background.Color = new Color(background.Color, 0.9f);
+            background.MouseExited += () => background.Color = new Color(background.Color, 0.5f);
             control.AddChild(background);
 
             _scrollContainer = new ScrollContainer
