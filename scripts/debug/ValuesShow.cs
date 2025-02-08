@@ -18,13 +18,13 @@ namespace RSLib.GE.Debug
             {
                 ZIndex = 2 ^ 63 - 1,
                 Modulate = COLOR,
-                Position = new Vector2(20, 600),
+                Position = new Vector2(20, 750),
             };
 
             LabelSettings labelSettings = new()
             {
                 LineSpacing = -4,
-                FontSize = 12,
+                FontSize = 10,
             };
             _label.LabelSettings = labelSettings;
 
