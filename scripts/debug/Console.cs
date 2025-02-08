@@ -80,9 +80,7 @@ namespace RSLib.GE.Debug
             _entriesContainer.AddChild(label);
 
             if (enginePrint)
-            {
                 GD.Print(text);
-            }
         }
 
         public void Warning(object text)
@@ -98,9 +96,7 @@ namespace RSLib.GE.Debug
             GD.PushError(text);
 
             if (!_canvasLayer.Visible)
-            {
                 ToggleVisible();
-            }
         }
     }
 }

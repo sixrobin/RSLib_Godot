@@ -11,7 +11,7 @@ namespace RSLib.GE
             base._Process(delta);
 
             if (Shape is CircleShape2D circleShape2D)
-                RSLib.GE.Debug.Debugger.Drawer?.Circle(this, circleShape2D.Radius * GlobalScale.X).SetColor(_color);
+                Debug.Debugger.Drawer?.Circle(this, circleShape2D.Radius * GlobalScale.X).SetColor(_color);
         }
     }
 }
