@@ -146,7 +146,7 @@ namespace RSLib.GE.Debug
 
             Label label = new()
             {
-                Text = text + (key == -1 ? "" : $" {OS.GetKeycodeString((Key)key)}"),
+                Text = text + (key == -1 ? "" : $" [{OS.GetKeycodeString((Key)key)}]"),
                 VerticalAlignment = VerticalAlignment.Center,
             };
             label.AddThemeFontSizeOverride("font_size", 12);
