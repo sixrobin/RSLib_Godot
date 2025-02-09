@@ -26,7 +26,6 @@ namespace RSLib.GE
             return result;
         }
 
-        // TODO: tester
         public static void QueueFreeChildren(this Node node)
         {
             foreach (Node child in node.GetChildren())
