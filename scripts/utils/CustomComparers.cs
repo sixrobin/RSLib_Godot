@@ -8,5 +8,10 @@ namespace RSLib.GE
         {
             return (a.GlobalPosition - source.GlobalPosition).LengthSquared() < (b.GlobalPosition - source.GlobalPosition).LengthSquared();
         }
+        
+        public static bool IsFarthestTo(Node2D source, Node2D a, Node2D b)
+        {
+            return (a.GlobalPosition - source.GlobalPosition).LengthSquared() > (b.GlobalPosition - source.GlobalPosition).LengthSquared();
+        }
     }
 }

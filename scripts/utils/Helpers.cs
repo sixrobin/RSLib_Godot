@@ -5,38 +5,46 @@ namespace RSLib.GE
 
     public static class Helpers
     {
+        #region RANDOM
+        
+        /// <summary>
+        /// Gets a random boolean (true or false).
+        /// </summary>
+        /// <returns>Randomly generated boolean.</returns>
         public static bool RandomBool()
         {
             return GD.Randf() < 0.5f;
         }
 
-        // TODO: tester
-        public static List<T> GetChildrenOfType<T>(this Node node) where T : Node
+        /// <summary>
+        /// Gets a new random normalized Vector2.
+        /// </summary>
+        /// <returns>Randomly generated vector.</returns>
+        public static Vector2 RandomVector2()
         {
-            List<T> result = new();
-
-            foreach (Node child in node.GetChildren())
-            {
-                if (child is T typedChild)
-                    result.Add(typedChild);
-
-                result.AddRange(child.GetChildrenOfType<T>());
-            }
-
-            return result;
+            return new Vector2((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f)).Normalized();
         }
 
-        public static void QueueFreeChildren(this Node node)
+        /// <summary>
+        /// Gets a new random normalized Vector3.
+        /// </summary>
+        /// <returns>Randomly generated vector.</returns>
+        public static Vector3 RandomVector3()
         {
-            foreach (Node child in node.GetChildren())
-                child.QueueFree();
+            return new Vector3((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f)).Normalized();
         }
 
-        public static void Unparent(this Node node)
+        /// <summary>
+        /// Gets a new random normalized Vector4.
+        /// </summary>
+        /// <returns>Randomly generated vector.</returns>
+        public static Vector4 RandomVector4()
         {
-            node.GetParent()?.RemoveChild(node);
+            return new Vector4((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f)).Normalized();
         }
-
+        
+        #endregion // RANDOM
+        
         public static string FormatByteSize(ulong bytes, bool round = false)
         {
             string[] suffixes = {"bytes", "KB", "MB", "GB", "TB", "PB"};
