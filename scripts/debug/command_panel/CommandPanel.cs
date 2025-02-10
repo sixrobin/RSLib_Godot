@@ -20,9 +20,9 @@ namespace RSLib.GE.Debug
             _canvasLayer.Visible = false;
         }
 
-        public void ToggleVisible()
+        public void ToggleVisible(bool? visible = null)
         {
-            _canvasLayer.Visible = !_canvasLayer.Visible;
+            _canvasLayer.Visible = visible ?? !_canvasLayer.Visible;
         }
 
         private void CreatePanel()

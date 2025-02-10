@@ -45,8 +45,8 @@ namespace RSLib.GE.Debug
             _commands[Key.F] = ToggleScreenMode;
             _commands[Key.F1] = ValuesShow.ToggleVisible;
             _commands[Key.F2] = Drawer.ToggleVisible;
-            _commands[Key.F3] = CommandPanel.ToggleVisible;
-            _commands[Key.F4] = Console.ToggleVisible;
+            _commands[Key.F3] = () => CommandPanel.ToggleVisible();
+            _commands[Key.F4] = () => Console.ToggleVisible();
         }
 
         private void ToggleDebugMode()
