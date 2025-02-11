@@ -1,5 +1,6 @@
 namespace RSLib.GE.Debug
 {
+    using System.Threading.Tasks;
     using Godot;
 
     public partial class Console : Node
@@ -43,12 +44,12 @@ namespace RSLib.GE.Debug
 
             ColorRect background = new()
             {
-                Color = new Color(0.1f, 0.1f, 0.1f, 0.5f),
+                Color = new Color(0.05f, 0.05f, 0.05f, 0.5f),
                 Size = new Vector2(WIDTH, HEIGHT),
                 Position = new Vector2(screenResolution.X - WIDTH - MARGIN, screenResolution.Y - HEIGHT - MARGIN),
             };
             background.SetAnchorsPreset(Control.LayoutPreset.RightWide);
-            background.MouseEntered += () => background.Color = new Color(background.Color, 0.9f);
+            background.MouseEntered += () => background.Color = new Color(background.Color, 0.95f);
             background.MouseExited += () => background.Color = new Color(background.Color, 0.5f);
             control.AddChild(background);
 
@@ -67,7 +68,7 @@ namespace RSLib.GE.Debug
             _scrollContainer.AddChild(_entriesContainer);
         }
 
-        public void Entry(object text, Color? color = null, bool enginePrint = true)
+        public async void Entry(object text, Color? color = null, bool enginePrint = true)
         {
             Label label = new()
             {
@@ -83,6 +84,9 @@ namespace RSLib.GE.Debug
 
             if (enginePrint)
                 GD.Print(text);
+
+            await Task.Delay(2);
+            _scrollContainer.ScrollVertical = (int)_entriesContainer.Size.Y;
         }
 
         public void Warning(object text)

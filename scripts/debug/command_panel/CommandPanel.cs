@@ -43,7 +43,7 @@ namespace RSLib.GE.Debug
 
             ColorRect background = new()
             {
-                Color = new Color(0.1f, 0.1f, 0.1f, 0.6f),
+                Color = new Color(0.05f, 0.05f, 0.05f, 0.5f),
                 Size = new Vector2(WIDTH, HEIGHT),
                 Position = new Vector2(screenResolution.X - WIDTH - MARGIN, MARGIN),
             };
