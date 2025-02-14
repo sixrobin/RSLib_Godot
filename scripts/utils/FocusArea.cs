@@ -10,19 +10,19 @@ namespace RSLib.GE
         //     @export var _debug_color: Color = Color.BLUE
         //
         //
-        //         func _ready():
-        //         self.top_level = true
+        // func _ready():
+        //     self.top_level = true
         //     self.global_position = self._target.global_position
         //
         //
-        //         func _process(delta: float):
+        //   func _process(delta: float):
         //         self.focus_target()
         // 	
-        // #RSDraw.marker(self._target).set_color(self._debug_color)
-        // #RSDraw.rect(self, _size).set_color(self._debug_color)
+        //          #RSDraw.marker(self._target).set_color(self._debug_color)
+        //          #RSDraw.rect(self, _size).set_color(self._debug_color)
         //
         //
-        //     func focus_target():
+        // func focus_target():
         //     var half_size := self._size * 0.5
         //     var offset := self._target.global_position - self.global_position
         // 	
@@ -36,8 +36,7 @@ namespace RSLib.GE
         //         elif offset.y < -half_size.y:
         //     self.global_position.y += offset.y + half_size.y
         // 		
-        // #RSDraw.marker(self._target).set_color(self._debug_color).set_width(2)
-        // #RSDraw.rect(self, _size).set_color(self._debug_color).set_width(2)
-
+        //     #RSDraw.marker(self._target).set_color(self._debug_color).set_width(2)
+        //     #RSDraw.rect(self, _size).set_color(self._debug_color).set_width(2)
     }
 }
