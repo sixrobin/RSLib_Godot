@@ -28,6 +28,23 @@ namespace RSLib.GE
         }
 
         /// <summary>
+        /// Loops upward through all the node hierarchy, and returns the first parent fitting the asked type.
+        /// </summary>
+        /// <param name="node">Source node.</param>
+        /// <typeparam name="T">Type to check.</typeparam>
+        /// <returns>Fitting parent found.</returns>
+        public static T GetFirstParentOfType<T>(this Node node) where T : Node
+        {
+            Node result = node;
+            
+            do
+                result = result.GetParent();
+            while (result is not T);
+
+            return result as T;
+        }
+        
+        /// <summary>
         /// Calls QueueFree method on all children of the given node.
         /// </summary>
         public static void QueueFreeChildren(this Node node)
