@@ -33,7 +33,7 @@ namespace RSLib.GE
         /// <param name="node">Source node.</param>
         /// <typeparam name="T">Type to check.</typeparam>
         /// <returns>Fitting parent found.</returns>
-        public static T GetFirstParentOfType<T>(this Node node) where T : Node
+        public static T GetFirstParentOfType<T>(this Node node)
         {
             Node result = node;
             
@@ -41,7 +41,7 @@ namespace RSLib.GE
                 result = result.GetParent();
             while (result is not T);
 
-            return result as T;
+            return result is T resultCast ? resultCast : default;
         }
         
         /// <summary>
