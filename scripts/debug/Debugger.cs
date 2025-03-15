@@ -24,7 +24,14 @@ namespace RSLib.GE.Debug
         
         public void Init()
         {
-            Instance = this; // TODO: safer singleton.
+            if (Instance != null)
+            {
+                GD.PushError($"An instance of {nameof(Debugger)} already exists, which should never happen in application flow.");
+                QueueFree();
+                return;
+            }
+            
+            Instance = this;
 
             Console = new Console();
             ValuesShow = new ValuesShow();
