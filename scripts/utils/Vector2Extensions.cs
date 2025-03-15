@@ -61,6 +61,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with all components incremented.
         /// </summary>
+        /// <param name="v">Vector to increment.</param>
         /// <param name="value">Incrementation amount.</param>
         public static Vector2 AddAll(this Vector2 v, float value)
         {
@@ -70,8 +71,8 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with all components incremented.
         /// </summary>
-        /// <param name="value">Incrementation amount.
-        /// </param>
+        /// <param name="v">Vector to increment.</param>
+        /// <param name="value">Incrementation amount.</param>
         public static Vector2I AddAll(this Vector2I v, int value)
         {
             return new Vector2I(v.X + value, v.Y + value);
@@ -80,6 +81,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with x component incremented.
         /// </summary>
+        /// <param name="v">Vector to increment.</param>
         /// <param name="value">Incrementation amount.</param>
         public static Vector2 AddX(this Vector2 v, float value)
         {
@@ -89,6 +91,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with x component incremented.
         /// </summary>
+        /// <param name="v">Vector to increment.</param>
         /// <param name="value">Incrementation amount.</param>
         public static Vector2I AddX(this Vector2I v, int value)
         {
@@ -98,6 +101,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with y component incremented.
         /// </summary>
+        /// <param name="v">Vector to increment.</param>
         /// <param name="value">Incrementation amount.</param>
         public static Vector2 AddY(this Vector2 v, float value)
         {
@@ -107,6 +111,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with y component incremented.
         /// </summary>
+        /// <param name="v">Vector to increment.</param>
         /// <param name="value">Incrementation amount.</param>
         public static Vector2I AddY(this Vector2I v, int value)
         {
@@ -120,6 +125,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with all components clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum value.</param>
         /// <param name="max">Maximum value.</param>
         public static Vector2 ClampAll(this Vector2 v, float min, float max)
@@ -130,6 +136,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with all components clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum value.</param>
         /// <param name="max">Maximum value.</param>
         public static Vector2I ClampAll(this Vector2I v, int min, int max)
@@ -140,6 +147,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with all components clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum values.</param>
         /// <param name="max">Maximum values.</param>
         public static Vector2 ClampAll(this Vector2 v, Vector2 min, Vector2 max)
@@ -150,6 +158,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with all components clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum values.</param>
         /// <param name="max">Maximum values.</param>
         public static Vector2I ClampAll(this Vector2I v, Vector2I min, Vector2I max)
@@ -160,6 +169,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with x component clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum value.</param>
         /// <param name="max">Maximum value.</param>
         public static Vector2 ClampX(this Vector2 v, float min, float max)
@@ -170,6 +180,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with x component clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum value.</param>
         /// <param name="max">Maximum value.</param>
         public static Vector2I ClampX(this Vector2I v, int min, int max)
@@ -180,6 +191,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with y component clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum value.</param>
         /// <param name="max">Maximum value.</param>
         public static Vector2 ClampY(this Vector2 v, float min, float max)
@@ -190,6 +202,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector copy with y component clamped between two values.
         /// </summary>
+        /// <param name="v">Vector to clamp.</param>
         /// <param name="min">Minimum value.</param>
         /// <param name="max">Maximum value.</param>
         public static Vector2I ClampY(this Vector2I v, int min, int max)
@@ -357,63 +370,121 @@ namespace RSLib.GE
 
         #region MODULO
         
-        // TODO: summaries.
-        
+        /// <summary>
+        /// Gets a vector copy with a modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo value.</param>
         public static Vector2I Mod(this Vector2I v, int mod)
         {
             return new Vector2I(v.X % mod, v.Y % mod);
         }
 
+        /// <summary>
+        /// Gets a vector copy with a modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo value.</param>
         public static Vector3I Mod(this Vector3I v, int mod)
         {
             return new Vector3I(v.X % mod, v.Y % mod, v.Z % mod);
         }
 
+        /// <summary>
+        /// Gets a vector copy with a modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo value.</param>
         public static Vector4I Mod(this Vector4I v, int mod)
         {
             return new Vector4I(v.X % mod, v.Y % mod, v.Z % mod, v.W % mod);
         }
-
+        
+        /// <summary>
+        /// Gets a vector copy with a modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector2I Mod(this Vector2I v, Vector2I mod)
         {
             return new Vector2I(v.X % mod.X, v.Y % mod.Y);
         }
 
+        /// <summary>
+        /// Gets a vector copy with a modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector3I Mod(this Vector3I v, Vector3I mod)
         {
             return new Vector3I(v.X % mod.X, v.Y % mod.Y, v.Z % mod.Z);
         }
 
+        /// <summary>
+        /// Gets a vector copy with a modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector4I Mod(this Vector4I v, Vector4I mod)
         {
             return new Vector4I(v.X % mod.X, v.Y % mod.Y, v.Z % mod.Z, v.W % mod.W);
         }
 
+        /// <summary>
+        /// Gets a vector copy with a canonical modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector2I PosMod(this Vector2I v, int mod)
         {
             return new Vector2I(Mathf.PosMod(v.X, mod), Mathf.PosMod(v.Y, mod));
         }
 
+        /// <summary>
+        /// Gets a vector copy with a canonical modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector3I PosMod(this Vector3I v, int mod)
         {
             return new Vector3I(Mathf.PosMod(v.X, mod), Mathf.PosMod(v.Y, mod), Mathf.PosMod(v.Z, mod));
         }
 
+        /// <summary>
+        /// Gets a vector copy with a canonical modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector4I PosMod(this Vector4I v, int mod)
         {
             return new Vector4I(Mathf.PosMod(v.X, mod), Mathf.PosMod(v.Y, mod), Mathf.PosMod(v.Z, mod), Mathf.PosMod(v.W, mod));
         }
 
+        /// <summary>
+        /// Gets a vector copy with a canonical modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector2I PosMod(this Vector2I v, Vector2I mod)
         {
             return new Vector2I(Mathf.PosMod(v.X, mod.X), Mathf.PosMod(v.Y, mod.Y));
         }
 
+        /// <summary>
+        /// Gets a vector copy with a canonical modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector3I PosMod(this Vector3I v, Vector3I mod)
         {
             return new Vector3I(Mathf.PosMod(v.X, mod.X), Mathf.PosMod(v.Y, mod.Y), Mathf.PosMod(v.Z, mod.Z));
         }
 
+        /// <summary>
+        /// Gets a vector copy with a canonical modulo applied on all components.
+        /// </summary>
+        /// <param name="v">Vector to apply modulo to.</param>
+        /// <param name="mod">Modulo values.</param>
         public static Vector4I PosMod(this Vector4I v, Vector4I mod)
         {
             return new Vector4I(Mathf.PosMod(v.X, mod.X), Mathf.PosMod(v.Y, mod.Y), Mathf.PosMod(v.Z, mod.Z), Mathf.PosMod(v.W, mod.W));
@@ -426,6 +497,7 @@ namespace RSLib.GE
         /// <summary>
         /// Computes the vector normal. Use NormalNormalized to get it normalized.
         /// </summary>
+        /// <param name="v">Vector to get the normal of.</param>
         /// <param name="clockwise">Normal is rotated clockwise.</param>
         /// <returns>Normal as a new vector.</returns>
         public static Vector2 Normal(this Vector2 v, bool clockwise = true)
@@ -441,8 +513,9 @@ namespace RSLib.GE
         }
 
         /// <summary>
-        /// Computes the vector normal normalized.
+        /// Computes the vector normalized normal.
         /// </summary>
+        /// <param name="v">Vector to get the normalized normal of.</param>
         /// <param name="clockwise">Normal is rotated clockwise.</param>
         /// <returns>Normalized normal as a new vector.</returns>
         public static Vector2 NormalNormalized(this Vector2 v, bool clockwise = true)
@@ -519,6 +592,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with new x value.
         /// </summary>
+        /// <param name="v">Vector to modify.</param>
         /// <param name="value">New x value.</param>
         public static Vector2 WithX(this Vector2 v, float value)
         {
@@ -528,6 +602,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with new x value.
         /// </summary>
+        /// <param name="v">Vector to modify.</param>
         /// <param name="value">New x value.</param>
         public static Vector2 WithX(this Vector2 v, int value)
         {
@@ -537,6 +612,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with new y value.
         /// </summary>
+        /// <param name="v">Vector to modify.</param>
         /// <param name="value">New y value.</param>
         public static Vector2 WithY(this Vector2 v, float value)
         {
@@ -546,6 +622,7 @@ namespace RSLib.GE
         /// <summary>
         /// Gets a vector's copy with new y value.
         /// </summary>
+        /// <param name="v">Vector to modify.</param>
         /// <param name="value">New y value.</param>
         public static Vector2 WithY(this Vector2 v, int value)
         {
