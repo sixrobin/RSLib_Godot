@@ -39,7 +39,7 @@ namespace RSLib.GE
             
             do
                 result = result.GetParent();
-            while (result is not T);
+            while (result != null && result is not T);
 
             return result is T resultCast ? resultCast : default;
         }
