@@ -4,6 +4,7 @@ namespace RSLib.GE.Debug
 
     public partial class ValuesShow : Node
     {
+        private const int MARGIN = 16;
         private static readonly Color COLOR = Colors.Yellow;
 
         private Label _label;
@@ -18,8 +19,12 @@ namespace RSLib.GE.Debug
             {
                 ZIndex = 2 ^ 63 - 1,
                 Modulate = COLOR,
-                Position = new Vector2(20, 750),
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Size = GetViewport().GetVisibleRect().Size,
+                MouseFilter = Control.MouseFilterEnum.Ignore,
             };
+            _label.SetAnchorsPreset(Control.LayoutPreset.BottomLeft);
+            _label.Position = new Vector2(MARGIN, -_label.Size.Y - MARGIN);
 
             LabelSettings labelSettings = new()
             {
