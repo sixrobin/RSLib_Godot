@@ -11,7 +11,7 @@ namespace RSLib.GE
         /// <returns>File context as string.</returns>
         public static string ReadText(string resRelativePath)
         {
-            Godot.FileAccess file = Godot.FileAccess.Open($"res://{resRelativePath}", Godot.FileAccess.ModeFlags.Read);
+            FileAccess file = FileAccess.Open($"res://{resRelativePath}", FileAccess.ModeFlags.Read);
             string text = file.GetAsText();
             file.Close();
             return text;
