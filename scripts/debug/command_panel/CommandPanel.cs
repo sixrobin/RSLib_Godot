@@ -83,14 +83,17 @@ namespace RSLib.GE.Debug
             button.ButtonDown += () => command.Execute();
             command.SetButton(button);
 
-            if (_commandsCountPerSource.ContainsKey(source))
+            if (source != null)
             {
-                _commandsCountPerSource[source]++;
-            }
-            else
-            {
-                source.TreeExited += () => OnSourceTreeExited(source);
-                _commandsCountPerSource[source] = 1;
+                if (_commandsCountPerSource.ContainsKey(source))
+                {
+                    _commandsCountPerSource[source]++;
+                }
+                else
+                {
+                    source.TreeExited += () => OnSourceTreeExited(source);
+                    _commandsCountPerSource[source] = 1;
+                }
             }
         }
 
