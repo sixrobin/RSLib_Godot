@@ -56,7 +56,7 @@ namespace RSLib.GE
         /// <summary>
         /// Removes all children of the given node (the children won't be in the tree until being reparented).
         /// </summary>
-        public static void UnparentChildren(this Node node)
+        public static void RemoveChildren(this Node node)
         {
             foreach (Node child in node.GetChildren())
                 node.RemoveChild(child);
@@ -68,6 +68,22 @@ namespace RSLib.GE
         public static void Unparent(this Node node)
         {
             node.GetParent()?.RemoveChild(node);
+        }
+        
+        /// <summary>
+        /// Moves the node up by one step in its siblings hierarchy.
+        /// </summary>
+        public static void MoveSiblingUp(this Node node)
+        {
+            node.GetParent()?.MoveChild(node, node.GetIndex() - 1);
+        }
+
+        /// <summary>
+        /// Moves the node down by one step in its siblings hierarchy.
+        /// </summary>
+        public static void MoveSiblingDown(this Node node)
+        {
+            node.GetParent()?.MoveChild(node, node.GetIndex() + 1);
         }
     }
 }
