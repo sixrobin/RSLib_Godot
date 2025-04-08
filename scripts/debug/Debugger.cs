@@ -5,7 +5,7 @@ namespace RSLib.GE.Debug
 
     public partial class Debugger : Node
     {
-        public static bool DebugMode = true;
+        public bool DebugMode = true;
 
         public static Debugger Instance { get; private set; }
 
@@ -17,9 +17,10 @@ namespace RSLib.GE.Debug
         private readonly System.Collections.Generic.Dictionary<Key, Action> _commands = new();
         private readonly System.Collections.Generic.Dictionary<Key, bool> _keysJustPressed = new();
         
-        public Debugger()
+        public Debugger(bool debugOn = true)
         {
             Name = "RSLib_Debugger";
+            DebugMode = debugOn;
         }
         
         public void Init()

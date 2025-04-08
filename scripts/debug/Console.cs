@@ -16,8 +16,8 @@ namespace RSLib.GE.Debug
         public void Init()
         {
             CreatePanel();
-            Entry("[RSLib Console]", Colors.DimGray, false);
             _canvasLayer.Visible = false;
+            Entry("[RSLib Console]", Colors.DimGray, false);
         }
 
         public void ToggleVisible(bool? visible = null)
@@ -101,7 +101,7 @@ namespace RSLib.GE.Debug
             GD.PrintErr(text);
             GD.PushError(text);
 
-            if (!_canvasLayer.Visible)
+            if (!_canvasLayer.Visible && Debugger.Instance.DebugMode)
                 ToggleVisible();
         }
     }

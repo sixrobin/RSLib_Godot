@@ -166,7 +166,7 @@ namespace RSLib.GE.Debug
         {
             base._UnhandledKeyInput(inputEvent);
 
-            if (!Debugger.DebugMode)
+            if (!Debugger.Instance.DebugMode)
                 return;
 
             if (inputEvent is not InputEventKey eventKey || !eventKey.IsPressed())

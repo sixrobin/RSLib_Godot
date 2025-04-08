@@ -41,7 +41,7 @@ namespace RSLib.GE.Debug
             AddChild(canvasLayer);
             canvasLayer.AddChild(_label);
 
-            _label.SetVisible(Debugger.DebugMode);
+            _label.Visible = Debugger.Instance.DebugMode;
         }
 
         public void ToggleVisible()
