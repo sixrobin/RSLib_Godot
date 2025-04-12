@@ -85,5 +85,31 @@ namespace RSLib.GE
         {
             node.GetParent()?.MoveChild(node, node.GetIndex() + 1);
         }
+        
+        /// <summary>
+        /// GetNode version that returns a boolean depending on the fetch success, and the fetched node itself as an out parameter.
+        /// </summary>
+        /// <param name="node">Source node.</param>
+        /// <param name="nodePath">Path to the node to fetch.</param>
+        /// <param name="result">Fetched node.</param>
+        /// <returns>True if a node was fetched, else false.</returns>
+        public static bool TryGetNode(this Node node, string nodePath, out Node result)
+        {
+            result = node.GetNode(nodePath);
+            return result != null;
+        }
+
+        /// <summary>
+        /// GetNode version that returns a boolean depending on the fetch success, and the fetched node itself as an out parameter.
+        /// </summary>
+        /// <param name="node">Source node.</param>
+        /// <param name="nodePath">Path to the node to fetch.</param>
+        /// <param name="result">Fetched node.</param>
+        /// <returns>True if a node was fetched, else false.</returns>
+        public static bool TryGetNode<T>(this Node node, string nodePath, out T result) where T : Node
+        {
+            result = node.GetNode<T>(nodePath);
+            return result != null;
+        }
     }
 }
