@@ -8,8 +8,8 @@ namespace RSLib.GE.Debug
 
         public Circle(Vector2 center, float radius, int resolution)
         {
-            _points = new Vector2[resolution];
-            for (int i = 0; i < resolution; ++i)
+            _points = new Vector2[resolution + 1];
+            for (int i = 0; i < _points.Length; ++i)
             {
                 double angle = Mathf.DegToRad(360.0 * i / resolution);
                 _points[i] = (center + new Vector2((float)Mathf.Cos(angle), (float)Mathf.Sin(angle)) * radius);
