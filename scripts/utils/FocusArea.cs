@@ -1,42 +1,46 @@
 namespace RSLib.GE
 {
+    using Debug;
     using Godot;
 
-    public partial class FocusArea : Node
+    public partial class FocusArea : Node2D
     {
-        // TODO
-        //     @export var _target: Node2D
-        //         @export var _size: Vector2 = Vector2.ONE * 100.0
-        //     @export var _debug_color: Color = Color.BLUE
-        //
-        //
-        // func _ready():
-        //     self.top_level = true
-        //     self.global_position = self._target.global_position
-        //
-        //
-        //   func _process(delta: float):
-        //         self.focus_target()
-        // 	
-        //          #RSDraw.marker(self._target).set_color(self._debug_color)
-        //          #RSDraw.rect(self, _size).set_color(self._debug_color)
-        //
-        //
-        // func focus_target():
-        //     var half_size := self._size * 0.5
-        //     var offset := self._target.global_position - self.global_position
-        // 	
-        //     if offset.x > half_size.x:
-        //     self.global_position.x += offset.x - half_size.x
-        //         elif offset.x < -half_size.x:
-        //     self.global_position.x += offset.x + half_size.x
-        // 		
-        //     if offset.y > half_size.y:
-        //     self.global_position.y += offset.y - half_size.y
-        //         elif offset.y < -half_size.y:
-        //     self.global_position.y += offset.y + half_size.y
-        // 		
-        //     #RSDraw.marker(self._target).set_color(self._debug_color).set_width(2)
-        //     #RSDraw.rect(self, _size).set_color(self._debug_color).set_width(2)
+        [Export] private Node2D _target;
+        [Export] private Vector2 _size = Vector2.One * 100f;
+        [Export] private Color _debugColor = Colors.Blue;
+
+        private void FocusTarget()
+        {
+            Vector2 halfSize = _size * 0.5f;
+            Vector2 offset = _target.GlobalPosition - GlobalPosition;
+            
+            if (offset.X > halfSize.X)
+                GlobalPosition += Vector2.Right * (offset.X - halfSize.X);
+            else if (offset.X < -halfSize.X)
+                GlobalPosition += Vector2.Right * (offset.X + halfSize.X);
+            
+            if (offset.Y > halfSize.Y)
+                GlobalPosition += Vector2.Down * (offset.Y - halfSize.Y);
+            else if (offset.Y < -halfSize.Y)
+                GlobalPosition += Vector2.Down * (offset.Y + halfSize.Y);
+        }
+        
+        public override void _Ready()
+        {
+            base._Ready();
+            
+            TopLevel = true;
+            GlobalPosition = _target.GlobalPosition;
+        }
+
+        public override void _Process(double delta)
+        {
+            base._Process(delta);
+            
+            FocusTarget();
+            
+            Debugger.Drawer?.Marker(_target).SetColor(_debugColor).SetWidth(2);
+            Debugger.Drawer?.Rect(this, _size).SetColor(_debugColor).SetWidth(2);
+        }
     }
 }
