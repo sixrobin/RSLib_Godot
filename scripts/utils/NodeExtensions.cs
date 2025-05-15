@@ -6,6 +6,21 @@ namespace RSLib.GE
     public static class NodeExtensions
     {
         /// <summary>
+        /// Loops downward through node children (not recursive), and returns the first child fitting the asked type.
+        /// </summary>
+        /// <param name="node">Source node.</param>
+        /// <typeparam name="T">Type to check.</typeparam>
+        /// <returns>Fitting child found.</returns>
+        public static T GetFirstChildOfType<T>(this Node node)
+        {
+            foreach (Node child in node.GetChildren())
+                if (child is T typedChild)
+                    return typedChild;
+
+            return default;
+        }
+        
+        /// <summary>
         /// Loops through all the children of a node, and stores the ones fitting the asked type.
         /// </summary>
         /// <param name="node">Source node.</param>
