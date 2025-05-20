@@ -14,7 +14,15 @@ public partial class SpriteRandomizer : Node2D
 	[Export] private Gradient _randomColor;
 	[Export] private float _randomOffsetMax;
 
-	private void RandomizeSprite()
+	public void Reset()
+	{
+		if (_target == null)
+			return;
+		
+		// TODO: store default values and restore them.
+	}
+	
+	public void Randomize()
 	{
 		if (_target == null)
 			return;
@@ -42,6 +50,6 @@ public partial class SpriteRandomizer : Node2D
 	public override void _Ready()
 	{
 		base._Ready();
-		RandomizeSprite();
+		Randomize();
 	}
 }
