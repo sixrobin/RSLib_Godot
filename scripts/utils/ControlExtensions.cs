@@ -4,7 +4,7 @@ namespace RSLib.GE
 
     public static class ControlExtensions
     {
-        private static readonly NodePath SELF_NODE_PATH = new(".");
+        public static readonly NodePath SELF_NODE_PATH = new(".");
         
         /// <summary>
         /// Disables controller navigation to neighbours.
