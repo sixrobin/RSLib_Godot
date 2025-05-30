@@ -23,7 +23,7 @@ public partial class AudioHandler : Node2D
     
     public void SFX(string path, SFXArgs args = null)
     {
-        string streamPath = $"{_sfxParentFolder}/{path}.wav";
+        string streamPath = $"{_sfxParentFolder}/{path}";
         
         AudioStreamPlayer2D audioPlayer2D = new()
         {
@@ -31,6 +31,8 @@ public partial class AudioHandler : Node2D
             Bus = SFX_BUS_NAME,
             GlobalPosition = args?.GlobalPosition ?? GlobalPosition,
             VolumeLinear = args?.Volume ?? 1f,
+            Attenuation = 0,
+            MaxDistance = float.MaxValue,
         };
         
         AddChild(audioPlayer2D);
