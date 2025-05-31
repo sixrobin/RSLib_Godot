@@ -1,9 +1,12 @@
 using Godot;
+using RSLib.GE.Debug;
 
 public partial class AudioHandler : Node2D
 {
     private const string SFX_BUS_NAME = "sfx";
 
+    private bool _debugMuteSFX;
+    
     public AudioHandler(string sfxParentFolder)
     {
         _sfxParentFolder = sfxParentFolder;
@@ -11,6 +14,12 @@ public partial class AudioHandler : Node2D
         AudioServer.AddBus(AudioServer.GetBusCount());
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
+        
+        Debugger.CommandPanel.Add(this, "audio", "toggle sfx", () =>
+        {
+            _debugMuteSFX = !_debugMuteSFX;
+            SetSFXVolume(_debugMuteSFX ? 0f : 1f);
+        });
     }
 
     private readonly string _sfxParentFolder;
