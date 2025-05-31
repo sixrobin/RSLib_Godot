@@ -17,5 +17,14 @@ namespace RSLib.GE
             control.FocusNeighborTop = SELF_NODE_PATH;
             control.FocusNeighborBottom = SELF_NODE_PATH;
         }
+
+        /// <summary>
+        /// Releases focus on control if it has focus.
+        /// </summary>
+        public static void ReleaseIfHasFocus(this Control control)
+        {
+            if (control.HasFocus())
+                control.ReleaseFocus();
+        }
     }
 }
