@@ -300,6 +300,15 @@ namespace RSLib.GE
             return list.ToArray();
         }
 
+        /// <summary>
+        /// Converts a Vector2 to a direction.
+        /// </summary>
+        /// <returns>Direction.</returns>
+        public static Direction ToDirection(this Vector2 v)
+        {
+            return Mathf.Abs(v.X) > Mathf.Abs(v.Y) ? v.X < 0f ? Direction.LEFT : Direction.RIGHT : v.Y < 0f ? Direction.UP : Direction.DOWN;
+        }
+        
         #endregion // CONVERSION
         
         #region LERP
