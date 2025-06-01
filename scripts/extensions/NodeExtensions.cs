@@ -110,7 +110,7 @@ namespace RSLib.GE
         /// <returns>True if a node was fetched, else false.</returns>
         public static bool TryGetNode(this Node node, string nodePath, out Node result)
         {
-            result = node.GetNode(nodePath);
+            result = node.GetNodeOrNull(nodePath);
             return result != null;
         }
 
@@ -123,7 +123,7 @@ namespace RSLib.GE
         /// <returns>True if a node was fetched, else false.</returns>
         public static bool TryGetNode<T>(this Node node, string nodePath, out T result) where T : Node
         {
-            result = node.GetNode<T>(nodePath);
+            result = node.GetNodeOrNull<T>(nodePath);
             return result != null;
         }
     }
