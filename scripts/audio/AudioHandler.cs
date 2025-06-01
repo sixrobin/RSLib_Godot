@@ -3,7 +3,7 @@ using RSLib.GE.Debug;
 
 public partial class AudioHandler : Node2D
 {
-    private const string SFX_BUS_NAME = "sfx";
+    public const string SFX_BUS_NAME = "sfx";
 
     private bool _debugMuteSFX;
     
