@@ -5,6 +5,7 @@ namespace RSLib.GE.Debug
     public partial class ValuesShow : Node
     {
         private const int MARGIN = 16;
+        private const int POSITIONED_TEXTS_FONT_SIZE = 36;
         private static readonly Color COLOR = Colors.Yellow;
 
         private Label _label;
@@ -51,7 +52,7 @@ namespace RSLib.GE.Debug
 
         private string Format(object key, object value)
         {
-            return $"{key}: {value}\n";
+            return string.IsNullOrEmpty(key.ToString()) ? value.ToString() : $"{key}: {value}\n";
         }
 
         public void Show(object key, object value, Vector2? position = null)
@@ -79,6 +80,8 @@ namespace RSLib.GE.Debug
                 GlobalPosition = position,
                 Text = debugText,
             };
+            
+            label.AddThemeFontSizeOverride("font_size", POSITIONED_TEXTS_FONT_SIZE);
 
             AddChild(label);
             return label;
