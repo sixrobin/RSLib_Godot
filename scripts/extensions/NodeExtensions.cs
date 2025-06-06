@@ -27,7 +27,7 @@ namespace RSLib.GE
         /// <param name="recursive">If true, the loop will also check children of children.</param>
         /// <typeparam name="T">Type to check.</typeparam>
         /// <returns>List of found nodes.</returns>
-        public static T[] GetChildrenOfType<T>(this Node node, bool recursive = true) where T : Node
+        public static T[] GetChildrenOfType<T>(this Node node, bool recursive = true)
         {
             List<T> result = new();
             foreach (Node child in node.GetChildren())
