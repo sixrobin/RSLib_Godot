@@ -1,5 +1,6 @@
 namespace RSLib.GE.Debug
 {
+    using System.Linq;
     using Godot;
 
     public partial class CommandPanel : Node
@@ -8,7 +9,7 @@ namespace RSLib.GE.Debug
         private const int HEIGHT = 700;
         private const int MARGIN = 16;
 
-        private readonly System.Collections.Generic.Dictionary<string, VBoxContainer> _categories = new();
+        private readonly System.Collections.Generic.Dictionary<string, VBoxContainer> _categoryContainers = new();
         private readonly System.Collections.Generic.List<PanelCommand> _commands = new();
         private readonly System.Collections.Generic.Dictionary<Node, int> _commandsCountPerSource = new();
         private CanvasLayer _canvasLayer;
@@ -76,7 +77,7 @@ namespace RSLib.GE.Debug
             if (string.IsNullOrEmpty(category))
                 category = "General";
 
-            if (!_categories.ContainsKey(category))
+            if (!_categoryContainers.ContainsKey(category))
                 AddCategory(category);
 
             BaseButton button = AddButton(category, command.Label, key);
@@ -101,6 +102,20 @@ namespace RSLib.GE.Debug
         {
             command.OnRemoved();
             _commands.Remove(command);
+
+            string[] categories = _categoryContainers.Keys.ToArray();
+            foreach (string category in categories)
+            {
+                if (!_categoryContainers.TryGetValue(category, out VBoxContainer categoryContainer))
+                    continue;
+                
+                // > 2 as label and spacing are never destroyed.
+                if (categoryContainer.GetChildren().Count(o => !o.IsQueuedForDeletion()) > 2)
+                    continue;
+                
+                categoryContainer.QueueFree();
+                _categoryContainers.Remove(category);
+            }
         }
 
         private void OnSourceTreeExited(Node source)
@@ -120,14 +135,14 @@ namespace RSLib.GE.Debug
             VBoxContainer vbox = new();
             vbox.AddThemeConstantOverride("separation", 0);
 
-            Label categoryLabel = new()
+            Label label = new()
             {
                 Text = id.ToUpper(),
                 SelfModulate = Colors.Yellow,
                 VerticalAlignment = VerticalAlignment.Bottom,
             };
-            categoryLabel.AddThemeFontSizeOverride("font_size", 12);
-            vbox.AddChild(categoryLabel);
+            label.AddThemeFontSizeOverride("font_size", 12);
+            vbox.AddChild(label);
 
             Control spacing = new()
             {
@@ -135,7 +150,7 @@ namespace RSLib.GE.Debug
             };
             vbox.AddChild(spacing);
 
-            _categories[id] = vbox;
+            _categoryContainers[id] = vbox;
             _buttonsContainer.AddChild(vbox);
             return vbox;
         }
@@ -155,7 +170,7 @@ namespace RSLib.GE.Debug
             label.AddThemeFontSizeOverride("font_size", 12);
             button.AddChild(label);
 
-            VBoxContainer categoryContainer = _categories[category];
+            VBoxContainer categoryContainer = _categoryContainers[category];
             categoryContainer.AddChild(button);
             categoryContainer.MoveChild(button, categoryContainer.GetChildCount() - 2);
 
