@@ -78,7 +78,7 @@ namespace RSLib.GE.Debug
 
             foreach (System.Collections.Generic.KeyValuePair<Key, Action> command in _commands)
             {
-                if (!DebugMode && command.Key != Key.F && command.Key != Key.F12)
+                if (!DebugMode && command.Key != Key.F12)
                     continue;
 
                 bool keyPressed = Input.IsKeyPressed(command.Key);
