@@ -8,6 +8,11 @@ public partial class InputDeviceHandler : Node
         KBM,
         CONTROLLER,
     }
+
+    public InputDeviceHandler()
+    {
+        Name = nameof(InputDeviceHandler);
+    }
     
     public event System.Action<DeviceType, DeviceType> DeviceChanged;
     
