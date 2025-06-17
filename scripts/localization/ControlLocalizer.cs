@@ -7,15 +7,25 @@ namespace RSLib.GE
         [Export] private string _key;
         [Export] private string _format;
 
+        private object[] _args;
+
         public void SetKey(string key)
         {
             _key = key;
             Localize();
         }
 
+        public void SetArgs(object[] args)
+        {
+            _args = args;
+        }
+        
         private void Localize()
         {
-            string text = Localizer.Get(_key);
+            string text = _args != null
+                ? Localizer.Format(_key, _args)
+                : Localizer.Get(_key);
+            
             if (!string.IsNullOrEmpty(_format))
                 text = string.Format(_format, text);
             
