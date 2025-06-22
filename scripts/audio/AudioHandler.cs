@@ -5,6 +5,7 @@ public partial class AudioHandler : Node2D
 {
     public const string SFX_BUS_NAME = "sfx";
 
+    private float _sfxVolume;
     private bool _debugMuteSFX;
     
     public AudioHandler(string sfxParentFolder)
@@ -18,7 +19,7 @@ public partial class AudioHandler : Node2D
         Debugger.CommandPanel.Add(this, "audio", "toggle sfx", () =>
         {
             _debugMuteSFX = !_debugMuteSFX;
-            SetSFXVolume(_debugMuteSFX ? 0f : 1f);
+            SetSFXVolume(_sfxVolume);
         });
     }
 
@@ -27,7 +28,8 @@ public partial class AudioHandler : Node2D
 
     public void SetSFXVolume(float volume)
     {
-        AudioServer.SetBusVolumeLinear(_sfxBusID, volume);
+        _sfxVolume = volume;
+        AudioServer.SetBusVolumeLinear(_sfxBusID, _debugMuteSFX ? 0f : _sfxVolume);
     }
     
     public void SFX(string path, SFXArgs args = null)
