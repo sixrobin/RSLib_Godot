@@ -18,6 +18,7 @@ namespace RSLib.GE
         public void SetArgs(object[] args)
         {
             _args = args;
+            Localize();
         }
         
         private void Localize()
