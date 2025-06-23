@@ -22,7 +22,7 @@ namespace RSLib.GE.Debug
             filterRect.SetAnchorsPreset(Control.LayoutPreset.FullRect);
             AddChild(filterRect);
             
-            Debugger.CommandPanel.Add(this, "colorblindness", "none", () => _material.SetShaderParameter("severity", 0f));
+            Debugger.CommandPanel.Add(this, "colorblindness", "none", () => material.SetShaderParameter("severity", 0f));
             Debugger.CommandPanel.Add(this, "colorblindness", "protanomaly", () =>
             {
                 material.SetShaderParameter("mode", 0);
