@@ -3,7 +3,7 @@ shader_type canvas_item;
 #include "res://externals/RSLib_Godot/shaders/include/colorblind_matrices.gdshaderinc"
 #include "res://externals/RSLib_Godot/shaders/include/helpers.gdshaderinc"
 
-uniform float mode: hint_range(0.0, 2.0, 1.0);
+uniform int mode: hint_range(0, 3, 1);
 uniform float severity: hint_range(0.0, 1.0, 0.1);
 uniform bool show_difference;
 
@@ -28,10 +28,12 @@ void fragment()
 {
 	vec3 color = texture(screen_texture, SCREEN_UV).rgb;
 	
-	if (mode == 0.0)
+	if (mode == 0)
 		COLOR.rgb = compute_color_blindness(color, protanomaly);
-	else if (mode == 1.0)
+	else if (mode == 1)
 		COLOR.rgb = compute_color_blindness(color, deuteranomaly);
-	else if (mode == 2.0)
+	else if (mode == 2)
 		COLOR.rgb = compute_color_blindness(color, tritanomaly);
+	else if (mode == 3)
+		COLOR.rgb = mix(color, vec3(luminance(color)), severity);
 }
