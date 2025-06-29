@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class InputDeviceHandler : Node
@@ -25,7 +26,21 @@ public partial class InputDeviceHandler : Node
             DeviceType previous = _currentDevice;
             _currentDevice = value;
             if (_currentDevice != previous)
+            {
                 DeviceChanged?.Invoke(previous, _currentDevice);
+
+                switch (_currentDevice)
+                {
+                    case DeviceType.UNKNOWN:
+                    case DeviceType.KBM:
+                        Input.SetMouseMode(Input.MouseModeEnum.Visible);
+                        break;
+                    case DeviceType.CONTROLLER:
+                    default:
+                        Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+                        break;
+                }
+            }
         }
     }
     
