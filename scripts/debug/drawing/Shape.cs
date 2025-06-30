@@ -6,6 +6,7 @@ namespace RSLib.GE.Debug
     {
         protected Color _color;
         protected float _width;
+        protected bool _filled;
         
         public bool AlwaysDraw { get; private set; }
 
@@ -29,6 +30,12 @@ namespace RSLib.GE.Debug
             return this;
         }
 
+        public Shape SetFilled(bool filled)
+        {
+            _filled = filled;
+            return this;
+        }
+        
         public Shape SetAlwaysDraw(bool alwaysDraw)
         {
             AlwaysDraw = alwaysDraw;

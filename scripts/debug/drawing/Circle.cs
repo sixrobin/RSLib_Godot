@@ -1,5 +1,6 @@
 namespace RSLib.GE.Debug
 {
+    using System.Linq;
     using Godot;
 
     public class Circle : Shape
@@ -18,7 +19,10 @@ namespace RSLib.GE.Debug
 
         public override void Draw(CanvasItem drawer)
         {
-            drawer.DrawPolyline(_points, _color, _width);
+            if (_filled)
+                drawer.DrawPolygon(_points, Enumerable.Repeat(_color, _points.Length).ToArray());
+            else
+                drawer.DrawPolyline(_points, _color, _width);
         }
     }
 }

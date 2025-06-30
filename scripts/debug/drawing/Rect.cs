@@ -16,7 +16,11 @@ namespace RSLib.GE.Debug
         public override void Draw(CanvasItem drawer)
         {
             Rect2 rect = new Rect2(_center, _size);
-            drawer.DrawRect(rect, _color, false, _width);
+            
+            if (_filled)
+                drawer.DrawRect(rect, _color);
+            else
+                drawer.DrawRect(rect, _color, false, _width);
         }
     }
 }
