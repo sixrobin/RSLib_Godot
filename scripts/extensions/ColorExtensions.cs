@@ -55,7 +55,7 @@ namespace RSLib.GE
         /// <param name="b">Second color.</param>
         /// <param name="t">Lerp factor.</param>
         /// <returns>Interpolated color.</returns>
-        public static Color Lerp(Color a, Color b, float t)
+        public static Color Lerp(this Color a, Color b, float t)
         {
             return new Color(Mathf.Lerp(a.R, b.R, t), Mathf.Lerp(a.G, b.G, t), Mathf.Lerp(a.B, b.B, t), Mathf.Lerp(a.A, b.A, t));
         }
