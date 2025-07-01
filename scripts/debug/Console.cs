@@ -20,6 +20,11 @@ namespace RSLib.GE.Debug
             Entry("[RSLib Console]", Colors.DimGray, false);
         }
 
+        public bool IsVisible()
+        {
+            return _canvasLayer.Visible;
+        }
+        
         public void ToggleVisible(bool? visible = null)
         {
             _canvasLayer.Visible = visible ?? !_canvasLayer.Visible;

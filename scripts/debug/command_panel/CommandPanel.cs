@@ -21,6 +21,11 @@ namespace RSLib.GE.Debug
             _canvasLayer.Visible = false;
         }
 
+        public bool IsVisible()
+        {
+            return _canvasLayer.Visible;
+        }
+        
         public void ToggleVisible(bool? visible = null)
         {
             _canvasLayer.Visible = visible ?? !_canvasLayer.Visible;
@@ -187,7 +192,7 @@ namespace RSLib.GE.Debug
             if (inputEvent is not InputEventKey eventKey || !eventKey.IsPressed())
                 return;
             
-            foreach (PanelCommand command in this._commands)
+            foreach (PanelCommand command in _commands)
                 if (command.Key == (int)eventKey.Keycode)
                     command.Execute();
         }

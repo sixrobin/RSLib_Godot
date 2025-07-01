@@ -45,9 +45,14 @@ namespace RSLib.GE.Debug
             _label.Visible = Debugger.Instance.DebugMode;
         }
 
-        public void ToggleVisible()
+        public bool IsVisible()
         {
-            _label.Visible = !_label.Visible;
+            return _label.Visible;
+        }
+        
+        public void ToggleVisible(bool? visible = null)
+        {
+            _label.Visible = visible ?? !_label.Visible;
         }
 
         private string Format(object key, object value)
