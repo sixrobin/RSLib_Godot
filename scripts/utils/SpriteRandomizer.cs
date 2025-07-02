@@ -14,18 +14,46 @@ public partial class SpriteRandomizer : Node2D
 	[Export] private Gradient _randomColor;
 	[Export] private float _randomOffsetMax;
 
+	private bool _initValuesStored;
+	private Texture2D _initTexture;
+	private bool _initFlipH;
+	private bool _initFlipV;
+	private Vector2 _initScale;
+	private Color _initColor;
+	private Vector2 _initOffset;
+    
+	private void StoreInitValues()
+	{
+		_initTexture = _target.Texture;
+		_initFlipH = _target.FlipH;
+		_initFlipV = _target.FlipV;
+		_initScale = _target.Scale;
+		_initColor = _target.Modulate;
+		_initOffset = _target.Position;
+        
+		_initValuesStored = true;
+	}
+	
 	public void Reset()
 	{
 		if (_target == null)
 			return;
-		
-		// TODO: store default values and restore them.
+
+		_target.Texture = _initTexture;
+		_target.FlipH = _initFlipH;
+		_target.FlipV = _initFlipV;
+		_target.Scale = _initScale;
+		_target.Modulate = _initColor;
+		_target.Position = _initOffset;
 	}
 	
 	public void Randomize()
 	{
 		if (_target == null)
 			return;
+
+		if (!_initValuesStored)
+			StoreInitValues();
 
 		if (_textures is {Count: > 0})
 			_target.Texture = _textures.PickRandom();
