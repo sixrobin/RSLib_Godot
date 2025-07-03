@@ -42,6 +42,16 @@ namespace RSLib.GE
             return new Vector4((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f)).Normalized();
         }
         
+        /// <summary>
+        /// Gets a new random color.
+        /// <param name="randomAlpha">Randomize alpha.</param>
+        /// </summary>
+        /// <returns>Randomly generated color.</returns>
+        public static Color RandomColor(bool randomAlpha = false)
+        {
+            return new Color(GD.Randf(), GD.Randf(), GD.Randf(), randomAlpha ? GD.Randf() : 1f);
+        }
+        
         #endregion // RANDOM
         
         public static string FormatByteSize(ulong bytes, bool round = false)
