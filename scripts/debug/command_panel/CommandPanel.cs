@@ -14,6 +14,9 @@ namespace RSLib.GE.Debug
         private readonly System.Collections.Generic.Dictionary<Node, int> _commandsCountPerSource = new();
         private CanvasLayer _canvasLayer;
         private Control _buttonsContainer;
+        private ColorRect _background;
+        
+        public bool IsHovered { get; private set; }
         
         public void Init()
         {
@@ -47,14 +50,14 @@ namespace RSLib.GE.Debug
             };
             _canvasLayer.AddChild(control);
 
-            ColorRect background = new()
+            _background = new ColorRect()
             {
                 Color = new Color(0.05f, 0.05f, 0.05f, 0.5f),
                 Size = new Vector2(WIDTH, HEIGHT),
                 Position = new Vector2(screenResolution.X - WIDTH - MARGIN, MARGIN),
             };
-            background.SetAnchorsPreset(Control.LayoutPreset.RightWide);
-            control.AddChild(background);
+            _background.SetAnchorsPreset(Control.LayoutPreset.RightWide);
+            control.AddChild(_background);
 
             ScrollContainer scrollContainer = new()
             {
@@ -62,7 +65,7 @@ namespace RSLib.GE.Debug
                 VerticalScrollMode = ScrollContainer.ScrollMode.ShowAlways,
             };
             scrollContainer.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-            background.AddChild(scrollContainer);
+            _background.AddChild(scrollContainer);
 
             VBoxContainer vbox = new()
             {
@@ -165,6 +168,7 @@ namespace RSLib.GE.Debug
             Button button = new()
             {
                 CustomMinimumSize = new Vector2(0f, 16f),
+                FocusMode = Control.FocusModeEnum.Click,
             };
 
             Label label = new()
@@ -195,6 +199,21 @@ namespace RSLib.GE.Debug
             foreach (PanelCommand command in _commands)
                 if (command.Key == (int)eventKey.Keycode)
                     command.Execute();
+        }
+
+        public override void _Process(double delta)
+        {
+            base._Process(delta);
+
+            if (IsVisible())
+            {
+                IsHovered = _background.GetGlobalRect().HasPoint(_background.GetGlobalMousePosition());
+                _background.SetModulateAlpha(IsHovered ? 1f : 0.25f);
+            }
+            else
+            {
+                IsHovered = false;
+            }
         }
     }
 }
