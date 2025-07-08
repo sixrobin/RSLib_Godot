@@ -168,7 +168,7 @@ namespace RSLib.GE.Debug
             Button button = new()
             {
                 CustomMinimumSize = new Vector2(0f, 16f),
-                FocusMode = Control.FocusModeEnum.Click,
+                FocusMode = Control.FocusModeEnum.None,
             };
 
             Label label = new()
