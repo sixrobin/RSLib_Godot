@@ -9,15 +9,18 @@ public static class PoissonDiscDistribution
     /// <param name="candidatePointsCount">The number of candidate points the algorithm will generate between each iteration.</param>
     /// <param name="gridSize">The size of the grid. Points will be generated between (0,0) and the grid size.</param>
     /// <param name="existingPoints">Points that were here prior to the generation. They will be avoided as well as any other point, and won't be added in the output.</param>
+    /// <param name="rng">Random number generator..</param>
     /// <returns>The generated points.</returns>
-    public static HashSet<Vector2> GeneratePoints(int pointsCount, int candidatePointsCount, Vector2 gridSize, HashSet<Vector2> existingPoints)
+    public static HashSet<Vector2> GeneratePoints(int pointsCount, int candidatePointsCount, Vector2 gridSize, HashSet<Vector2> existingPoints, RandomNumberGenerator rng)
     {
         if (gridSize == Vector2.Zero)
             throw new ArgumentException($"{nameof(PoissonDiscDistribution)} argument {nameof(gridSize)} cannot be zero");
+
+        rng ??= new RandomNumberGenerator();
         
         return GeneratePoints(pointsCount,
                               candidatePointsCount, 
-                              () => new Vector2(GD.Randf() * gridSize.X, GD.Randf() * gridSize.Y),
+                              () => new Vector2(rng.Randf() * gridSize.X, rng.Randf() * gridSize.Y),
                               (a, b) => a.DistanceTo(b),
                               existingPoints);
     }
