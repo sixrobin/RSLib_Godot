@@ -14,6 +14,8 @@ public partial class SpriteRandomizer : Node2D
 	[Export] private Gradient _randomColor;
 	[Export] private float _randomOffsetMax;
 
+	private static RandomNumberGenerator _rng;
+
 	private bool _initValuesStored;
 	private Texture2D _initTexture;
 	private bool _initFlipH;
@@ -21,7 +23,12 @@ public partial class SpriteRandomizer : Node2D
 	private Vector2 _initScale;
 	private Color _initColor;
 	private Vector2 _initOffset;
-    
+
+	public static void SetRandomNumberGenerator(RandomNumberGenerator rng)
+	{
+		_rng = rng;
+	}
+	
 	private void StoreInitValues()
 	{
 		_initTexture = _target.Texture;
@@ -54,25 +61,27 @@ public partial class SpriteRandomizer : Node2D
 
 		if (!_initValuesStored)
 			StoreInitValues();
-
+				
+		_rng ??= new RandomNumberGenerator();
+		
 		if (_textures is {Count: > 0})
-			_target.Texture = _textures.PickRandom();
+			_target.Texture = _textures[_rng.RandiRange(0, _textures.Count - 1)];
 
 		if (_randomizeFlipH)
-			_target.FlipH = Helpers.RandomBool();
+			_target.FlipH = Helpers.RandomBool(_rng);
 		if (_randomizeFlipV)
-			_target.FlipV = Helpers.RandomBool();
+			_target.FlipV = Helpers.RandomBool(_rng);
 
 		if (_randomColor != null)
-			_target.Modulate = _randomColor.Sample(GD.Randf());
+			_target.Modulate = _randomColor.Sample(_rng.Randf());
 
-		_target.Scale *= _randomScale.Random();
+		_target.Scale *= _rng.RandfRange(_randomScale.X, _randomScale.Y);
 		if (_randomizeFlipScaleX)
-			_target.Scale = new Vector2(_target.Scale.X * (Helpers.RandomBool() ? 1f : -1f), _target.Scale.Y);
+			_target.Scale = new Vector2(_target.Scale.X * (Helpers.RandomBool(_rng) ? 1f : -1f), _target.Scale.Y);
 		if (_randomizeFlipScaleY)
-			_target.Scale = new Vector2(_target.Scale.X, _target.Scale.Y * (Helpers.RandomBool() ? 1f : -1f));
-
-		_target.Position += Vector2.Right.Rotated(GD.Randf() * Mathf.Tau) * GD.Randf() * _randomOffsetMax;
+			_target.Scale = new Vector2(_target.Scale.X, _target.Scale.Y * (Helpers.RandomBool(_rng) ? 1f : -1f));
+		
+		_target.Position += Vector2.Right.Rotated(_rng.Randf() * Mathf.Tau) * _rng.Randf() * _randomOffsetMax;
 	}
 	
 	public override void _Ready()

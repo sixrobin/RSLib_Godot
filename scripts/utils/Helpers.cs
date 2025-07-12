@@ -16,6 +16,16 @@ namespace RSLib.GE
         }
 
         /// <summary>
+        /// Gets a random boolean (true or false).
+        /// </summary>
+        /// <param name="rng">Random number generator.</param>
+        /// <returns>Randomly generated boolean.</returns>
+        public static bool RandomBool(RandomNumberGenerator rng)
+        {
+            return rng.Randf() < 0.5f;
+        }
+        
+        /// <summary>
         /// Gets a new random normalized Vector2.
         /// </summary>
         /// <returns>Randomly generated vector.</returns>
