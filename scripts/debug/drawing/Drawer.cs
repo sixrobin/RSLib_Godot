@@ -12,7 +12,12 @@ namespace RSLib.GE.Debug
 
         private static Vector2 ToVector2(object input)
         {
-            return input is Vector2 v ? v : (input as Node2D)!.GlobalPosition;
+            return input switch
+            {
+                Vector2 v2   => v2,
+                Vector2I v2i => v2i,
+                _            => (input as Node2D)!.GlobalPosition,
+            };
         }
         
         public void Init()
