@@ -1,3 +1,5 @@
+using Godot.Collections;
+
 namespace RSLib.GE.Debug
 {
     using System.Linq;
@@ -10,6 +12,7 @@ namespace RSLib.GE.Debug
         private const int MARGIN = 16;
 
         private readonly System.Collections.Generic.Dictionary<string, VBoxContainer> _categoryContainers = new();
+        private readonly System.Collections.Generic.HashSet<string> _foldedCategories = new();
         private readonly System.Collections.Generic.List<PanelCommand> _commands = new();
         private readonly System.Collections.Generic.Dictionary<Node, int> _commandsCountPerSource = new();
         private CanvasLayer _canvasLayer;
@@ -152,6 +155,15 @@ namespace RSLib.GE.Debug
             label.AddThemeFontSizeOverride("font_size", 12);
             vbox.AddChild(label);
 
+            Button button = new()
+            {
+                FocusMode = Control.FocusModeEnum.None,
+                ShowBehindParent = true,
+            };
+            button.Pressed += () => ToggleCategoryFold(id);
+            button.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+            label.AddChild(button);
+
             Control spacing = new()
             {
                 CustomMinimumSize = new Vector2(0f, 12f),
@@ -160,9 +172,32 @@ namespace RSLib.GE.Debug
 
             _categoryContainers[id] = vbox;
             _buttonsContainer.AddChild(vbox);
+            
+            ToggleCategoryFold(id);
+            
             return vbox;
         }
 
+        private void ToggleCategoryFold(string id)
+        {
+            VBoxContainer container = _categoryContainers[id];
+
+            bool folded = _foldedCategories.Contains(id);
+            if (folded)
+                _foldedCategories.Remove(id);
+            else
+                _foldedCategories.Add(id);
+
+            folded = !folded;
+
+            Array<Node> children = container.GetChildren();
+            for (int i = 1; i < children.Count; i++)
+            {
+                Control child = (Control)children[i];
+                child.Visible = !folded;
+            }
+        }
+        
         private BaseButton AddButton(string category, string text, int key = -1)
         {
             Button button = new()
@@ -183,6 +218,9 @@ namespace RSLib.GE.Debug
             categoryContainer.AddChild(button);
             categoryContainer.MoveChild(button, categoryContainer.GetChildCount() - 2);
 
+            if (_foldedCategories.Contains(category))
+                button.Visible = false;
+            
             return button;
         }
         
