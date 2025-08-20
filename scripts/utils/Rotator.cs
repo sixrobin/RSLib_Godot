@@ -41,7 +41,7 @@ public partial class Rotator : Node2D
         _rotatedNode = GetParentOrNull<Node2D>();
         if (_rotatedNode == null)
         {
-            Debugger.Console.Warning($"No valid {nameof(Node2D)} parent for {nameof(Rotator)}");
+            Debugger.Console.Warning($"No valid {nameof(Node2D)} parent for {nameof(Rotator)}.");
             QueueFree();
         }
         
@@ -64,7 +64,7 @@ public partial class Rotator : Node2D
                 RotatePendulum(delta);
                 break;
             default:
-                Debugger.Console.Warning($"Unhandled {nameof(Rotator)} mode {_mode}");
+                Debugger.Console.Warning($"Unhandled {nameof(Rotator)} mode {_mode}.");
                 break;
         }
     }

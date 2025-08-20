@@ -123,7 +123,7 @@ namespace RSLib.GE
 
                 if (loadMode == LoadMode.GOOGLE_SHEETS_DOWNLOAD)
                 {
-                    Debugger.Console.Entry("Localization initialization failed while downloading from Google Sheets, trying to initialize from file path...");
+                    Debugger.Console.Entry($"Localization initialization failed while downloading from Google Sheets, trying to initialize from {args.ResourceFilePath}");
 
                     try
                     {
@@ -138,7 +138,7 @@ namespace RSLib.GE
 
             if (string.IsNullOrEmpty(downloadOutput))
             {
-                Debugger.Console.Error($"Could not initialize {nameof(Localizer)}");
+                Debugger.Console.Error($"Could not initialize {nameof(Localizer)}.");
                 return;
             }
 
@@ -196,7 +196,7 @@ namespace RSLib.GE
         {
             if (languageIndex > _entries.Count - 1)
             {
-                Debugger.Console.Error($"Tried to set language index to {languageIndex} but only {_entries.Count} languages are known");
+                Debugger.Console.Error($"Tried to set language index to {languageIndex} but only {_entries.Count} languages are known.");
                 return;
             }
 
@@ -211,7 +211,7 @@ namespace RSLib.GE
         {
             if (!_entries.ContainsKey(languageName))
             {
-                Debugger.Console.Error($"Tried to set language to {languageName} but it wasn't found");
+                Debugger.Console.Error($"Tried to set language to {languageName} but it wasn't found.");
                 return;
             }
 
@@ -251,14 +251,14 @@ namespace RSLib.GE
 
             if (!languageKnown)
             {
-                Debugger.Console.Warning($"Language {language} is not known in languages list. Known languages are: {string.Join(", ", Languages)}");
+                Debugger.Console.Warning($"Language {language} is not known in languages list. Known languages are: {string.Join(", ", Languages)}.");
                 return key;
             }
 
             if (_entries[language].TryGetValue(key, out string entry))
                 return entry;
 
-            Debugger.Console.Warning($"Localization key {key} not found in language {language}");
+            Debugger.Console.Warning($"Localization key {key} not found in language {language}.");
             return key;
         }
 
