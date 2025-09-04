@@ -4,10 +4,15 @@ namespace RSLib.GE
 
     public partial class Bounce : Node2D
     {
+        [ExportGroup("Motion")]
         [Export] private float _duration = 0.5f;
         [Export] private float _strength = 0.2f;
         [Export] private Tween.TransitionType _easing = Tween.TransitionType.Elastic;
 
+        [ExportGroup("Axis")]
+        [Export] private float _strengthX = 1f;
+        [Export] private float _strengthY = 1f;
+        
         private Tween _tween;
         
         public void PlayBounce(float? duration = null,
@@ -20,7 +25,7 @@ namespace RSLib.GE
             strength ??= _strength;
             easing ??= _easing;
             
-            Vector2 bouncedScale = new(1f + strength.Value, 1f - strength.Value);
+            Vector2 bouncedScale = new(1f + strength.Value * _strengthX, 1f - strength.Value * _strengthY);
         
             _tween = CreateTween();
             _tween.TweenMethod(Callable.From((Vector2 s) => { Scale = s; }), bouncedScale, Vector2.One, duration.Value)
