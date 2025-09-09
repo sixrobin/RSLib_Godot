@@ -51,9 +51,14 @@ namespace RSLib.GE
         public static T GetFirstParentOfType<T>(this Node node)
         {
             Node result = node;
-            
+
             do
+            {
+                if (!GodotObject.IsInstanceValid(result))
+                    return default;
+                
                 result = result.GetParent();
+            }
             while (result != null && result is not T);
 
             return result is T resultCast ? resultCast : default;
@@ -68,6 +73,15 @@ namespace RSLib.GE
                 child.QueueFree();
         }
 
+        /// <summary>
+        /// Calls Free method on all children of the given node.
+        /// </summary>
+        public static void FreeChildren(this Node node)
+        {
+            foreach (Node child in node.GetChildren())
+                child.Free();
+        }
+        
         /// <summary>
         /// Removes all children of the given node (the children won't be in the tree until being reparented).
         /// </summary>
