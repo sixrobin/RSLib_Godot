@@ -23,9 +23,13 @@ namespace RSLib.GE
         
         private void Localize()
         {
-            string text = _args != null
-                ? Localizer.Format(_key, _args)
-                : Localizer.Get(_key);
+            string text = string.Empty;
+            if (!string.IsNullOrEmpty(_key))
+            {
+                text = _args != null
+                       ? Localizer.Format(_key, _args)
+                       : Localizer.Get(_key);
+            }
             
             if (!string.IsNullOrEmpty(_format))
                 text = string.Format(_format, text);
