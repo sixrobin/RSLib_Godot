@@ -12,6 +12,9 @@ namespace RSLib.GE
         [ExportGroup("Axis")]
         [Export] private float _strengthX = 1f;
         [Export] private float _strengthY = 1f;
+
+        [ExportGroup("Options")]
+        [Export] private bool _smallerY = true;
         
         private Tween _tween;
         
@@ -25,7 +28,7 @@ namespace RSLib.GE
             strength ??= _strength;
             easing ??= _easing;
             
-            Vector2 bouncedScale = new(1f + strength.Value * _strengthX, 1f - strength.Value * _strengthY);
+            Vector2 bouncedScale = new(1f + strength.Value * _strengthX, 1f + (_smallerY ? -strength.Value : strength.Value) * _strengthY);
         
             _tween = CreateTween();
             _tween.TweenMethod(Callable.From((Vector2 s) => { Scale = s; }), bouncedScale, Vector2.One, duration.Value)
