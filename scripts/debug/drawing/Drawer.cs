@@ -25,9 +25,9 @@ namespace RSLib.GE.Debug
             SetZIndex(2 ^ 63 - 1);
         }
 
-        public void ToggleVisible()
+        public void ToggleVisible(bool? visible = null)
         {
-            _enabled = !_enabled;
+            _enabled = visible ?? !_enabled;
         }
 
         public Shape Add(Shape shape)
