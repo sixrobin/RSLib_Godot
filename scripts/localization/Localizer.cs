@@ -162,6 +162,12 @@ namespace RSLib.GE
                 if (string.IsNullOrEmpty(language) || language[0] == IGNORE_CHAR)
                     continue;
 
+                if (_entries.ContainsKey(language))
+                {
+                    Debugger.Console.Error($"Cannot add already added language {language} in {nameof(Localizer)}.");
+                    continue;
+                }
+                
                 _entries.Add(language, new Dictionary<string, string>());
                 languages.Add(language);
             }
