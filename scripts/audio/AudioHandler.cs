@@ -1,4 +1,5 @@
 using Godot;
+using RSLib.GE.Debug;
 
 public partial class AudioHandler : Node2D
 {
@@ -11,10 +12,17 @@ public partial class AudioHandler : Node2D
         AudioServer.AddBus(AudioServer.GetBusCount());
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
+        
+        Debugger.CommandPanel.Add(this, "audio", "toggle_fmod_debug", () =>
+        {
+            _fmodDebug = !_fmodDebug;
+            FmodUtils.RaiseEvent(_fmodDebug ? "event:/DEBUG/debugIsAudible" : "event:/DEBUG/debugIsInaudible");
+        });
     }
 
     private readonly string _sfxParentFolder;
     private readonly int _sfxBusID;
+    private bool _fmodDebug;
 
     public void SetSFXVolume(float volume)
     {
