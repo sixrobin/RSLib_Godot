@@ -13,16 +13,19 @@ public partial class AudioHandler : Node2D
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
         
-        Debugger.CommandPanel.Add(this, "audio", "toggle_fmod_debug", () =>
+        // TODO: FmodUtils is not part of RSLib_Godot -> move these commands to FmodUtils itself. 
+        Debugger.CommandPanel.Add(this, "audio", "fmod debug audible", () =>
         {
-            _fmodDebug = !_fmodDebug;
-            FmodUtils.RaiseEvent(_fmodDebug ? "event:/DEBUG/debugIsAudible" : "event:/DEBUG/debugIsInaudible");
+            FmodUtils.DebugAudible = !FmodUtils.DebugAudible;
+            FmodUtils.RaiseEvent(FmodUtils.DebugAudible ? "event:/DEBUG/debugIsAudible" : "event:/DEBUG/debugIsInaudible");
         });
+        Debugger.CommandPanel.Add(this, "audio", "mute fmod events", () => FmodUtils.DebugFmodEventsMuted = !FmodUtils.DebugFmodEventsMuted);
+        Debugger.CommandPanel.Add(this, "audio", "mute placeholders", () => _sfxMuted = !_sfxMuted);
     }
 
     private readonly string _sfxParentFolder;
     private readonly int _sfxBusID;
-    private bool _fmodDebug;
+    private bool _sfxMuted;
 
     public void SetSFXVolume(float volume)
     {
@@ -31,6 +34,9 @@ public partial class AudioHandler : Node2D
     
     public void SFX(string path, SFXArgs args = null)
     {
+        if (_sfxMuted)
+            return;
+        
         string streamPath = $"{_sfxParentFolder}/{path}";
         
         AudioStreamPlayer2D audioPlayer2D = new()
