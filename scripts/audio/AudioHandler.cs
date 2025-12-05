@@ -13,12 +13,6 @@ public partial class AudioHandler : Node2D
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
         
-        // TODO: FmodUtils is not part of RSLib_Godot -> move these commands to FmodUtils itself. 
-        Debugger.CommandPanel.Add(this, "audio", "fmod debug audible", () =>
-        {
-            FmodUtils.DebugAudible = !FmodUtils.DebugAudible;
-            FmodUtils.RaiseEvent(FmodUtils.DebugAudible ? "event:/DEBUG/debugIsAudible" : "event:/DEBUG/debugIsInaudible");
-        });
         Debugger.CommandPanel.Add(this, "audio", "mute fmod events", () => FmodUtils.DebugFmodEventsMuted = !FmodUtils.DebugFmodEventsMuted);
         Debugger.CommandPanel.Add(this, "audio", "mute placeholders", () => _sfxMuted = !_sfxMuted);
     }
