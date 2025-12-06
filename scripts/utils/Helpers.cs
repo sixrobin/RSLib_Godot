@@ -31,7 +31,7 @@ namespace RSLib.GE
         /// <returns>Randomly generated vector.</returns>
         public static Vector2 RandomVector2()
         {
-            return new Vector2((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f)).Normalized();
+            return Vector2.Right.Rotated(GD.Randf() * Mathf.Tau);
         }
 
         /// <summary>
@@ -40,6 +40,7 @@ namespace RSLib.GE
         /// <returns>Randomly generated vector.</returns>
         public static Vector3 RandomVector3()
         {
+            // TODO: Distribution is not normal, implement a method similar to RandomVector2.
             return new Vector3((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f)).Normalized();
         }
 
@@ -49,6 +50,7 @@ namespace RSLib.GE
         /// <returns>Randomly generated vector.</returns>
         public static Vector4 RandomVector4()
         {
+            // TODO: Distribution is not normal, implement a method similar to RandomVector2.
             return new Vector4((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f)).Normalized();
         }
         
