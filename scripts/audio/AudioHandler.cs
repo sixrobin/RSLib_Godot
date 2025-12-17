@@ -12,15 +12,22 @@ public partial class AudioHandler : Node2D
         AudioServer.AddBus(AudioServer.GetBusCount());
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
+
+        _sfxMuted = Invasion.Instance.Config.MutePlaceholderSFX;
         
         Debugger.CommandPanel.Add(this, "audio", "mute fmod events", () => FmodUtils.DebugFmodEventsMuted = !FmodUtils.DebugFmodEventsMuted);
-        Debugger.CommandPanel.Add(this, "audio", "mute placeholders", () => _sfxMuted = !_sfxMuted);
+        Debugger.CommandPanel.Add(this, "audio", "mute placeholders", () => SetSFXMuted(!_sfxMuted));
     }
 
     private readonly string _sfxParentFolder;
     private readonly int _sfxBusID;
     private bool _sfxMuted;
 
+    public void SetSFXMuted(bool muted)
+    {
+        _sfxMuted = muted;
+    }
+    
     public void SetSFXVolume(float volume)
     {
         AudioServer.SetBusVolumeLinear(_sfxBusID, volume);
