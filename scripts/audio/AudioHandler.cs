@@ -3,6 +3,7 @@ using RSLib.GE.Debug;
 
 public partial class AudioHandler : Node2D
 {
+    public const string MASTER_BUS_NAME = "Master";
     public const string SFX_BUS_NAME = "sfx";
 
     public AudioHandler(string sfxParentFolder)
@@ -12,6 +13,7 @@ public partial class AudioHandler : Node2D
         AudioServer.AddBus(AudioServer.GetBusCount());
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
+        AudioServer.SetBusSend(_sfxBusID, MASTER_BUS_NAME);
 
         _sfxMuted = Invasion.Instance.Config.MutePlaceholderSFX;
         
@@ -26,6 +28,11 @@ public partial class AudioHandler : Node2D
     public void SetSFXMuted(bool muted)
     {
         _sfxMuted = muted;
+    }
+    
+    public void SetMasterVolume(float volume)
+    {
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex(MASTER_BUS_NAME), volume);
     }
     
     public void SetSFXVolume(float volume)
