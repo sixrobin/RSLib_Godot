@@ -8,6 +8,13 @@ public partial class InputDeviceHandler : Node
         KBM,
         CONTROLLER,
     }
+    
+    public enum KeyboardMouse
+    {
+        NONE,
+        KEYBOARD,
+        MOUSE,
+    }
 
     public InputDeviceHandler()
     {
@@ -15,6 +22,8 @@ public partial class InputDeviceHandler : Node
     }
     
     public event System.Action<DeviceType, DeviceType> DeviceChanged;
+
+    public KeyboardMouse KeyboardMouseLast { get; private set; }
     
     private DeviceType _currentDevice;
     public DeviceType CurrentDevice
@@ -60,9 +69,20 @@ public partial class InputDeviceHandler : Node
     {
         base._Input(evt);
 
-        if (evt is InputEventMouseButton or InputEventKey)
+        if (evt is InputEventMouseButton)
+        {
             CurrentDevice = DeviceType.KBM;
+            KeyboardMouseLast = KeyboardMouse.MOUSE;
+        }
+        else if (evt is InputEventKey)
+        {
+            CurrentDevice = DeviceType.KBM;
+            KeyboardMouseLast = KeyboardMouse.KEYBOARD;
+        }
         else if (evt is InputEventJoypadButton || evt is InputEventJoypadMotion joypadMotion && Mathf.Abs(joypadMotion.AxisValue) > 0.5f)
+        {
             CurrentDevice = DeviceType.CONTROLLER;
+            KeyboardMouseLast = KeyboardMouse.NONE;
+        }
     }
 }
