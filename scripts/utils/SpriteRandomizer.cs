@@ -5,6 +5,7 @@ using RSLib.GE;
 public partial class SpriteRandomizer : Node2D
 {
 	[Export] private Sprite2D _target;
+	[Export] private bool _randomizeAndFree = true;
 	[Export] private Array<Texture2D> _textures;
 	[Export] private bool _randomizeFlipH;
 	[Export] private bool _randomizeFlipV;
@@ -87,6 +88,9 @@ public partial class SpriteRandomizer : Node2D
 	public override void _Ready()
 	{
 		base._Ready();
+		
 		Randomize();
+		if (_randomizeAndFree)
+			QueueFree();
 	}
 }
