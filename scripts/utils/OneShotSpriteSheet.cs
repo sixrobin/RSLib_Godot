@@ -7,10 +7,12 @@ public partial class OneShotSpriteSheet : Sprite2D
 	[Export] private int _fps = 12;
 
 	private double _timer;
-	
+
 	public override void _Ready()
 	{
 		base._Ready();
+
+		ProcessThreadGroup = ProcessThreadGroupEnum.SubThread;
 		Texture = _frames[0];
 	}
 
