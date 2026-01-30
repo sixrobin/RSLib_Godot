@@ -53,6 +53,7 @@ namespace RSLib.GE.Debug
         public void ToggleVisible(bool? visible = null)
         {
             _label.Visible = visible ?? !_label.Visible;
+            ProcessMode = _label.Visible ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
         }
 
         private string Format(object key, object value)
@@ -62,6 +63,9 @@ namespace RSLib.GE.Debug
 
         public void Show(object key, object value, Vector2? position = null)
         {
+            if (!IsVisible())
+                return;
+            
             string debugText = Format(key, value);
 
             if (position.HasValue)
