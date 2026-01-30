@@ -12,8 +12,8 @@ public partial class OneShotSpriteSheet : Sprite2D
 	{
 		base._Ready();
 
-		ProcessThreadGroup = ProcessThreadGroupEnum.SubThread;
 		Texture = _frames[0];
+		ProcessThreadGroup = ProcessThreadGroupEnum.SubThread;
 	}
 
 	public override void _Process(double delta)
@@ -29,6 +29,6 @@ public partial class OneShotSpriteSheet : Sprite2D
 			return;
 		}
 		
-		Texture = _frames[frame];
+		CallDeferred(Sprite2D.MethodName.SetTexture, _frames[frame]);
 	}
 }

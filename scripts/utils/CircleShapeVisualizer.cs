@@ -6,6 +6,7 @@ namespace RSLib.GE
     {
         [Export] private Color _color = Colors.Magenta;
 
+#if TOOLS
         public override void _Process(double delta)
         {
             base._Process(delta);
@@ -14,4 +15,5 @@ namespace RSLib.GE
                 Debug.Debugger.Drawer?.Circle(this, circleShape2D.Radius * GlobalScale.X).SetColor(_color);
         }
     }
+#endif
 }

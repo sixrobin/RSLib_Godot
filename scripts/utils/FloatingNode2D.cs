@@ -13,6 +13,8 @@ public partial class FloatingNode2D : Node2D
     public override void _Ready()
     {
         base._Ready();
+
+        ProcessThreadGroup = ProcessThreadGroupEnum.SubThread;
         
         _movedNode = GetParent<Node2D>();
         _initY = _movedNode.Position.Y;
@@ -26,6 +28,6 @@ public partial class FloatingNode2D : Node2D
         _timer += (float)delta * _speed;
 
         float wave = Mathf.Sin(_timer) * _amplitude;
-        _movedNode.Position = _movedNode.Position.WithY(_initY + wave);
+        _movedNode.CallDeferred(Node2D.MethodName.SetPosition, _movedNode.Position.WithY(_initY + wave));
     }
 }

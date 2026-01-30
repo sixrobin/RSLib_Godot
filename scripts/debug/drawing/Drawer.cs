@@ -8,7 +8,8 @@ namespace RSLib.GE.Debug
         private const float DEFAULT_WIDTH = 1f;
 
         private readonly System.Collections.Generic.List<Shape> _shapes = new();
-        private bool _enabled;
+        
+        public bool Enabled { get; private set; }
 
         private static Vector2 ToVector2(object input)
         {
@@ -27,7 +28,7 @@ namespace RSLib.GE.Debug
 
         public void ToggleVisible(bool? visible = null)
         {
-            _enabled = visible ?? !_enabled;
+            Enabled = visible ?? !Enabled;
         }
 
         public Shape Add(Shape shape)
@@ -82,7 +83,7 @@ namespace RSLib.GE.Debug
             base._Draw();
 
             foreach (Shape shape in _shapes)
-                if (_enabled || shape.AlwaysDraw)
+                if (Enabled || shape.AlwaysDraw)
                     shape.Draw(this);
 
             _shapes.Clear();
