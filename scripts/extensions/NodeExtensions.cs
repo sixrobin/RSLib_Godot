@@ -1,5 +1,6 @@
 namespace RSLib.GE
 {
+    using System;
     using Godot;
     using System.Collections.Generic;
 
@@ -33,6 +34,29 @@ namespace RSLib.GE
             foreach (Node child in node.GetChildren())
             {
                 if (child is T typedChild)
+                    result.Add(typedChild);
+
+                if (recursive)
+                    result.AddRange(child.GetChildrenOfType<T>());
+            }
+
+            return result.ToArray();
+        }
+        
+        /// <summary>
+        /// Loops through all the children of a node, and stores the ones fitting the asked type and matching the given condition.
+        /// </summary>
+        /// <param name="node">Source node.</param>
+        /// <param name="condition">Condition to match to include a node.</param>
+        /// <param name="recursive">If true, the loop will also check children of children.</param>
+        /// <typeparam name="T">Type to check.</typeparam>
+        /// <returns>List of found nodes.</returns>
+        public static T[] GetChildrenOfType<T>(this Node node, Func<Node, bool> condition, bool recursive = true)
+        {
+            List<T> result = new();
+            foreach (Node child in node.GetChildren())
+            {
+                if (child is T typedChild && condition.Invoke(child))
                     result.Add(typedChild);
 
                 if (recursive)
