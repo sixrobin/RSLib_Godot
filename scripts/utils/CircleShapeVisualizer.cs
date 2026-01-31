@@ -14,6 +14,6 @@ namespace RSLib.GE
             if (Shape is CircleShape2D circleShape2D)
                 Debug.Debugger.Drawer?.Circle(this, circleShape2D.Radius * GlobalScale.X).SetColor(_color);
         }
-    }
 #endif
+    }
 }
