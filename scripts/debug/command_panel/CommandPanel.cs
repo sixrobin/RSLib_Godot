@@ -26,7 +26,10 @@ namespace RSLib.GE.Debug
             CreatePanel();
             
             _canvasLayer.Visible = false;
+            
+#if !TOOLS
             ProcessMode = ProcessModeEnum.Disabled;
+#endif
         }
 
         public bool IsVisible()
@@ -37,7 +40,10 @@ namespace RSLib.GE.Debug
         public void ToggleVisible(bool? visible = null)
         {
             _canvasLayer.Visible = visible ?? !_canvasLayer.Visible;
+         
+#if !TOOLS
             ProcessMode = _canvasLayer.Visible ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
+#endif
         }
 
         private void CreatePanel()
