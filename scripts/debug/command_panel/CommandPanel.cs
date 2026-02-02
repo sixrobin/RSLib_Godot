@@ -91,7 +91,7 @@ namespace RSLib.GE.Debug
 
         public void Add(Node source, string category, string actionName, System.Action action, int key = -1)
         {
-            PanelCommand command = new(source, actionName, action, key);
+            PanelCommand command = new(source.GetInstanceId(), actionName, action, key);
             _commands.Add(command);
 
             if (string.IsNullOrEmpty(category))
@@ -101,20 +101,17 @@ namespace RSLib.GE.Debug
                 AddCategory(category);
 
             BaseButton button = AddButton(category, command.Label, key);
-            button.ButtonDown += () => command.Execute();
+            button.ButtonDown += command.Execute;
             command.SetButton(button);
 
-            if (source != null)
+            if (_commandsCountPerSource.ContainsKey(source))
             {
-                if (_commandsCountPerSource.ContainsKey(source))
-                {
-                    _commandsCountPerSource[source]++;
-                }
-                else
-                {
-                    source.TreeExited += () => OnSourceTreeExited(source);
-                    _commandsCountPerSource[source] = 1;
-                }
+                _commandsCountPerSource[source]++;
+            }
+            else
+            {
+                source.TreeExited += () => OnSourceTreeExited(source);
+                _commandsCountPerSource[source] = 1;
             }
         }
 
@@ -143,7 +140,7 @@ namespace RSLib.GE.Debug
             System.Collections.Generic.List<PanelCommand> removedCommands = new();
 
             foreach (PanelCommand command in _commands)
-                if (command.Source == source)
+                if (command.SourceInstanceID == source.GetInstanceId())
                     removedCommands.Add(command);
 
             foreach (PanelCommand command in removedCommands)

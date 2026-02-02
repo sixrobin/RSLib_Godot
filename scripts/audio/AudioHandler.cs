@@ -1,7 +1,7 @@
 using Godot;
 using RSLib.GE.Debug;
 
-public partial class AudioHandler : Node2D
+public partial class AudioHandler : Node
 {
     public const string MASTER_BUS_NAME = "Master";
     public const string SFX_BUS_NAME = "sfx";
@@ -14,7 +14,7 @@ public partial class AudioHandler : Node2D
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
         AudioServer.SetBusSend(_sfxBusID, MASTER_BUS_NAME);
-
+        
         _sfxMuted = Invasion.Instance.Config.MutePlaceholderSFX;
         
         Debugger.CommandPanel.Add(this, "audio", "mute fmod events", () => FmodUtils.DebugFmodEventsMuted = !FmodUtils.DebugFmodEventsMuted);
@@ -51,7 +51,7 @@ public partial class AudioHandler : Node2D
         {
             Stream = GD.Load<AudioStream>(streamPath),
             Bus = SFX_BUS_NAME,
-            GlobalPosition = args?.GlobalPosition ?? GlobalPosition,
+            GlobalPosition = args?.GlobalPosition ?? Vector2.Zero,
             VolumeLinear = args?.Volume ?? 1f,
             Attenuation = 0,
             MaxDistance = float.MaxValue,
