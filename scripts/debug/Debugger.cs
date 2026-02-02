@@ -35,18 +35,19 @@ namespace RSLib.GE.Debug
             Instance = this;
 
             Console = new Console();
-            ValuesShow = new ValuesShow();
-            Drawer = new Drawer();
-            CommandPanel = new CommandPanel();
-
             AddChild(Console);
-            AddChild(ValuesShow);
-            AddChild(Drawer);
-            AddChild(CommandPanel);
-
             Console.Init();
+
+            ValuesShow = new ValuesShow();
+            AddChild(ValuesShow);
             ValuesShow.Init();
+
+            Drawer = new Drawer();
+            AddChild(Drawer);
             Drawer.Init();
+            
+            CommandPanel = new CommandPanel();
+            AddChild(CommandPanel);
             CommandPanel.Init();
 
             _commands[Key.F12] = ToggleDebugMode;
