@@ -66,7 +66,7 @@ namespace RSLib.GE
         
         #endregion // RANDOM
         
-        public static string FormatByteSize(ulong bytes, bool round = false)
+        public static string FormatByteSize(ulong bytes, int decimals = 2)
         {
             string[] suffixes = {"bytes", "KB", "MB", "GB", "TB", "PB"};
             int counter = 0;
@@ -78,7 +78,7 @@ namespace RSLib.GE
                 counter++;
             }
 
-            return (round ? Mathf.Round(number) : number) + suffixes[counter];
+            return number.ToString($"N{decimals}") + suffixes[counter];
         }
     }
 }
