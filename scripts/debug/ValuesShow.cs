@@ -101,7 +101,8 @@ namespace RSLib.GE.Debug
             _valuesText += "\n";
 
             Show("fps", Performance.GetMonitor(Performance.Monitor.TimeFps));
-            Show("mem", Helpers.FormatByteSize(OS.GetStaticMemoryUsage(), true));
+            Show("mem", Helpers.FormatByteSize(OS.GetStaticMemoryUsage()));
+            Show("video_mem", Helpers.FormatByteSize((ulong)Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed)));
             Show("obj", Performance.GetMonitor(Performance.Monitor.ObjectCount));
             Show("obj_nodes", Performance.GetMonitor(Performance.Monitor.ObjectNodeCount));
             Show("orphans", Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount));
