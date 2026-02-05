@@ -5,6 +5,8 @@ namespace RSLib.GE.Debug
 
     public partial class Debugger : Node
     {
+        private const double MONITORING_LOG_INTERVAL = 30;
+        
         public bool DebugMode = true;
 
         public static Debugger Instance { get; private set; }
@@ -16,6 +18,9 @@ namespace RSLib.GE.Debug
 
         private readonly System.Collections.Generic.Dictionary<Key, Action> _commands = new();
         private readonly System.Collections.Generic.Dictionary<Key, bool> _keysJustPressed = new();
+
+        private double _monitoringLogTimer;
+        private int _monitoringLogCounter;
         
         public Debugger(bool debugOn = true)
         {
@@ -72,6 +77,25 @@ namespace RSLib.GE.Debug
             else
                 DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
         }
+
+        private void LogMonitoring()
+        {
+            _monitoringLogCounter++;
+
+            double totalSeconds = _monitoringLogCounter * MONITORING_LOG_INTERVAL;
+            int seconds = Mathf.FloorToInt(totalSeconds % 60);
+            int minutes = Mathf.FloorToInt(totalSeconds / 60);
+            
+            string log = $"Monitoring log #{_monitoringLogCounter} ({minutes}m{seconds:d2}s):\n";
+
+            log += $"mem: {Helpers.FormatByteSize(OS.GetStaticMemoryUsage())}\n";
+            log += $"video_mem: {Helpers.FormatByteSize((ulong)Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed))}\n";
+            log += $"obj: {Performance.GetMonitor(Performance.Monitor.ObjectCount)}\n";
+            log += $"obj_nodes: {Performance.GetMonitor(Performance.Monitor.ObjectNodeCount)}\n";
+            log += $"orphans:{Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount)}\n";
+            
+            GD.Print(log);
+        }
         
         public override void _Process(double delta)
         {
@@ -94,6 +118,13 @@ namespace RSLib.GE.Debug
                 {
                     _keysJustPressed[command.Key] = false;
                 }
+            }
+
+            _monitoringLogTimer += delta;
+            if (_monitoringLogTimer > MONITORING_LOG_INTERVAL)
+            {
+                LogMonitoring();
+                _monitoringLogTimer = 0f;
             }
         }
     }
