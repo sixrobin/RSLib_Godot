@@ -57,6 +57,11 @@ public partial class InputDeviceHandler : Node
         return CurrentDevice == DeviceType.CONTROLLER;
     }
     
+    public bool IsUsingKBM()
+    {
+        return CurrentDevice == DeviceType.KBM;
+    }
+    
     public override void _Ready()
     {
         base._Ready();
