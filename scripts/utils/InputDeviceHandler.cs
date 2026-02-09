@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class InputDeviceHandler : Node
@@ -16,10 +18,25 @@ public partial class InputDeviceHandler : Node
         MOUSE,
     }
 
+    public enum ControllerBrand
+    {
+        UNKNOWN,
+        XBOX,
+        PLAYSTATION,
+        SWITCH,
+        SWITCH2,
+        STEAMDECK,
+    }
+
     public InputDeviceHandler()
     {
         Name = nameof(InputDeviceHandler);
     }
+
+    // Initialize these from every project code.
+    public readonly Dictionary<ControllerBrand, Dictionary<JoyButton, Texture2D>> JoypadButtonIcons = new();
+    public readonly Dictionary<ControllerBrand, Dictionary<JoyAxis, Texture2D>> JoypadAxisIcons = new();
+    public Dictionary<Key, Texture2D> KeyboardIcons = new();
     
     public event System.Action<DeviceType, DeviceType> DeviceChanged;
 
@@ -50,6 +67,32 @@ public partial class InputDeviceHandler : Node
                 }
             }
         }
+    }
+
+    public Texture2D GetJoypadButtonIcon(JoyButton button)
+    {
+        return JoypadButtonIcons[ControllerBrand.XBOX].GetValueOrDefault(button);
+    }
+    
+    public Texture2D GetJoypadAxisIcon(JoyAxis axis)
+    {
+        return JoypadAxisIcons[ControllerBrand.XBOX].GetValueOrDefault(axis);
+    }
+
+    public Texture2D GetKeyboardIcon(Key key)
+    {
+        return KeyboardIcons.GetValueOrDefault(key);
+    }
+    
+    public InputEvent GetInputEventForCurrentDevice(string actionName)
+    {
+        Godot.Collections.Array<InputEvent> actionEvents = InputMap.ActionGetEvents(actionName);
+        if (actionEvents.Count == 0)
+            return null;
+
+        return Invasion.Instance.InputDeviceHandler.IsUsingController()
+               ? actionEvents.FirstOrDefault(actionEvent => actionEvent is InputEventJoypadButton or InputEventJoypadMotion)
+               : actionEvents.FirstOrDefault(actionEvent => actionEvent is InputEventKey or InputEventMouseButton or InputEventMouseMotion);
     }
     
     public bool IsUsingController()
