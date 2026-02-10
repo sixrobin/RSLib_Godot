@@ -8,7 +8,7 @@ namespace RSLib.GE
         {
             return evt switch
             {
-                InputEventKey inputEventKey                   => inputEventKey.PhysicalKeycode.ToString(),
+                InputEventKey inputEventKey                   => DisplayServer.KeyboardGetKeycodeFromPhysical(inputEventKey.PhysicalKeycode).ToString(),
                 InputEventMouseButton inputEventMouseButton   => inputEventMouseButton.ButtonIndex.ToString(),
                 InputEventJoypadButton inputEventJoypadButton => inputEventJoypadButton.ButtonIndex.ToString(),
                 InputEventJoypadMotion inputEventJoypadMotion => inputEventJoypadMotion.Axis.ToString(),
