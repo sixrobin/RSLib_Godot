@@ -26,5 +26,48 @@ namespace RSLib.GE
             if (control.HasFocus())
                 control.ReleaseFocus();
         }
+        
+        /// <summary>
+        /// Resets all navigation neighbors.
+        /// </summary>
+        static public void ResetNavigation(this Control control)
+        {
+            control.FocusNeighborLeft = SELF_NODE_PATH;
+            control.FocusNeighborRight = SELF_NODE_PATH;
+            control.FocusNeighborTop = SELF_NODE_PATH;
+            control.FocusNeighborBottom = SELF_NODE_PATH;
+        }
+	
+        /// <summary>
+        /// Sets right navigation neighbor.
+        /// </summary>
+        static public void SetFocusRight(this Control control, Node target)
+        {
+            control.FocusNeighborRight = control.GetPathTo(target);
+        }
+	
+        /// <summary>
+        /// Sets left navigation neighbor.
+        /// </summary>
+        static public void SetFocusLeft(this Control control, Node target)
+        {
+            control.FocusNeighborLeft = control.GetPathTo(target);
+        }
+        
+        /// <summary>
+        /// Sets top navigation neighbor.
+        /// </summary>
+        static public void SetFocusTop(this Control control, Node target)
+        {
+            control.FocusNeighborTop = control.GetPathTo(target);
+        }
+	
+        /// <summary>
+        /// Sets bottom navigation neighbor.
+        /// </summary>
+        static public void SetFocusBottom(this Control control, Node target)
+        {
+            control.FocusNeighborBottom = control.GetPathTo(target);
+        }
     }
 }
