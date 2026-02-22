@@ -37,6 +37,7 @@ public partial class InputDeviceHandler : Node
     public readonly Dictionary<ControllerBrand, Dictionary<JoyButton, Texture2D>> JoypadButtonIcons = new();
     public readonly Dictionary<ControllerBrand, Dictionary<JoyAxis, Texture2D>> JoypadAxisIcons = new();
     public Dictionary<Key, Texture2D> KeyboardIcons = new();
+    public Dictionary<MouseButton, Texture2D> MouseIcons = new();
     
     public event System.Action<DeviceType, DeviceType> DeviceChanged;
 
@@ -82,6 +83,11 @@ public partial class InputDeviceHandler : Node
     public Texture2D GetKeyboardIcon(Key key)
     {
         return KeyboardIcons.GetValueOrDefault(key);
+    }
+    
+    public Texture2D GetMouseIcon(MouseButton key)
+    {
+        return MouseIcons.GetValueOrDefault(key);
     }
     
     public InputEvent GetInputEventForCurrentDevice(string actionName)
