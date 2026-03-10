@@ -38,6 +38,8 @@ public partial class InputDeviceHandler : Node
     public readonly Dictionary<ControllerBrand, Dictionary<JoyAxis, Texture2D>> JoypadAxisIcons = new();
     public Dictionary<Key, Texture2D> KeyboardIcons = new();
     public Dictionary<MouseButton, Texture2D> MouseIcons = new();
+
+    private ControllerBrand _iconsControllerBrand = ControllerBrand.UNKNOWN;
     
     public event System.Action<DeviceType, DeviceType> DeviceChanged;
 
@@ -70,14 +72,35 @@ public partial class InputDeviceHandler : Node
         }
     }
 
+    public bool SetIconsControllerBrand(ControllerBrand brand, out string error)
+    {
+        if (brand != ControllerBrand.UNKNOWN
+            && (!JoypadButtonIcons.ContainsKey(brand) || !JoypadAxisIcons.ContainsKey(brand)))
+        {
+            _iconsControllerBrand = ControllerBrand.UNKNOWN;
+            error = $"{nameof(InputDeviceHandler)} cannot use {brand} for icons as {nameof(JoypadButtonIcons)} or {nameof(JoypadAxisIcons)} do not have that key.";
+            return false;
+        }
+        
+        _iconsControllerBrand = brand;
+        error = string.Empty;
+        return true;
+    }
+
+    public ControllerBrand GetIconsControllerBrand()
+    {
+        // TODO: If unknown, automatically detect plugged controller brand.
+        return _iconsControllerBrand != ControllerBrand.UNKNOWN ? _iconsControllerBrand : ControllerBrand.XBOX;
+    }
+
     public Texture2D GetJoypadButtonIcon(JoyButton button)
     {
-        return JoypadButtonIcons[ControllerBrand.XBOX].GetValueOrDefault(button);
+        return JoypadButtonIcons[GetIconsControllerBrand()].GetValueOrDefault(button);
     }
     
     public Texture2D GetJoypadAxisIcon(JoyAxis axis)
     {
-        return JoypadAxisIcons[ControllerBrand.XBOX].GetValueOrDefault(axis);
+        return JoypadAxisIcons[GetIconsControllerBrand()].GetValueOrDefault(axis);
     }
 
     public Texture2D GetKeyboardIcon(Key key)
