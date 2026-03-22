@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 
 public partial class InputDeviceHandler : Node
 {
@@ -34,11 +35,12 @@ public partial class InputDeviceHandler : Node
     }
 
     // Initialize these from every project code.
-    public readonly Dictionary<ControllerBrand, Dictionary<JoyButton, Texture2D>> JoypadButtonIcons = new();
-    public readonly Dictionary<ControllerBrand, Dictionary<JoyAxis, Texture2D>> JoypadAxisIcons = new();
-    public Dictionary<Key, Texture2D> KeyboardIcons = new();
-    public Dictionary<MouseButton, Texture2D> MouseIcons = new();
+    public readonly System.Collections.Generic.Dictionary<ControllerBrand, System.Collections.Generic.Dictionary<JoyButton, Texture2D>> JoypadButtonIcons = new();
+    public readonly System.Collections.Generic.Dictionary<ControllerBrand, System.Collections.Generic.Dictionary<JoyAxis, Texture2D>> JoypadAxisIcons = new();
+    public System.Collections.Generic.Dictionary<Key, Texture2D> KeyboardIcons = new();
+    public System.Collections.Generic.Dictionary<MouseButton, Texture2D> MouseIcons = new();
 
+    private ControllerBrand _autoControllerBrand = ControllerBrand.UNKNOWN;
     private ControllerBrand _iconsControllerBrand = ControllerBrand.UNKNOWN;
     
     public event System.Action<DeviceType, DeviceType> DeviceChanged;
@@ -72,6 +74,24 @@ public partial class InputDeviceHandler : Node
         }
     }
 
+    private void OnJoyConnectionChanged(long device, bool connected)
+    {
+        Array<int> connectedJoypads = Input.GetConnectedJoypads();
+        _autoControllerBrand = ControllerBrand.UNKNOWN;
+
+        if (connectedJoypads.Count == 0)
+            return;
+
+        string firstControllerName = Input.GetJoyName(connectedJoypads[0]).ToLower();
+
+        if (firstControllerName.Contains("xbox"))
+            _autoControllerBrand = ControllerBrand.XBOX;
+        else if (firstControllerName.Contains("ps3") || firstControllerName.Contains("ps4") || firstControllerName.Contains("ps5"))
+            _autoControllerBrand = ControllerBrand.PLAYSTATION;
+        else if (firstControllerName.Contains("Nintendo Switch"))
+            _autoControllerBrand = ControllerBrand.SWITCH;
+    }
+    
     public bool SetIconsControllerBrand(ControllerBrand brand, out string error)
     {
         if (brand != ControllerBrand.UNKNOWN
@@ -89,8 +109,12 @@ public partial class InputDeviceHandler : Node
 
     public ControllerBrand GetIconsControllerBrand()
     {
-        // TODO: If unknown, automatically detect plugged controller brand.
-        return _iconsControllerBrand != ControllerBrand.UNKNOWN ? _iconsControllerBrand : ControllerBrand.XBOX;
+        if (_iconsControllerBrand != ControllerBrand.UNKNOWN)
+            return _iconsControllerBrand;
+        
+        return _autoControllerBrand != ControllerBrand.UNKNOWN
+               ? _autoControllerBrand
+               : ControllerBrand.XBOX;
     }
 
     public Texture2D GetJoypadButtonIcon(JoyButton button)
@@ -140,6 +164,9 @@ public partial class InputDeviceHandler : Node
     
         ProcessThreadGroup = ProcessThreadGroupEnum.SubThread;
         ProcessThreadMessages = ProcessThreadMessagesEnum.Messages;
+
+        Input.JoyConnectionChanged += OnJoyConnectionChanged;
+        OnJoyConnectionChanged(0, false);
     }
 
     public override void _Input(InputEvent evt)
