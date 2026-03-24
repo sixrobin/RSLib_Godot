@@ -17,6 +17,7 @@ namespace RSLib.GE
             public string ResourceFilePath;
         }
 
+#if TOOLS
         private class LocalizationDownloader : WebClient
         {
             public LocalizationDownloader(CookieContainer container)
@@ -30,9 +31,7 @@ namespace RSLib.GE
             {
                 WebRequest request = base.GetWebRequest(address);
                 if (request is HttpWebRequest httpRequest)
-                {
                     httpRequest.CookieContainer = _container;
-                }
 
                 return request;
             }
@@ -60,6 +59,7 @@ namespace RSLib.GE
                 }
             }
         }
+#endif
 
         public enum LoadMode
         {
@@ -100,6 +100,7 @@ namespace RSLib.GE
             {
                 switch (loadMode)
                 {
+#if TOOLS
                     case LoadMode.GOOGLE_SHEETS_DOWNLOAD:
                         LocalizationDownloader wc = new(new CookieContainer());
                         wc.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0");
@@ -111,8 +112,14 @@ namespace RSLib.GE
                         byte[] downloadData = wc.DownloadData(string.Format(GOOGLE_SHEETS_EXPORT_FORMAT, args.GoogleSheetUID));
                         downloadOutput = System.Text.Encoding.UTF8.GetString(downloadData);
                         break;
+#endif
 
                     case LoadMode.FILE_PATH:
+                        downloadOutput = FileUtils.ReadText(args.ResourceFilePath);
+                        break;
+                    
+                    default:
+                        Debugger.Console.Warning($"Unhandled {nameof(LoadMode)} in {nameof(Localizer)}, downloading using {nameof(LoadMode.FILE_PATH)}.");
                         downloadOutput = FileUtils.ReadText(args.ResourceFilePath);
                         break;
                 }
