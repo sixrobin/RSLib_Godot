@@ -47,6 +47,7 @@ namespace RSLib.GE
             if (OS.HasFeature("editor"))
                 return path;
             
+            // TODO: Not only for windows?
             if (OS.HasFeature("windows") && path.EndsWith(".remap"))
                 path = path.Remove(path.Length - 6);
 
