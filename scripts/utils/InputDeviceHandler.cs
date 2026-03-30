@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -29,6 +30,9 @@ public partial class InputDeviceHandler : Node
         STEAMDECK,
     }
 
+    private const double CUSTOM_ECHO_DELAY = 0.5;
+    private const double CUSTOM_ECHO_INTERVAL = 0.05;
+    
     public InputDeviceHandler()
     {
         Name = nameof(InputDeviceHandler);
@@ -42,8 +46,23 @@ public partial class InputDeviceHandler : Node
 
     private ControllerBrand _autoControllerBrand = ControllerBrand.UNKNOWN;
     private ControllerBrand _iconsControllerBrand = ControllerBrand.UNKNOWN;
+
+    private Side? _customEchoCurrentSide;
+    private Side? CustomEchoCurrentSide
+    {
+        get => _customEchoCurrentSide;
+        set
+        {
+            _customEchoCurrentSide = value;
+            _customEchoDelayTimer = 0;
+            _customEchoIntervalTimer = double.MaxValue;
+        }
+    }
     
-    public event System.Action<DeviceType, DeviceType> DeviceChanged;
+    private double _customEchoDelayTimer;
+    private double _customEchoIntervalTimer;
+    
+    public event Action<DeviceType, DeviceType> DeviceChanged;
 
     public KeyboardMouse KeyboardMouseLast { get; private set; }
     
@@ -165,6 +184,8 @@ public partial class InputDeviceHandler : Node
         ProcessThreadGroup = ProcessThreadGroupEnum.SubThread;
         ProcessThreadMessages = ProcessThreadMessagesEnum.Messages;
 
+        ProcessMode = ProcessModeEnum.Always;
+
         Input.JoyConnectionChanged += OnJoyConnectionChanged;
         OnJoyConnectionChanged(0, false);
     }
@@ -187,6 +208,69 @@ public partial class InputDeviceHandler : Node
         {
             CurrentDevice = DeviceType.CONTROLLER;
             KeyboardMouseLast = KeyboardMouse.NONE;
+        }
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        if (IsUsingController())
+        {
+            if (CustomEchoCurrentSide == null && Input.IsActionPressed("ui_left"))
+                CustomEchoCurrentSide = Side.Left;
+            else if (CustomEchoCurrentSide == Side.Left && !Input.IsActionPressed("ui_left"))
+                CustomEchoCurrentSide = null;
+            
+            if (CustomEchoCurrentSide == null && Input.IsActionPressed("ui_right"))
+                CustomEchoCurrentSide = Side.Right;
+            else if (CustomEchoCurrentSide == Side.Right && !Input.IsActionPressed("ui_right"))
+                CustomEchoCurrentSide = null;
+            
+            if (CustomEchoCurrentSide == null && Input.IsActionPressed("ui_up"))
+                CustomEchoCurrentSide = Side.Top;
+            else if (CustomEchoCurrentSide == Side.Top && !Input.IsActionPressed("ui_up"))
+                CustomEchoCurrentSide = null;
+            
+            if (CustomEchoCurrentSide == null && Input.IsActionPressed("ui_down"))
+                CustomEchoCurrentSide = Side.Bottom;
+            else if (CustomEchoCurrentSide == Side.Bottom && !Input.IsActionPressed("ui_down"))
+                CustomEchoCurrentSide = null;
+            
+            if (CustomEchoCurrentSide.HasValue)
+            {
+                _customEchoDelayTimer += TimeHandler.GetUnscaledDeltaTime();
+                if (_customEchoDelayTimer > CUSTOM_ECHO_DELAY)
+                {
+                    if (_customEchoIntervalTimer > CUSTOM_ECHO_INTERVAL)
+                    {
+                        string sideActionName = CustomEchoCurrentSide.Value switch
+                        {
+                            Side.Left   => "ui_left",
+                            Side.Right  => "ui_right",
+                            Side.Top    => "ui_up",
+                            Side.Bottom => "ui_down",
+                            _           => string.Empty,
+                        };
+                        
+                        Input.ParseInputEvent(new InputEventAction
+                        {
+                            Action = sideActionName,
+                            Pressed = true,
+                        });
+                        
+                        Input.ParseInputEvent(new InputEventAction
+                        {
+                            Action = sideActionName,
+                            Pressed = false,
+                        });
+                        
+                        _customEchoIntervalTimer = 0;
+                    }
+
+                    _customEchoIntervalTimer += TimeHandler.GetUnscaledDeltaTime();
+                }
+            }
         }
     }
 }
