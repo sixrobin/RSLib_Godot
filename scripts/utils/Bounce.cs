@@ -17,6 +17,16 @@ namespace RSLib.GE
         [Export] private bool _smallerY = true;
         
         private Tween _tween;
+
+        public void SetDuration(float duration)
+        {
+            _duration = duration;
+        }
+
+        public void SetStrength(float strength)
+        {
+            _strength = strength;
+        }
         
         public void PlayBounce(float? duration = null,
                                float? strength = null,
