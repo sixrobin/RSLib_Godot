@@ -16,6 +16,19 @@ namespace RSLib.GE
             file.Close();
             return text;
         }
+        
+        /// <summary>
+        /// Writes a string into a text file.
+        /// </summary>
+        /// <param name="resRelativePath">File path relative to res:// directory.</param>
+        /// <param name="text">Text to store.</param>
+        /// <returns>File context as string.</returns>
+        public static void WriteText(string resRelativePath, string text)
+        {
+            FileAccess file = FileAccess.Open($"res://{resRelativePath}", FileAccess.ModeFlags.Write);
+            file.StoreString(text);
+            file.Close();
+        }
 
         /// <summary>
         /// Returns the main element of a .xml file.
