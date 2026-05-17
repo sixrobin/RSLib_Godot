@@ -39,37 +39,37 @@ namespace RSLib.GE.Debug
 
         public Shape Line(object a, object b, Color? color = null, float width = DEFAULT_WIDTH)
         {
-            return Add(new Line(ToVector2(a), ToVector2(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+            return !Enabled ? null : Add(new Line(ToVector2(a), ToVector2(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
         }
 
         public Shape Arrow(object a, object b, Color? color = null, float width = DEFAULT_WIDTH)
         {
-            return Add(new Arrow(ToVector2(a), ToVector2(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+            return !Enabled ? null : Add(new Arrow(ToVector2(a), ToVector2(b)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
         }
 
         public Shape Triangle(object a, object b, object c, Color? color = null, float width = DEFAULT_WIDTH)
         {
-            return Add(new Triangle(ToVector2(a), ToVector2(b), ToVector2(c)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+            return !Enabled ? null : Add(new Triangle(ToVector2(a), ToVector2(b), ToVector2(c)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
         }
 
         public Shape Circle(object center, float radius, int resolution = 16, Color? color = null, float width = DEFAULT_WIDTH)
         {
-            return Add(new Circle(ToVector2(center), radius, resolution).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+            return !Enabled ? null : Add(new Circle(ToVector2(center), radius, resolution).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
         }
 
         public Shape Ring(object center, float radius1, float radius2, int resolution = 16, Color? color = null, float width = DEFAULT_WIDTH)
         {
-            return Add(new Ring(ToVector2(center), radius1, radius2, resolution).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+            return !Enabled ? null : Add(new Ring(ToVector2(center), radius1, radius2, resolution).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
         }
 
         public Shape Rect(object center, Vector2 size, Color? color = null, float width = DEFAULT_WIDTH)
         {
-            return Add(new Rect(ToVector2(center), size).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+            return !Enabled ? null : Add(new Rect(ToVector2(center), size).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
         }
 
         public Shape Marker(object position, Color? color = null, float width = DEFAULT_WIDTH)
         {
-            return Add(new Marker(ToVector2(position)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
+            return !Enabled ? null : Add(new Marker(ToVector2(position)).SetColor(color ?? DEFAULT_COLOR).SetWidth(width));
         }
         
         public override void _Process(double delta)
