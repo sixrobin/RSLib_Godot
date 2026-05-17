@@ -5,6 +5,7 @@ namespace RSLib.GE.Debug
 
     public partial class Console : Node
     {
+        private const int MAX_ENTRIES = 200;
         private const int WIDTH = 512;
         private const int HEIGHT = 150;
         private const int MARGIN = 16;
@@ -73,6 +74,14 @@ namespace RSLib.GE.Debug
             _scrollContainer.AddChild(_entriesContainer);
         }
 
+        private void AddEntryChild(Label entry)
+        {
+            _entriesContainer.AddChild(entry);
+            
+            if (_entriesContainer.GetChildCount() > MAX_ENTRIES)
+                _entriesContainer.GetChild(0).Free();
+        }
+        
         public async void Entry(object text, Color? color = null, bool enginePrint = true)
         {
             Label label = new()
@@ -85,7 +94,7 @@ namespace RSLib.GE.Debug
             };
             label.AddThemeFontSizeOverride("font_size", 12);
             label.AddThemeConstantOverride("line_spacing", -4);
-            _entriesContainer.CallDeferred(Node.MethodName.AddChild, label);
+            CallDeferred(nameof(AddEntryChild), label);
 
             if (enginePrint)
                 GD.Print(text);
