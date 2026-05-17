@@ -39,8 +39,8 @@ namespace RSLib.GE
             
             FocusTarget();
             
-            Debugger.Drawer?.Marker(_target).SetColor(_debugColor).SetWidth(2);
-            Debugger.Drawer?.Rect(this, _size).SetColor(_debugColor).SetWidth(2);
+            Debugger.Drawer?.Marker(_target, _debugColor, 2f);
+            Debugger.Drawer?.Rect(this, _size, _debugColor, 2f);
         }
     }
 }
