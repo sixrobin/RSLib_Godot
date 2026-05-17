@@ -85,7 +85,7 @@ namespace RSLib.GE.Debug
             };
             label.AddThemeFontSizeOverride("font_size", 12);
             label.AddThemeConstantOverride("line_spacing", -4);
-            _entriesContainer.AddChild(label);
+            _entriesContainer.CallDeferred(Node.MethodName.AddChild, label);
 
             if (enginePrint)
                 GD.Print(text);
