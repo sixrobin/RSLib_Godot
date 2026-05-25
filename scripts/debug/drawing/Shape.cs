@@ -8,8 +8,6 @@ namespace RSLib.GE.Debug
         protected float _width;
         protected bool _filled;
         
-        public bool AlwaysDraw { get; private set; }
-
         public abstract void Draw(CanvasItem drawer);
 
         public Shape SetColor(Color color)
@@ -33,12 +31,6 @@ namespace RSLib.GE.Debug
         public Shape SetFilled(bool filled)
         {
             _filled = filled;
-            return this;
-        }
-        
-        public Shape SetAlwaysDraw(bool alwaysDraw)
-        {
-            AlwaysDraw = alwaysDraw;
             return this;
         }
     }

@@ -82,8 +82,8 @@ namespace RSLib.GE.Debug
         {
             base._Draw();
 
-            foreach (Shape shape in _shapes)
-                if (Enabled || shape.AlwaysDraw)
+            if (Enabled)
+                foreach (Shape shape in _shapes)
                     shape.Draw(this);
 
             _shapes.Clear();
