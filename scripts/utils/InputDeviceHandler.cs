@@ -105,7 +105,7 @@ public partial class InputDeviceHandler : Node
 
         if (firstControllerName.Contains("xbox"))
             _autoControllerBrand = ControllerBrand.XBOX;
-        else if (firstControllerName.Contains("ps3") || firstControllerName.Contains("ps4") || firstControllerName.Contains("ps5"))
+        else if (firstControllerName.Contains("ps3") || firstControllerName.Contains("ps4") || firstControllerName.Contains("ps5") || firstControllerName.Contains("dualsense"))
             _autoControllerBrand = ControllerBrand.PLAYSTATION;
         else if (firstControllerName.Contains("Nintendo Switch"))
             _autoControllerBrand = ControllerBrand.SWITCH;
