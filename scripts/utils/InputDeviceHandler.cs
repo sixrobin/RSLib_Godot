@@ -103,11 +103,11 @@ public partial class InputDeviceHandler : Node
 
         string firstControllerName = Input.GetJoyName(connectedJoypads[0]).ToLower();
 
-        if (firstControllerName.Contains("xbox"))
+        if (firstControllerName.Contains("xbox") || firstControllerName.Contains("microsoft"))
             _autoControllerBrand = ControllerBrand.XBOX;
-        else if (firstControllerName.Contains("ps3") || firstControllerName.Contains("ps4") || firstControllerName.Contains("ps5") || firstControllerName.Contains("dualsense"))
+        else if (firstControllerName.Contains("sony") || firstControllerName.Contains("ps3") || firstControllerName.Contains("ps4") || firstControllerName.Contains("ps5") || firstControllerName.Contains("dual"))
             _autoControllerBrand = ControllerBrand.PLAYSTATION;
-        else if (firstControllerName.Contains("Nintendo Switch"))
+        else if (firstControllerName.Contains("nintendo"))
             _autoControllerBrand = ControllerBrand.SWITCH;
     }
     
