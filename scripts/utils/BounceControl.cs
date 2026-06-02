@@ -23,7 +23,7 @@ namespace RSLib.GE
 							   float? strength = null,
 							   Tween.TransitionType? easing = null)
 		{
-			PivotOffset = Size * 0.5f;
+			PivotOffsetRatio = Vector2.One * 0.5f;
 
 			_tween?.Stop();
 
