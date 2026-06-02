@@ -15,6 +15,7 @@ namespace RSLib.GE
 
 		[ExportGroup("Options")]
 		[Export] private bool _smallerY = true;
+		[Export] private bool _bounceOnReady;
 
 		private Tween _tween;
 
@@ -37,6 +38,14 @@ namespace RSLib.GE
 				  .SetTrans(easing.Value)
 				  .SetEase(Tween.EaseType.Out);
 			_tween.TweenCallback(Callable.From(() => _tween = null));
+		}
+
+		public override void _Ready()
+		{
+			base._Ready();
+			
+			if (_bounceOnReady)
+				PlayBounce();
 		}
 	}
 }
