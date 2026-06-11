@@ -4,12 +4,15 @@ namespace RSLib.GE
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Text.RegularExpressions;
     using Godot;
     using CSharp.Framework;
     using Debug;
 
     public static class Localizer
     {
+        private static readonly Regex REGEX_PLURAL = new(@"\(([^|()]*)\|([^()]*)\)", RegexOptions.Compiled);
+
         public class InitializationArgs
         {
             public LoadMode Mode;
@@ -276,6 +279,28 @@ namespace RSLib.GE
         }
 
         /// <summary>
+        /// Gets and pluralizes the localized key for current language, and returns the key itself if it has not been found.
+        /// </summary>
+        /// <param name="key">Key to localize.</param>
+        /// <param name="plural">True for plural, false for singular.</param>
+        /// <returns>Localized and pluralized key if it exists, else the key itself.</returns>
+        public static string GetPluralized(string key, bool plural)
+        {
+            return Pluralize(Get(key, Language), plural);
+        }
+        
+        /// <summary>
+        /// Gets and pluralizes the localized key for current language, and returns the key itself if it has not been found.
+        /// </summary>
+        /// <param name="key">Key to localize.</param>
+        /// <param name="pluralCount">Reference count for pluralization, a value higher than 1 will use plural form.</param>
+        /// <returns>Localized and pluralized key if it exists, else the key itself.</returns>
+        public static string GetPluralized(string key, int pluralCount)
+        {
+            return Pluralize(Get(key, Language), pluralCount);
+        }
+        
+        /// <summary>
         /// Checks if the key exists for current language, and localizes it if so.
         /// </summary>
         /// <param name="key">Key to localize.</param>
@@ -309,6 +334,32 @@ namespace RSLib.GE
         {
             return string.Format(Get(key), args);
         }
+        
+        /// <summary>
+        /// Gets and pluralizes the localized key for current language, and formats the result using given arguments.
+        /// Localized key is thus considered to have format slots in {i} format.
+        /// </summary>
+        /// <param name="key">Key to localize and format.</param>
+        /// <param name="plural">True for plural, false for singular.</param>
+        /// <param name="args">Formatting arguments.</param>
+        /// <returns>Localized, pluralized and formatted key if it exists, else the key itself.</returns>
+        public static string FormatPluralized(string key, bool plural, params object[] args)
+        {
+            return Pluralize(string.Format(Get(key), args), plural);
+        }
+        
+        /// <summary>
+        /// Gets and pluralizes the localized key for current language, and formats the result using given arguments.
+        /// Localized key is thus considered to have format slots in {i} format.
+        /// </summary>
+        /// <param name="key">Key to localize and format.</param>
+        /// <param name="pluralCount">Reference count for pluralization, a value higher than 1 will use plural form.</param>
+        /// <param name="args">Formatting arguments.</param>
+        /// <returns>Localized, pluralized and formatted key if it exists, else the key itself.</returns>
+        public static string FormatPluralized(string key, int pluralCount, params object[] args)
+        {
+            return Pluralize(string.Format(Get(key), args), pluralCount);
+        }
 
         /// <summary>
         /// Gets the localized key for current language, and formats the result using given arguments.
@@ -328,6 +379,30 @@ namespace RSLib.GE
 
             result = string.Format(entry, args);
             return true;
+        }
+
+        /// <summary>
+        /// Pluralizes a text.
+        /// Pluralized parts format is (s|p) where s is the singular form, and p the plural form.
+        /// </summary>
+        /// <param name="text">Text to pluralize.</param>
+        /// <param name="count">Reference count, a value higher than 1 will use plural form.</param>
+        /// <returns>Pluralized text.</returns>
+        public static string Pluralize(string text, int count)
+        {
+            return Pluralize(text, count >= 2);
+        }
+        
+        /// <summary>
+        /// Pluralizes a text.
+        /// Pluralized parts format is (s|p) where s is the singular form, and p the plural form.
+        /// </summary>
+        /// <param name="text">Text to pluralize.</param>
+        /// <param name="plural">True for plural, false for singular.</param>
+        /// <returns>Pluralized text.</returns>
+        public static string Pluralize(string text, bool plural)
+        {
+            return REGEX_PLURAL.Replace(text, match => match.Groups[plural ? 2 : 1].Value);
         }
     }
 }

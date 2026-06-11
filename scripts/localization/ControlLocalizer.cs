@@ -7,11 +7,24 @@ namespace RSLib.GE
         [Export] private string _key;
         [Export] private string _format;
 
+        private bool? _plural;
         private object[] _args;
 
         public void SetKey(string key)
         {
             _key = key;
+            Localize();
+        }
+
+        public void SetPlural(bool? plural)
+        {
+            _plural = plural;
+            Localize();
+        }
+        
+        public void SetPlural(int pluralCount)
+        {
+            _plural = pluralCount >= 2;
             Localize();
         }
 
@@ -26,9 +39,18 @@ namespace RSLib.GE
             string text = string.Empty;
             if (!string.IsNullOrEmpty(_key))
             {
-                text = _args != null
-                       ? Localizer.Format(_key, _args)
-                       : Localizer.Get(_key);
+                if (_args != null)
+                {
+                    text = _plural.HasValue
+                           ? Localizer.FormatPluralized(_key, _plural.Value, _args)
+                           : Localizer.Format(_key, _args);
+                }
+                else
+                {
+                    text = _plural.HasValue
+                           ? Localizer.GetPluralized(_key, _plural.Value)
+                           : Localizer.Get(_key);
+                }
             }
             
             if (!string.IsNullOrEmpty(_format))
