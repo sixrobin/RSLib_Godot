@@ -54,6 +54,14 @@ namespace RSLib.GE.Debug
         {
             _label.Visible = visible ?? !_label.Visible;
             ProcessMode = _label.Visible ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
+
+            if (!_label.Visible)
+            {
+                foreach ((Label label, _) in _positionedTexts)
+                    label.QueueFree();
+                
+                _positionedTexts.Clear();
+            }
         }
 
         private string Format(object key, object value)
