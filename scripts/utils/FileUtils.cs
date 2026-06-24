@@ -66,5 +66,16 @@ namespace RSLib.GE
 
             return path;
         }
+        
+        /// <summary>
+        /// Creates a directory if it does not exist already.
+        /// </summary>
+        /// <param name="path">File path relative to res:// or user:// directory.</param>
+        public static void CreateDirectory(string path)
+        {
+            path = ProjectSettings.GlobalizePath(path);
+            if (!DirAccess.DirExistsAbsolute(path))
+                DirAccess.MakeDirRecursiveAbsolute(path);
+        }
     }
 }
