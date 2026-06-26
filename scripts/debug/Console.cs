@@ -100,7 +100,7 @@ namespace RSLib.GE.Debug
                 GD.Print(text);
 
             await Task.Delay(2);
-            _scrollContainer.ScrollVertical = (int)_entriesContainer.Size.Y;
+            _scrollContainer.CallDeferred(ScrollContainer.MethodName.SetVScroll, int.MaxValue);
         }
 
         public void Warning(object text)
