@@ -70,12 +70,9 @@ namespace RSLib.GE.Debug
 
         private void ToggleScreenMode()
         {
-            if (DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen)
-                DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-            else if (DisplayServer.WindowGetMode() == DisplayServer.WindowMode.ExclusiveFullscreen)
-                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
-            else
-                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+            DisplayServer.WindowSetMode(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.ExclusiveFullscreen
+                                        ? DisplayServer.WindowMode.Windowed
+                                        : DisplayServer.WindowMode.ExclusiveFullscreen);
         }
 
         private void LogMonitoring()
