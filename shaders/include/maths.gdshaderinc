@@ -20,5 +20,7 @@ float atan2(float x, float y)
     return a;
 }
 
+float parabola01(float t) { return -(t - 0.5) * ((t - 0.5) * 4.0) + 1.0; }
+
 vec2 cartesian_to_polar(vec2 cartesian) { return vec2(atan2(cartesian.y, cartesian.x) / (PI * 2.0), length(cartesian)); }
 vec2 polar_to_cartesian(vec2 polar)     { return vec2(sin(polar.x * (PI * 2.0)), cos(polar.x * (PI * 2.0))) * polar.y; }
