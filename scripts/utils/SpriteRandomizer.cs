@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using RSLib.GE;
 
-public partial class SpriteRandomizer : Node2D
+public partial class SpriteRandomizer : Node
 {
 	[Export] private Sprite2D _target;
 	[Export] private bool _randomizeAndFree = true;
