@@ -63,7 +63,7 @@ namespace RSLib.GE.Debug
             _commands[Key.F4] = () => Console.ToggleVisible();
         }
 
-        private void ToggleDebugMode()
+        public void ToggleDebugMode()
         {
             DebugMode = !DebugMode;
         }
