@@ -2,7 +2,7 @@ namespace RSLib.GE
 {
     using Godot;
 
-    public partial class ControlLocalizer : Control
+    public partial class ControlLocalizer : Node
     {
         [Export] private string _key;
         [Export] private string _format;
@@ -82,14 +82,6 @@ namespace RSLib.GE
         {
             base._ExitTree();
             Localizer.LanguageChanged -= Localize;
-        }
-
-        public override void _Ready()
-        {
-            base._Ready();
-            
-            Size = Vector2.Zero;
-            MouseFilter = MouseFilterEnum.Ignore;
         }
     }
 }
