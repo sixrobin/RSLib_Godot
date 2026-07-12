@@ -10,6 +10,11 @@ namespace RSLib.GE
         private bool? _plural;
         private object[] _args;
 
+        public bool HasKey()
+        {
+            return !string.IsNullOrEmpty(_key);
+        }
+        
         public void SetKey(string key)
         {
             _key = key;
