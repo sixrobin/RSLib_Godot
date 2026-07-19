@@ -156,15 +156,20 @@ public partial class InputDeviceHandler : Node
         return MouseIcons.GetValueOrDefault(key);
     }
     
-    public InputEvent GetInputEventForCurrentDevice(string actionName)
+    public InputEvent GetInputEventForDevice(string actionName, DeviceType deviceType)
     {
-        Godot.Collections.Array<InputEvent> actionEvents = InputMap.ActionGetEvents(actionName);
+        Array<InputEvent> actionEvents = InputMap.ActionGetEvents(actionName);
         if (actionEvents.Count == 0)
             return null;
 
-        return Invasion.Instance.InputDeviceHandler.IsUsingController()
+        return deviceType == DeviceType.CONTROLLER
                ? actionEvents.FirstOrDefault(actionEvent => actionEvent is InputEventJoypadButton or InputEventJoypadMotion)
                : actionEvents.FirstOrDefault(actionEvent => actionEvent is InputEventKey or InputEventMouseButton or InputEventMouseMotion);
+    }
+    
+    public InputEvent GetInputEventForCurrentDevice(string actionName)
+    {
+        return GetInputEventForDevice(actionName, CurrentDevice);
     }
     
     public bool IsUsingController()
