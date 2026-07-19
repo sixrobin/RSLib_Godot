@@ -21,12 +21,20 @@ namespace RSLib.GE
         }
 
 #if TOOLS
-        private class LocalizationDownloader : WebClient
+        public class LocalizationDownloader : WebClient
         {
+#pragma warning disable SYSLIB0014
             public LocalizationDownloader(CookieContainer container)
             {
                 _container = container;
+                
+                Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0");
+                Headers.Add("DNT", "1");
+                Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+                Headers.Add("Accept-Encoding", "deflate");
+                Headers.Add("Accept-Language", "en-US,en;q=0.5");
             }
+#pragma warning restore SYSLIB0014
 
             private readonly CookieContainer _container;
 
@@ -70,8 +78,8 @@ namespace RSLib.GE
             FILE_PATH,
         }
 
-        private const string GOOGLE_SHEETS_EXPORT_FORMAT = "https://docs.google.com/spreadsheets/d/{0}/export?format=csv&amp;usp=sharing";
-        private const char IGNORE_CHAR = '#';
+        public const string GOOGLE_SHEETS_EXPORT_FORMAT = "https://docs.google.com/spreadsheets/d/{0}/export?format=csv&amp;usp=sharing";
+        public const char IGNORE_CHAR = '#';
 
         private static Dictionary<string, Dictionary<string, string>> _entries;
 
@@ -105,14 +113,8 @@ namespace RSLib.GE
                 {
 #if TOOLS
                     case LoadMode.GOOGLE_SHEETS_DOWNLOAD:
-                        LocalizationDownloader wc = new(new CookieContainer());
-                        wc.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0");
-                        wc.Headers.Add("DNT", "1");
-                        wc.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-                        wc.Headers.Add("Accept-Encoding", "deflate");
-                        wc.Headers.Add("Accept-Language", "en-US,en;q=0.5");
-
-                        byte[] downloadData = wc.DownloadData(string.Format(GOOGLE_SHEETS_EXPORT_FORMAT, args.GoogleSheetUID));
+                        LocalizationDownloader downloader = new(new CookieContainer());
+                        byte[] downloadData = downloader.DownloadData(string.Format(GOOGLE_SHEETS_EXPORT_FORMAT, args.GoogleSheetUID));
                         downloadOutput = System.Text.Encoding.UTF8.GetString(downloadData);
                         break;
 #endif
