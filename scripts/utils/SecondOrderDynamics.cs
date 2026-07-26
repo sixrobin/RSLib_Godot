@@ -10,9 +10,7 @@
             _k2 = 1f / ((Mathf.Pi * frequency * 2f) * (Mathf.Pi * frequency * 2f));
             _k3 = responsiveness * damping / (Mathf.Pi * frequency * 2f);
             
-            _xp = initPosition;
-            _y = initPosition;
-            _yd = Vector2.Zero;
+            RefreshInitPosition(initPosition);
         }
         
         private readonly float _k1;
@@ -23,6 +21,13 @@
         private Vector2 _y;
         private Vector2 _yd;
 
+        public void RefreshInitPosition(Vector2 initPosition)
+        {
+            _xp = initPosition;
+            _y = initPosition;
+            _yd = Vector2.Zero;
+        }
+        
         public Vector2 Update(float time, Vector2 to, Vector2? velocity = null)
         {
             // Velocity estimation.
