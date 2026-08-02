@@ -83,13 +83,13 @@ namespace RSLib.GE.Debug
             int seconds = Mathf.FloorToInt(totalSeconds % 60);
             int minutes = Mathf.FloorToInt(totalSeconds / 60);
             
-            string log = $"Monitoring log #{_monitoringLogCounter} ({minutes}m{seconds:d2}s):\n";
+            string log = $"Monitoring log #{_monitoringLogCounter} ({minutes}m{seconds:d2}s): ";
 
-            log += $"mem: {Helpers.FormatByteSize(OS.GetStaticMemoryUsage())}\n";
-            log += $"video_mem: {Helpers.FormatByteSize((ulong)Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed))}\n";
-            log += $"obj: {Performance.GetMonitor(Performance.Monitor.ObjectCount)}\n";
-            log += $"obj_nodes: {Performance.GetMonitor(Performance.Monitor.ObjectNodeCount)}\n";
-            log += $"orphans:{Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount)}\n";
+            log += $"mem:{Helpers.FormatByteSize(OS.GetStaticMemoryUsage())} | ";
+            log += $"video_mem:{Helpers.FormatByteSize((ulong)Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed))} | ";
+            log += $"obj:{Performance.GetMonitor(Performance.Monitor.ObjectCount)} | ";
+            log += $"obj_nodes:{Performance.GetMonitor(Performance.Monitor.ObjectNodeCount)} | ";
+            log += $"orphans:{Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount)}";
             
             GD.Print(log);
         }
