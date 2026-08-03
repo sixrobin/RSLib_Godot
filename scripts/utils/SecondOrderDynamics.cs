@@ -33,7 +33,7 @@
             // Velocity estimation.
             if (velocity == null)
             {
-                velocity = (to - _xp) / time;
+                velocity = (to - _xp) / Mathf.Max(Mathf.Epsilon, time);
                 _xp = to;
             }
 
