@@ -59,6 +59,8 @@ public partial class InputDeviceHandler : Node
         }
     }
     
+    private double _lastFrameUnixTime;
+    private double _unscaledDelta;
     private double _customEchoDelayTimer;
     private double _customEchoIntervalTimer;
     
@@ -220,6 +222,9 @@ public partial class InputDeviceHandler : Node
     {
         base._Process(delta);
 
+        _unscaledDelta = Time.GetUnixTimeFromSystem() - _lastFrameUnixTime;
+        _lastFrameUnixTime = Time.GetUnixTimeFromSystem();
+        
         if (IsUsingController())
         {
             if (CustomEchoCurrentSide == null && Input.IsActionPressed("ui_left"))
@@ -244,7 +249,7 @@ public partial class InputDeviceHandler : Node
             
             if (CustomEchoCurrentSide.HasValue)
             {
-                _customEchoDelayTimer += TimeHandler.GetUnscaledDeltaTime();
+                _customEchoDelayTimer += _unscaledDelta;
                 if (_customEchoDelayTimer > CUSTOM_ECHO_DELAY)
                 {
                     if (_customEchoIntervalTimer > CUSTOM_ECHO_INTERVAL)
@@ -273,7 +278,7 @@ public partial class InputDeviceHandler : Node
                         _customEchoIntervalTimer = 0;
                     }
 
-                    _customEchoIntervalTimer += TimeHandler.GetUnscaledDeltaTime();
+                    _customEchoIntervalTimer += _unscaledDelta;
                 }
             }
         }

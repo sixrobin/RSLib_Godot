@@ -6,7 +6,7 @@ public partial class AudioHandler : Node
     public const string MASTER_BUS_NAME = "Master";
     public const string SFX_BUS_NAME = "sfx";
 
-    public AudioHandler(string sfxParentFolder)
+    public AudioHandler(string sfxParentFolder, bool sfxMuted)
     {
         _sfxParentFolder = sfxParentFolder;
         
@@ -14,20 +14,18 @@ public partial class AudioHandler : Node
         _sfxBusID = AudioServer.GetBusCount() - 1;
         AudioServer.SetBusName(_sfxBusID, SFX_BUS_NAME);
         AudioServer.SetBusSend(_sfxBusID, MASTER_BUS_NAME);
-        
-        _sfxMuted = Invasion.Instance.Config.MutePlaceholderSFX;
-        
-        Debugger.CommandPanel.Add(this, "audio", "mute fmod events", () => FmodUtils.DebugFmodEventsMuted = !FmodUtils.DebugFmodEventsMuted);
-        Debugger.CommandPanel.Add(this, "audio", "mute placeholders", () => SetSFXMuted(!_sfxMuted));
+
+        SFXMuted = sfxMuted;
     }
 
     private readonly string _sfxParentFolder;
     private readonly int _sfxBusID;
-    private bool _sfxMuted;
+    
+    public bool SFXMuted { get; private set; }
 
     public void SetSFXMuted(bool muted)
     {
-        _sfxMuted = muted;
+        SFXMuted = muted;
     }
     
     public void SetMasterVolume(float volume)
@@ -42,7 +40,7 @@ public partial class AudioHandler : Node
     
     public void SFX(string path, SFXArgs args = null)
     {
-        if (_sfxMuted)
+        if (SFXMuted)
             return;
         
         string streamPath = $"{_sfxParentFolder}/{path}";
