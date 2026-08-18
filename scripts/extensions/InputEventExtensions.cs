@@ -19,6 +19,7 @@ namespace RSLib.GE
         
         public static string LocalizedName(this InputEvent inputEvent)
         {
+            // TODO: Fix Localizer that should not be accessed here as it's not part of RSLib_Godot.
             return inputEvent switch
             {
                 InputEventKey key                   => Localizer.TryGet($"key_{DisplayServer.KeyboardGetKeycodeFromPhysical(key.PhysicalKeycode).ToString().ToLower()}", out string result) ? result : inputEvent.SimplifiedName(),
