@@ -1,6 +1,7 @@
 namespace RSLib.GE
 {
     using System.Linq;
+    using System.Collections.Generic;
     using Godot;
 
     public static class ControllerUINavigationUtils
@@ -49,47 +50,57 @@ namespace RSLib.GE
 
         public static void InitVBoxContainerNavigation(VBoxContainer box, bool resetBefore)
         {
-            Control[] controls = box.GetChildren()
-                                    .Where(o => !o.IsQueuedForDeletion())
-                                    .Cast<Control>()
-                                    .ToArray();
+            List<Control> controls = box.GetChildren()
+                                        .Where(o => !o.IsQueuedForDeletion())
+                                        .Cast<Control>()
+                                        .ToList();
 
-            if (resetBefore)
-                foreach (Control control in controls)
-                    control.DisableNeighboursFocus();
-
-            for (int i = 0; i < controls.Length; ++i)
-            {
-                Control current = controls[i];
-
-                if (i > 0)
-                    current.FocusNeighborTop = new NodePath($"../{controls[i - 1].Name}");
-
-                if (i < controls.Length - 1)
-                    current.FocusNeighborBottom = new NodePath($"../{controls[i + 1].Name}");
-            }
+            InitVerticalNavigation(controls, resetBefore);
         }
 
         public static void InitHBoxContainerNavigation(HBoxContainer box, bool resetBefore)
         {
-            Control[] controls = box.GetChildren()
-                                    .Where(o => !o.IsQueuedForDeletion())
-                                    .Cast<Control>()
-                                    .ToArray();
+            List<Control> controls = box.GetChildren()
+                                        .Where(o => !o.IsQueuedForDeletion())
+                                        .Cast<Control>()
+                                        .ToList();
 
+            InitHorizontalNavigation(controls, resetBefore);
+        }
+
+        public static void InitVerticalNavigation(List<Control> controls, bool resetBefore)
+        {
             if (resetBefore)
                 foreach (Control control in controls)
                     control.DisableNeighboursFocus();
-
-            for (int i = 0; i < controls.Length; ++i)
+            
+            for (int i = 0; i < controls.Count; ++i)
             {
                 Control current = controls[i];
 
                 if (i > 0)
-                    current.FocusNeighborLeft = new NodePath($"../{controls[i - 1].Name}");
+                    current.FocusNeighborTop = current.GetPathTo(controls[i - 1]);
 
-                if (i < controls.Length - 1)
-                    current.FocusNeighborRight = new NodePath($"../{controls[i + 1].Name}");
+                if (i < controls.Count - 1)
+                    current.FocusNeighborBottom = current.GetPathTo(controls[i + 1]);
+            }
+        }
+        
+        public static void InitHorizontalNavigation(List<Control> controls, bool resetBefore)
+        {
+            if (resetBefore)
+                foreach (Control control in controls)
+                    control.DisableNeighboursFocus();
+
+            for (int i = 0; i < controls.Count; ++i)
+            {
+                Control current = controls[i];
+
+                if (i > 0)
+                    current.FocusNeighborLeft = current.GetPathTo(controls[i - 1]);
+
+                if (i < controls.Count - 1)
+                    current.FocusNeighborRight = current.GetPathTo(controls[i + 1]);
             }
         }
     }
