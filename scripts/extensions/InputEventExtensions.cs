@@ -30,5 +30,20 @@ namespace RSLib.GE
                 _                                   => inputEvent.SimplifiedName(),
             };
         }
+
+        public static bool IsLeftClick(this InputEvent inputEvent)
+        {
+            return inputEvent.IsPressed() && !inputEvent.IsEcho() && inputEvent is InputEventMouseButton { ButtonIndex: MouseButton.Left };
+        }
+        
+        public static bool IsRightClick(this InputEvent inputEvent)
+        {
+            return inputEvent.IsPressed() && !inputEvent.IsEcho() && inputEvent is InputEventMouseButton { ButtonIndex: MouseButton.Right };
+        }
+        
+        public static bool IsMiddleClick(this InputEvent inputEvent)
+        {
+            return inputEvent.IsPressed() && !inputEvent.IsEcho() && inputEvent is InputEventMouseButton { ButtonIndex: MouseButton.Middle };
+        }
     }
 }
