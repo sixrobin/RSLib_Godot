@@ -103,5 +103,11 @@ namespace RSLib.GE
                     current.FocusNeighborRight = current.GetPathTo(controls[i + 1]);
             }
         }
+
+        public static void GrabFocusIf(this Control control, bool condition)
+        {
+            if (condition)
+                control.GrabFocus();
+        }
     }
 }
