@@ -4,6 +4,9 @@ namespace RSLib.GE.Debug
 
     public partial class ColorblindnessSimulator : CanvasLayer
     {
+        public readonly static StringName SHADER_PARAM_MODE = new("mode");
+        public readonly static StringName SHADER_PARAM_SEVERITY = new("severity");
+        
         public ColorblindnessSimulator()
         {
             Name = nameof(ColorblindnessSimulator);
@@ -22,26 +25,26 @@ namespace RSLib.GE.Debug
             filterRect.SetAnchorsPreset(Control.LayoutPreset.FullRect);
             AddChild(filterRect);
             
-            Debugger.CommandPanel.Add(this, "colorblindness", "none", () => material.SetShaderParameter("severity", 0f));
+            Debugger.CommandPanel.Add(this, "colorblindness", "none", () => material.SetShaderParameter(SHADER_PARAM_SEVERITY, 0f));
             Debugger.CommandPanel.Add(this, "colorblindness", "protanomaly", () =>
             {
-                material.SetShaderParameter("mode", 0);
-                material.SetShaderParameter("severity", 1f);
+                material.SetShaderParameter(SHADER_PARAM_MODE, 0);
+                material.SetShaderParameter(SHADER_PARAM_SEVERITY, 1f);
             });
             Debugger.CommandPanel.Add(this, "colorblindness", "deuteranomaly", () =>
             {
-                material.SetShaderParameter("mode", 1);
-                material.SetShaderParameter("severity", 1f);
+                material.SetShaderParameter(SHADER_PARAM_MODE, 1);
+                material.SetShaderParameter(SHADER_PARAM_SEVERITY, 1f);
             });
             Debugger.CommandPanel.Add(this, "colorblindness", "tritanomaly", () =>
             {
-                material.SetShaderParameter("mode", 2);
-                material.SetShaderParameter("severity", 1f);
+                material.SetShaderParameter(SHADER_PARAM_MODE, 2);
+                material.SetShaderParameter(SHADER_PARAM_SEVERITY, 1f);
             });
             Debugger.CommandPanel.Add(this, "colorblindness", "achromatopsia", () =>
             {
-                material.SetShaderParameter("mode", 3);
-                material.SetShaderParameter("severity", 1f);
+                material.SetShaderParameter(SHADER_PARAM_MODE, 3);
+                material.SetShaderParameter(SHADER_PARAM_SEVERITY, 1f);
             });
         }
     }
