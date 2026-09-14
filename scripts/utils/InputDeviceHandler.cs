@@ -184,6 +184,16 @@ public partial class InputDeviceHandler : Node
         return CurrentDevice == DeviceType.KBM;
     }
     
+    public bool IsUsingKeyboard()
+    {
+        return CurrentDevice == DeviceType.KBM && KeyboardMouseLast == KeyboardMouse.KEYBOARD;
+    }
+    
+    public bool IsUsingControllerOrKeyboard()
+    {
+        return IsUsingController() || IsUsingKeyboard();
+    }
+    
     public override void _Ready()
     {
         base._Ready();
