@@ -51,9 +51,13 @@ public partial class AudioHandler : Node
             Bus = SFX_BUS_NAME,
             GlobalPosition = args?.GlobalPosition ?? Vector2.Zero,
             VolumeLinear = args?.Volume ?? 1f,
+            PitchScale = args?.PitchScale ?? 1f,
             Attenuation = 0,
             MaxDistance = float.MaxValue,
         };
+
+        if (args != null)
+            audioPlayer2D.PitchScale += (float)GD.RandRange(-args.RandomPitch, args.RandomPitch);
         
         AddChild(audioPlayer2D);
 
@@ -65,5 +69,7 @@ public partial class AudioHandler : Node
     {
         public Vector2? GlobalPosition = null;
         public float Volume = 1f;
+        public float PitchScale = 1f;
+        public float RandomPitch = 0f;
     }
 }
