@@ -52,8 +52,8 @@ public partial class AudioHandler : Node
             GlobalPosition = args?.GlobalPosition ?? Vector2.Zero,
             VolumeLinear = args?.Volume ?? 1f,
             PitchScale = args?.PitchScale ?? 1f,
-            Attenuation = 0,
-            MaxDistance = float.MaxValue,
+            Attenuation = args?.Attenuation ?? 0f,
+            MaxDistance = args?.MaxDistance ?? float.MaxValue,
         };
 
         if (args != null)
@@ -71,5 +71,7 @@ public partial class AudioHandler : Node
         public float Volume = 1f;
         public float PitchScale = 1f;
         public float RandomPitch = 0f;
+        public float Attenuation = 0f;
+        public float MaxDistance = float.MaxValue;
     }
 }
